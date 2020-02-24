@@ -6,7 +6,7 @@ namespace EloBaza.WebApi.Controllers.Subject.Dtos
     {
         public CreateSubjectDtoValidator()
         {
-            RuleFor(x => x.Name).NotNull().NotEmpty().WithMessage("Subject name must be provided");
+            RuleFor(x => x.Name).NotEmpty().WithMessage("Subject name must be provided");
         }
     }
 }

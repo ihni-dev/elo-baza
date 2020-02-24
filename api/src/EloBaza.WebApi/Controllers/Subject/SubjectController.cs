@@ -1,12 +1,10 @@
 ﻿using EloBaza.Application.Commands.Create;
 using EloBaza.Application.Queries;
-using EloBaza.Domain.SharedKernel;
 using EloBaza.WebApi.Controllers.Subject.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EloBaza.WebApi.Controllers.Subject

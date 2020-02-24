@@ -3,7 +3,7 @@ using System;
 
 namespace EloBaza.Application.Queries
 {
-    public class GetSubject : IRequest<GetSubjectDto>
+    public class GetSubject : IRequest<GetSubjectResult>
     {
         public Guid Id { get; set; }
 

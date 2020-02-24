@@ -1,6 +1,6 @@
 ﻿namespace EloBaza.Application.Queries
 {
-    public class GetSubjectDto
+    public class GetSubjectResult
     {
     }
 }
