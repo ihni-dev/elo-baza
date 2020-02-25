@@ -3,14 +3,13 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["src/EloBaza.WebApi/EloBaza.WebApi.csproj", "src/EloBaza.WebApi/"]
 RUN dotnet restore "src/EloBaza.WebApi/EloBaza.WebApi.csproj"
 COPY . .
-WORKDIR "/src/src/EloBaza.WebApi"
+WORKDIR "src/EloBaza.WebApi"
 RUN dotnet build "EloBaza.WebApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
