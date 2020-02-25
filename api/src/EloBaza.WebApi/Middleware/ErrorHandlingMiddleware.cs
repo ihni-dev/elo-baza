@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace EloBaza.WebApi.Middleware

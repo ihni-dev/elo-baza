@@ -7,13 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5373954B-D24
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1FC7100C-5FED-4AEC-BCCC-2326EB2ABA53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EloBaza.WebApi", "src\EloBaza.WebApi\EloBaza.WebApi.csproj", "{19C6A39B-5C5F-4F89-9547-2386C7C63BB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EloBaza.WebApi", "src\EloBaza.WebApi\EloBaza.WebApi.csproj", "{19C6A39B-5C5F-4F89-9547-2386C7C63BB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EloBaza.Domain", "src\EloBaza.Domain\EloBaza.Domain.csproj", "{5FA39A43-1CBA-4238-8EE7-27E4A86183A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EloBaza.Domain", "src\EloBaza.Domain\EloBaza.Domain.csproj", "{5FA39A43-1CBA-4238-8EE7-27E4A86183A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EloBaza.Infrastructure", "src\EloBaza.Infrastructure\EloBaza.Infrastructure.csproj", "{EDF02433-C859-4AF8-876F-78ECAC3737F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EloBaza.Infrastructure", "src\EloBaza.Infrastructure\EloBaza.Infrastructure.csproj", "{EDF02433-C859-4AF8-876F-78ECAC3737F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EloBaza.Application", "src\EloBaza.Application\EloBaza.Application.csproj", "{17DC06F7-B1E4-4C97-8C83-FE4F9DA42E1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EloBaza.Application", "src\EloBaza.Application\EloBaza.Application.csproj", "{17DC06F7-B1E4-4C97-8C83-FE4F9DA42E1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
