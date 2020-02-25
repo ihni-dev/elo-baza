@@ -2,7 +2,7 @@
 
 namespace EloBaza.WebApi.Controllers.Subject.Dtos
 {
-    public class CreateSubjectDtoValidator : AbstractValidator<CreateSubjectDto>
+    class CreateSubjectDtoValidator : AbstractValidator<CreateSubjectDto>
     {
         public CreateSubjectDtoValidator()
         {

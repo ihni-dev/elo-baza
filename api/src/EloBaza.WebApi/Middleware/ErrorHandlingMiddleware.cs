@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace EloBaza.WebApi.Middleware
 {
-    public class ErrorHandlingMiddleware
+    class ErrorHandlingMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly IActionResultExecutor<ObjectResult> _executor;
