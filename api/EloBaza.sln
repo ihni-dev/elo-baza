@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EloBaza.Infrastructure", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EloBaza.Application", "src\EloBaza.Application\EloBaza.Application.csproj", "{17DC06F7-B1E4-4C97-8C83-FE4F9DA42E1F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EloBaza.MigrationTool", "src\EloBaza.MigrationTool\EloBaza.MigrationTool.csproj", "{264CE388-8A02-41B6-BDC4-4E303DAD90EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{17DC06F7-B1E4-4C97-8C83-FE4F9DA42E1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17DC06F7-B1E4-4C97-8C83-FE4F9DA42E1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17DC06F7-B1E4-4C97-8C83-FE4F9DA42E1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{264CE388-8A02-41B6-BDC4-4E303DAD90EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{264CE388-8A02-41B6-BDC4-4E303DAD90EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{264CE388-8A02-41B6-BDC4-4E303DAD90EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{264CE388-8A02-41B6-BDC4-4E303DAD90EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{5FA39A43-1CBA-4238-8EE7-27E4A86183A2} = {5373954B-D248-4040-8BA9-64AF2056E971}
 		{EDF02433-C859-4AF8-876F-78ECAC3737F8} = {5373954B-D248-4040-8BA9-64AF2056E971}
 		{17DC06F7-B1E4-4C97-8C83-FE4F9DA42E1F} = {5373954B-D248-4040-8BA9-64AF2056E971}
+		{264CE388-8A02-41B6-BDC4-4E303DAD90EE} = {5373954B-D248-4040-8BA9-64AF2056E971}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FCC3E60B-285E-415F-8ABE-56F4E78EEF29}

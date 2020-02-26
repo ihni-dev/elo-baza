@@ -1,6 +1,7 @@
 using EloBaza.Application.IoC;
 using EloBaza.WebApi.Middleware;
 using EloBaza.WebApi.Extensions;
+using EloBaza.Infrastructure.EntityFramework.IoC;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,7 +26,8 @@ namespace EloBaza.WebApi
             services.AddControllers()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
-            services.AddApplicationServices()
+            services.AddDbContexts(Configuration.GetConnectionString("DB"))
+                .AddApplicationServices()
                 .AddSwagger();
         }
 

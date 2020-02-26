@@ -7,7 +7,7 @@ services:
     ports:
       - "8000:80"
     environment: 
-      ConnectionString: Server=db;Database=master;User=sa;Password=PA$$W0RD
+      ConnectionStrings__DB: Server=db;Database=master;User=sa;Password=PA$$W0RD
     depends_on:
       - db
   db:

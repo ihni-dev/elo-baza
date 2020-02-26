@@ -4,7 +4,8 @@
     "EloBaza.WebApi": {
       "commandName": "Project",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ConnectionStrings__DB": "Server=db;Database=master;User=sa;Password=PA$$W0RD"
       },
       "applicationUrl": "http://localhost:5000"
     },
