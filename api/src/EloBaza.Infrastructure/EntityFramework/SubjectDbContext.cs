@@ -8,9 +8,7 @@ namespace EloBaza.Infrastructure.EntityFramework
     {
         public DbSet<Subject> Subjects { get; set; }
 
-        public SubjectDbContext(DbContextOptions options) : base(options)
-        {
-        }
+        public SubjectDbContext(DbContextOptions<SubjectDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

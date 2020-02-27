@@ -7,7 +7,7 @@ services:
     ports:
       - "8000:80"
     environment: 
-      ConnectionStrings__DB: Server=db;Database=master;User=sa;Password=PA$$W0RD
+      ConnectionStrings__DB: Server=db;Database=master;User=sa;Password=1Secure*Password1
     depends_on:
       - db
   db:
@@ -15,6 +15,5 @@ services:
     ports:
       - "1433:1433"
     environment:
-      SA_PASSWORD: "PA$$W0RD"
-      MSSQL_PID: "Express"
+      SA_PASSWORD: 1Secure*Password1
       ACCEPT_EULA: "Y"

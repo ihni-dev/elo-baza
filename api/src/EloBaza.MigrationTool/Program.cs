@@ -1,6 +1,7 @@
 ﻿using EloBaza.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.IO;
 
 namespace EloBaza.MigrationTool
@@ -9,20 +10,25 @@ namespace EloBaza.MigrationTool
     {
         static void Main(string[] args)
         {
-            var configurationBuilder = new ConfigurationBuilder()
+            Console.WriteLine("Starting Database Migration Tool...");
+
+            var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables()
+                .Build();
 
-            IConfigurationRoot configuration = configurationBuilder.Build();
             string connectionString = configuration.GetConnectionString("DB");
+            Console.WriteLine($"Using connection string: {connectionString}");
 
-            var optionsBuilder = new DbContextOptionsBuilder<SubjectDbContext>();
-            optionsBuilder.UseSqlServer(connectionString);
+            var optionsBuilder = DbContextOptionsBuilderProvider<SubjectDbContext>.GetDbContextOptionsBuilder(connectionString);
 
             using (SubjectDbContext sc = new SubjectDbContext(optionsBuilder.Options))
             {
                 sc.Database.Migrate();
             }
+
+            Console.WriteLine("Done");
         }
     }
 }
