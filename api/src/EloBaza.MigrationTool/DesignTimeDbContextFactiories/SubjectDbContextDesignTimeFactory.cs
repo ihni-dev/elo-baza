@@ -1,4 +1,4 @@
-﻿using EloBaza.Infrastructure.EntityFramework;
+﻿using EloBaza.Infrastructure.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
