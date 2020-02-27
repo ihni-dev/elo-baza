@@ -1,4 +1,5 @@
 ﻿using EloBaza.Infrastructure.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -16,10 +17,11 @@ namespace EloBaza.MigrationTool.DesignTimeDbContextFactiories
 				.AddEnvironmentVariables()
 				.Build();
 
-			string connectionString = configuration.GetConnectionString("DB");
+			var connectionString = configuration.GetConnectionString("DB");
 			Console.WriteLine($"Using connection string: {connectionString}");
 
-			var builder = DbContextOptionsBuilderProvider<SubjectDbContext>.GetDbContextOptionsBuilder(connectionString);
+			var builder = new DbContextOptionsBuilder<SubjectDbContext>()
+				.UseSqlServer(connectionString, b => b.MigrationsAssembly(typeof(SubjectDbContextDesignTimeFactory).Assembly.FullName));
 
 			return new SubjectDbContext(builder.Options);
 		}

@@ -34,34 +34,6 @@ namespace EloBaza.MigrationTool.Migrations
 
                     b.ToTable("Subject");
                 });
-
-            modelBuilder.Entity("EloBaza.Domain.Topic", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnName("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("SubjectId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubjectId");
-
-                    b.ToTable("Topic");
-                });
-
-            modelBuilder.Entity("EloBaza.Domain.Topic", b =>
-                {
-                    b.HasOne("EloBaza.Domain.Subject", null)
-                        .WithMany("Topics")
-                        .HasForeignKey("SubjectId");
-                });
 #pragma warning restore 612, 618
         }
     }

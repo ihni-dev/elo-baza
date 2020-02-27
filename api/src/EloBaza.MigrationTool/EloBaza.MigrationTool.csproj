@@ -12,6 +12,22 @@
     <Compile Remove="Migrations\20200227045926_AddTopicRelationship.Designer.cs" />
     <Compile Remove="Migrations\20200227050033_AddTopicRelationship.cs" />
     <Compile Remove="Migrations\20200227050033_AddTopicRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20200227050225_AddTopicRelationship.cs" />
+    <Compile Remove="Migrations\20200227050225_AddTopicRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20200227174959_AddAvailableTopicsRelationship.cs" />
+    <Compile Remove="Migrations\20200227174959_AddAvailableTopicsRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20200227175031_AddAvailableTopicsRelationship.cs" />
+    <Compile Remove="Migrations\20200227175031_AddAvailableTopicsRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20200227182318_AddTopicsRelationship.cs" />
+    <Compile Remove="Migrations\20200227182318_AddTopicsRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20200227182447_AddSubjectTopicRelationship.cs" />
+    <Compile Remove="Migrations\20200227182447_AddSubjectTopicRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20200227184045_AddSubjectQuestionRelationship.cs" />
+    <Compile Remove="Migrations\20200227184045_AddSubjectQuestionRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20200227185921_AddSubjectTopicRelationship.cs" />
+    <Compile Remove="Migrations\20200227185921_AddSubjectTopicRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20200227190742_AddSubjectQuestionRelationship.cs" />
+    <Compile Remove="Migrations\20200227190742_AddSubjectQuestionRelationship.Designer.cs" />
   </ItemGroup>
   
   <ItemGroup>

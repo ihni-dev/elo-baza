@@ -7,8 +7,8 @@ namespace EloBaza.Domain
     {
         public Guid Id { get; private set; }
         public string Name { get; private set; }
-        public List<Topic> Topics { get; private set; }
-        //public List<ExamSession> Exams { get; private set; }
+        //public List<Topic> Topics { get; private set; }
+        //public List<ExamSession> ExamSessions { get; private set; }
         //public List<Question> Questions { get; private set; }
 
         public Subject(string name)
@@ -18,8 +18,8 @@ namespace EloBaza.Domain
 
             Id = Guid.NewGuid();
             Name = name;
-            Topics = new List<Topic>();
-            //Exams = new List<ExamSession>();
+            //Topics = new List<Topic>();
+            //ExamSessions = new List<ExamSession>();
             //Questions = new List<Question>();
         }
     }

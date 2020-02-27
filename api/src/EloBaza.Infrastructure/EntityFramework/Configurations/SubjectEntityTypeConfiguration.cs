@@ -10,17 +10,13 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
         {
             builder.ToTable("Subject");
 
-            builder.HasKey(o => o.Id);
+            builder.HasKey(s => s.Id);
 
             builder
                 .Property<string>(nameof(Subject.Name))
                 .UsePropertyAccessMode(PropertyAccessMode.Property)
                 .HasColumnName(nameof(Subject.Name))
                 .IsRequired(true);
-
-            builder
-                .HasMany(b => b.Topics)
-                .WithOne();
         }
     }
 }
