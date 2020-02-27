@@ -4,6 +4,15 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200227045616_AddTopicRelationship.cs" />
+    <Compile Remove="Migrations\20200227045616_AddTopicRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20200227045926_AddTopicRelationship.cs" />
+    <Compile Remove="Migrations\20200227045926_AddTopicRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20200227050033_AddTopicRelationship.cs" />
+    <Compile Remove="Migrations\20200227050033_AddTopicRelationship.Designer.cs" />
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.2">

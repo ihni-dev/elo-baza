@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EloBaza.Infrastructure.EntityFramework.Configurations
 {
-    class SubjectEntityTypeConfiguration : IEntityTypeConfiguration<Subject>
+    class TopicEntityTypeConfiguration : IEntityTypeConfiguration<Topic>
     {
-        public void Configure(EntityTypeBuilder<Subject> builder)
+        public void Configure(EntityTypeBuilder<Topic> builder)
         {
-            builder.ToTable("Subject");
+            builder.ToTable("Topic");
 
             builder.HasKey(o => o.Id);
 
@@ -17,10 +17,6 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
                 .UsePropertyAccessMode(PropertyAccessMode.Property)
                 .HasColumnName(nameof(Subject.Name))
                 .IsRequired(true);
-
-            builder
-                .HasMany(b => b.Topics)
-                .WithOne();
         }
     }
 }

@@ -13,6 +13,7 @@ namespace EloBaza.Infrastructure.EntityFramework
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new SubjectEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new TopicEntityTypeConfiguration());
         }
     }
 }
