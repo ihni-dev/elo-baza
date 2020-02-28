@@ -1,8 +1,13 @@
 ﻿using EloBaza.Application.Contracts;
 using EloBaza.Domain;
 using EloBaza.Infrastructure.EntityFramework.DbContexts;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EloBaza.Infrastructure.EntityFramework.Repositories
@@ -10,25 +15,52 @@ namespace EloBaza.Infrastructure.EntityFramework.Repositories
     public class SubjectRepository : ISubjectRepository
     {
         private readonly SubjectDbContext _subjectDbContext;
+        private readonly ILogger<SubjectRepository> _logger;
 
-        public SubjectRepository(SubjectDbContext subjectDbContext)
+        public SubjectRepository(SubjectDbContext subjectDbContext, ILogger<SubjectRepository> logger)
         {
             _subjectDbContext = subjectDbContext;
+            _logger = logger;
         }
 
-        public Task<Subject> Find(Guid id)
+        public async Task<Subject> Find(Guid id)
         {
-            throw new NotImplementedException();
+            return await _subjectDbContext.Subjects.FindAsync(id);
         }
 
-        public Task<IEnumerable<Subject>> GetAll(int skip, int take, Predicate<Subject> condition)
+        public async Task<IEnumerable<Subject>> GetBy(Func<Subject, bool> condition, int skip, int take)
         {
-            throw new NotImplementedException();
+            return await GetAll()
+                .Where(condition)
+                .Skip(skip)
+                .Take(take)
+                .AsQueryable()
+                .ToListAsync();
         }
 
-        public Task Save(Subject save)
+        public async Task Save(Subject subject)
         {
-            throw new NotImplementedException();
+            if (await _subjectDbContext.Subjects.ContainsAsync(subject))
+                Update(subject);
+            else
+                Add(subject);
+
+            await _subjectDbContext.SaveChangesAsync();
+        }
+
+        private IQueryable<Subject> GetAll()
+        {
+            return _subjectDbContext.Subjects.AsQueryable();
+        }
+
+        private void Add(Subject subject)
+        {
+            _subjectDbContext.Subjects.Add(subject);
+        }
+
+        private void Update(Subject subject)
+        {
+            _subjectDbContext.Subjects.Update(subject);
         }
     }
 }

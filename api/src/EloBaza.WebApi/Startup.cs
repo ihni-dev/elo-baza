@@ -27,6 +27,7 @@ namespace EloBaza.WebApi
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.AddDbContexts(Configuration.GetConnectionString("DB"))
+                .AddInfrastructureServices()
                 .AddApplicationServices()
                 .AddSwagger();
         }

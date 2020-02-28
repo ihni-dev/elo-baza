@@ -20,15 +20,7 @@ namespace EloBaza.Application.Commands.Create
         {
             var subject = new Subject(request.Model.Name);
 
-            try
-            {
-                await _subjectRepository.Save(subject);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            await _subjectRepository.Save(subject);
 
             return subject.Id;
         }
