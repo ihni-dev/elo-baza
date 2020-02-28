@@ -22,12 +22,17 @@ namespace EloBaza.Infrastructure.EntityFramework.Repositories
             _logger = logger;
         }
 
+        public async Task<bool> Exists(Subject subject)
+        {
+            return await _subjectDbContext.Subjects.AnyAsync(s => s.Id == subject.Id || s.Name == subject.Name);
+        }
+
         public async Task<Subject> Find(Guid id)
         {
             return await _subjectDbContext.Subjects.FindAsync(id);
         }
 
-        public async Task<IEnumerable<Subject>> GetBy(Func<Subject, bool> condition, int skip, int take)
+        public async Task<IEnumerable<Subject>> GetAll(Func<Subject, bool> condition, int skip, int take)
         {
             return await GetAll()
                 .Where(condition)
@@ -39,7 +44,7 @@ namespace EloBaza.Infrastructure.EntityFramework.Repositories
 
         public async Task Save(Subject subject)
         {
-            if (await _subjectDbContext.Subjects.ContainsAsync(subject))
+            if (await Exists(subject))
                 Update(subject);
             else
                 Add(subject);
