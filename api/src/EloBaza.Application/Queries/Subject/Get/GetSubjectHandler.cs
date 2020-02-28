@@ -3,7 +3,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EloBaza.Application.Queries
+namespace EloBaza.Application.Queries.Subject.Get
 {
     class GetSubjectHandler : IRequestHandler<GetSubject, GetSubjectResult>
     {

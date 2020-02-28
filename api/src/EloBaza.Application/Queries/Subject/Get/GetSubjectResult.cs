@@ -1,4 +1,4 @@
-﻿namespace EloBaza.Application.Queries
+﻿namespace EloBaza.Application.Queries.Subject.Get
 {
     public class GetSubjectResult
     {
