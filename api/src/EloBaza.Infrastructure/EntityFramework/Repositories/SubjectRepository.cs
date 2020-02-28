@@ -2,7 +2,6 @@
 using EloBaza.Domain;
 using EloBaza.Infrastructure.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;

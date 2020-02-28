@@ -1,8 +1,6 @@
-﻿using EloBaza.Application.Commands;
-using EloBaza.Application.Commands.Create;
-using FluentValidation;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace EloBaza.Application.IoC
 {
@@ -10,7 +8,7 @@ namespace EloBaza.Application.IoC
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            return services.AddMediatR(typeof(ApplicationServiceCollectionExtension).GetType().Assembly);
+            return services.AddMediatR(typeof(ApplicationServiceCollectionExtension).GetTypeInfo().Assembly);
         }
     }
 }
