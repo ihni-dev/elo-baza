@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using EloBaza.Domain.SharedKernel;
+using MediatR;
 using System;
 
 namespace EloBaza.Application.Commands.Create
@@ -9,6 +10,12 @@ namespace EloBaza.Application.Commands.Create
 
         public CreateSubject(ICreateSubjectData model)
         {
+            using (var validationContext = new ValidationContext())
+            {
+                if (string.IsNullOrWhiteSpace(model.Name))
+                    validationContext.AddError(nameof(model.Name), "Subject name must be provided");
+            }
+
             Model = model;
         }
     }

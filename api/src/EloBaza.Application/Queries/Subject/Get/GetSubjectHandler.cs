@@ -17,9 +17,9 @@ namespace EloBaza.Application.Queries.Subject.Get
 
         public async Task<GetSubjectResult> Handle(GetSubject request, CancellationToken cancellationToken)
         {
-            var subject = await _subjectRepository.Find(request.Id);
+            var subject = await _subjectRepository.Find(request.Id, cancellationToken);
 
-            return new GetSubjectResult(new SubjectReadModel(subject.Name));
+            return new GetSubjectResult(new SubjectReadModel(subject.Id, subject.Name));
         }
     }
 }

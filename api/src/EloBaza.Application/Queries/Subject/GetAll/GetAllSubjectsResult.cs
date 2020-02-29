@@ -1,16 +1,21 @@
-﻿using System;
+﻿using EloBaza.Application.Queries.Common;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EloBaza.Application.Queries.Subject.GetAll
 {
-    public class GetAllSubjectsResult
+    /// <summary>
+    /// Result containing list of subject model representations
+    /// </summary>
+    public class GetAllSubjectsResult : PagedResult
     {
-        IEnumerable<SubjectReadModel> Subjects { get; set; }
+        /// <summary>
+        /// List of subject model representation
+        /// </summary>
+        public IEnumerable<SubjectReadModel> SubjectReadModels { get; private set; }
 
-        public GetAllSubjectsResult(IEnumerable<SubjectReadModel> subjects)
+        public GetAllSubjectsResult(IEnumerable<SubjectReadModel> subjectReadModels, PagingInfo pagingInfo) : base(pagingInfo)
         {
-            Subjects = subjects;
+            SubjectReadModels = subjectReadModels;
         }
     }
 }

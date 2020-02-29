@@ -6,9 +6,12 @@ namespace EloBaza.Infrastructure.EntityFramework.DbContexts
 {
     public class SubjectDbContext : DbContext
     {
-        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Subject> Subjects { get; private set; } = null!;
 
-        public SubjectDbContext(DbContextOptions<SubjectDbContext> options) : base(options) { }
+        public SubjectDbContext(DbContextOptions<SubjectDbContext> options) : base(options) 
+        {
+
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

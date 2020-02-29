@@ -1,11 +1,24 @@
-﻿namespace EloBaza.Application.Queries.Subject
+﻿using System;
+
+namespace EloBaza.Application.Queries.Subject
 {
+    /// <summary>
+    /// Subject representation
+    /// </summary>
     public class SubjectReadModel
     {
-        public string Name { get; set; }
+        /// <summary>
+        /// Subject id
+        /// </summary>
+        public Guid Id { get; private set; }
+        /// <summary>
+        /// Subject name
+        /// </summary>
+        public string Name { get; private set; }
 
-        public SubjectReadModel(string name)
+        public SubjectReadModel(Guid id, string name)
         {
+            Id = id;
             Name = name;
         }
     }

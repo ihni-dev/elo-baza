@@ -4,21 +4,19 @@ namespace EloBaza.Application.Queries.Common
 {
     public abstract class PagedQuery
     {
-        public int Skip { get; private set; }
-        public int Take { get; private set; }
+        public IPagingParameters PagingParameters { get; private set; }
 
-        protected PagedQuery(int skip, int take)
+        protected PagedQuery(IPagingParameters pagingParameters)
         {
             using (var validationContext = new ValidationContext())
             {
-                if (skip < 0)
-                    validationContext.AddError(nameof(Skip), "Skip value must be non-negative number");
-                if (take <= 0)
-                    validationContext.AddError(nameof(Take), "Take value must be positive number");
+                if (pagingParameters.PageIndex < 0)
+                    validationContext.AddError(nameof(pagingParameters.PageIndex), "Page Index value must be non-negative number");
+                if (pagingParameters.PageSize <= 0)
+                    validationContext.AddError(nameof(pagingParameters.PageSize), "Page Size value must be positive number");
             }
 
-            Skip = skip;
-            Take = take;
+            PagingParameters = pagingParameters;
         }
     }
 }

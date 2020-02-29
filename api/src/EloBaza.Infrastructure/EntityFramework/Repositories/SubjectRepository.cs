@@ -1,12 +1,14 @@
 ﻿using EloBaza.Application.Contracts;
+using EloBaza.Application.Queries.Common;
 using EloBaza.Domain;
 using EloBaza.Infrastructure.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace EloBaza.Infrastructure.EntityFramework.Repositories
@@ -22,49 +24,42 @@ namespace EloBaza.Infrastructure.EntityFramework.Repositories
             _logger = logger;
         }
 
-        public async Task<bool> Exists(Subject subject)
+        public async Task<bool> Exists(Subject subject, CancellationToken cancellationToken = default)
         {
-            return await _subjectDbContext.Subjects.AnyAsync(s => s.Id == subject.Id || s.Name == subject.Name);
+            return await _subjectDbContext.Subjects.AnyAsync(s => s.Id == subject.Id || s.Name == subject.Name, cancellationToken);
         }
 
-        public async Task<Subject> Find(Guid id)
+        public async Task<int> GetTotalCount(Expression<Func<Subject, bool>> condition, CancellationToken cancellationToken = default)
         {
-            return await _subjectDbContext.Subjects.FindAsync(id);
-        }
-
-        public async Task<IEnumerable<Subject>> GetAll(Func<Subject, bool> condition, int skip, int take)
-        {
-            return await GetAll()
+            return await _subjectDbContext.Subjects
                 .Where(condition)
-                .Skip(skip)
-                .Take(take)
-                .AsQueryable()
-                .ToListAsync();
+                .CountAsync(cancellationToken);
         }
 
-        public async Task Save(Subject subject)
+        public async Task<Subject> Find(Guid id, CancellationToken cancellationToken = default)
         {
-            if (await Exists(subject))
-                Update(subject);
-            else
-                Add(subject);
-
-            await _subjectDbContext.SaveChangesAsync();
+            return await _subjectDbContext.Subjects.FindAsync(new object[] { id }, cancellationToken);
         }
 
-        private IQueryable<Subject> GetAll()
+        public async Task<IEnumerable<Subject>> GetAll(Expression<Func<Subject, bool>> condition, IPagingParameters pagingParameters, CancellationToken cancellationToken = default)
         {
-            return _subjectDbContext.Subjects.AsQueryable();
+            return await _subjectDbContext.Subjects
+                .Where(condition)
+                .Skip(pagingParameters.PageIndex * pagingParameters.PageSize)
+                .Take(pagingParameters.PageSize)
+                .ToListAsync(cancellationToken);
         }
 
-        private void Add(Subject subject)
+        public async Task Add(Subject subject, CancellationToken cancellationToken = default)
         {
             _subjectDbContext.Subjects.Add(subject);
+            await _subjectDbContext.SaveChangesAsync(cancellationToken);
         }
 
-        private void Update(Subject subject)
+        public async Task Update(Subject subject, CancellationToken cancellationToken = default)
         {
             _subjectDbContext.Subjects.Update(subject);
+            await _subjectDbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

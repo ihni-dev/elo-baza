@@ -22,10 +22,10 @@ namespace EloBaza.Application.Commands.Create
         {
             var subject = new Subject(request.Model.Name);
 
-            if (await _subjectRepository.Exists(subject))
+            if (await _subjectRepository.Exists(subject, cancellationToken))
                 throw new AlreadyExistsException($"Subject {request.Model.Name} already exists");
 
-            await _subjectRepository.Save(subject);
+            await _subjectRepository.Add(subject, cancellationToken);
 
             return subject.Id;
         }
