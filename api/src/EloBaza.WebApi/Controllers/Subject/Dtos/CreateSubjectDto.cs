@@ -1,4 +1,5 @@
 ﻿using EloBaza.Application.Commands.Create;
+using System.ComponentModel.DataAnnotations;
 
 namespace EloBaza.WebApi.Controllers.Subject.Dtos
 {
@@ -10,6 +11,8 @@ namespace EloBaza.WebApi.Controllers.Subject.Dtos
         /// <summary>
         /// Name of the subject
         /// </summary>
-        public string Name { get; set; }
+        [Required]
+        [MinLength(1)]
+        public string Name { get; set; } = null!;
     }
 }

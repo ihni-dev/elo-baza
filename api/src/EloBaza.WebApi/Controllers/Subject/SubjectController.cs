@@ -1,5 +1,5 @@
 ﻿using EloBaza.Application.Commands.Create;
-using EloBaza.Application.Queries;
+using EloBaza.Application.Queries.Subject.Get;
 using EloBaza.WebApi.Controllers.Subject.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Http;
