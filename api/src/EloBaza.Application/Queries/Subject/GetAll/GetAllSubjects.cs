@@ -1,11 +1,15 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using EloBaza.Application.Queries.Common;
+using MediatR;
 
 namespace EloBaza.Application.Queries.Subject.GetAll
 {
-    public class GetAllSubjects : IRequest<GetAllSubjectsResult>
+    public class GetAllSubjects : PagedQuery, IRequest<GetAllSubjectsResult>
     {
+
+
+        public GetAllSubjects(int skip, int take) : base(skip, take)
+        {
+
+        }
     }
 }
