@@ -41,13 +41,19 @@ namespace EloBaza.Infrastructure.EntityFramework.Repositories
             return await _subjectDbContext.Subjects.FindAsync(new object[] { id }, cancellationToken);
         }
 
-        public async Task<IEnumerable<Subject>> GetAll(Expression<Func<Subject, bool>> condition, IPagingParameters pagingParameters, CancellationToken cancellationToken = default)
+        public async Task<GetAllResult<Subject>> GetAll(Expression<Func<Subject, bool>> condition, IPagingParameters pagingParameters, CancellationToken cancellationToken = default)
         {
-            return await _subjectDbContext.Subjects
+            var data = await _subjectDbContext.Subjects
                 .Where(condition)
                 .Skip((pagingParameters.Page - 1) * pagingParameters.PageSize)
                 .Take(pagingParameters.PageSize)
                 .ToListAsync(cancellationToken);
+
+            var totalCount = await _subjectDbContext.Subjects
+                .Where(condition)
+                .CountAsync();
+
+            return new GetAllResult<Subject>(data, totalCount);
         }
 
         public async Task Add(Subject subject, CancellationToken cancellationToken = default)

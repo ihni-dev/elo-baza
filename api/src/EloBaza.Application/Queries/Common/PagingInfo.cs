@@ -23,7 +23,7 @@ namespace EloBaza.Application.Queries.Common
 		/// Last page number
 		/// </summary>
 		public int LastPage { get; private set; }
-		public bool HasNext => Page < LastPage - 1;
+		public bool HasNext => Page < LastPage;
 		public bool HasPrevious => Page > 1;
 
 		public PagingInfo(int totalCount, int page, int pageSize)

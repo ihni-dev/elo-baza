@@ -18,15 +18,13 @@ namespace EloBaza.Application.Queries.Subject.GetAll
 
         public async Task<GetAllSubjectsResult> Handle(GetAllSubjects request, CancellationToken cancellationToken)
         {
-            var subjects = await _subjectRepository.GetAll(
+            var result = await _subjectRepository.GetAll(
                 s => s.Name.Contains(request.SubjectFilteringParameters.Name), 
                 request.PagingParameters,
                 cancellationToken);
 
-            var totalCount = await _subjectRepository.GetTotalCount(s => s.Name.Contains(request.SubjectFilteringParameters.Name), cancellationToken);
-
-            var subjectsReadModels = subjects.Select(s => new SubjectReadModel(s.Id, s.Name));
-            var pagingInfo = new PagingInfo(totalCount, request.PagingParameters.Page, request.PagingParameters.PageSize);
+            var subjectsReadModels = result.Data.Select(s => new SubjectReadModel(s.Id, s.Name));
+            var pagingInfo = new PagingInfo(result.TotalCount, request.PagingParameters.Page, request.PagingParameters.PageSize);
 
             return new GetAllSubjectsResult(subjectsReadModels, pagingInfo);
         }
