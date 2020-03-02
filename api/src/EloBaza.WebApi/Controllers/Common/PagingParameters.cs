@@ -1,4 +1,5 @@
 ﻿using EloBaza.Application.Queries.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace EloBaza.WebApi.Controllers.Common
 {
@@ -8,13 +9,15 @@ namespace EloBaza.WebApi.Controllers.Common
     public class PagingParameters : IPagingParameters
     {
         /// <summary>
-        /// Zero based page number
+        /// Page number (default 1)
         /// </summary>
-        public int PageIndex { get; set; } = 0;
+        [Range(1, int.MaxValue)]
+        public int Page { get; set; } = 1;
 
         /// <summary>
-        /// Maximum number of records
+        /// Maximum number of records (default 30)
         /// </summary>
-        public int PageSize { get; set; } = 50;
+        [Range(1, int.MaxValue)]
+        public int PageSize { get; set; } = 30;
     }
 }

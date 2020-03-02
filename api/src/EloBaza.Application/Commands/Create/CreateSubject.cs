@@ -12,8 +12,7 @@ namespace EloBaza.Application.Commands.Create
         {
             using (var validationContext = new ValidationContext())
             {
-                if (string.IsNullOrWhiteSpace(model.Name))
-                    validationContext.AddError(nameof(model.Name), "Subject name must be provided");
+                validationContext.Validate(() => string.IsNullOrWhiteSpace(model.Name), nameof(model.Name), "Subject name must be provided");
             }
 
             Model = model;

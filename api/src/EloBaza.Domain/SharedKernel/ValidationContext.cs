@@ -19,7 +19,13 @@ namespace EloBaza.Domain.SharedKernel
                 throw new ValidationException(_errors);
         }
 
-        public void AddError(string validationSubject, string validationMessage)
+        public void Validate(Func<bool> isValid, string validationSubject, string validationMessage)
+        {
+            if (!isValid())
+                AddError(validationSubject, validationMessage);
+        }
+
+        private void AddError(string validationSubject, string validationMessage)
         {
             if (_errors.ContainsKey(validationSubject))
                 _errors[validationSubject].Add(validationMessage);

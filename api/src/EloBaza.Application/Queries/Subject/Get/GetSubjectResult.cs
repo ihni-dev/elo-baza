@@ -8,11 +8,11 @@
         /// <summary>
         /// Subject model representation
         /// </summary>
-        public SubjectReadModel SubjectReadModel { get; set; }
+        public SubjectReadModel Data { get; set; }
 
-        public GetSubjectResult(SubjectReadModel subjectReadModel)
+        public GetSubjectResult(SubjectReadModel data)
         {
-            SubjectReadModel = subjectReadModel;
+            Data = data;
         }
     }
 }

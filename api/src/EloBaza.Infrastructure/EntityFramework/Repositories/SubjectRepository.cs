@@ -45,7 +45,7 @@ namespace EloBaza.Infrastructure.EntityFramework.Repositories
         {
             return await _subjectDbContext.Subjects
                 .Where(condition)
-                .Skip(pagingParameters.PageIndex * pagingParameters.PageSize)
+                .Skip((pagingParameters.Page - 1) * pagingParameters.PageSize)
                 .Take(pagingParameters.PageSize)
                 .ToListAsync(cancellationToken);
         }

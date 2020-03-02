@@ -11,11 +11,11 @@ namespace EloBaza.Application.Queries.Subject.GetAll
         /// <summary>
         /// List of subject model representation
         /// </summary>
-        public IEnumerable<SubjectReadModel> SubjectReadModels { get; private set; }
+        public IEnumerable<SubjectReadModel> Data { get; private set; }
 
-        public GetAllSubjectsResult(IEnumerable<SubjectReadModel> subjectReadModels, PagingInfo pagingInfo) : base(pagingInfo)
+        public GetAllSubjectsResult(IEnumerable<SubjectReadModel> data, PagingInfo pagingInfo) : base(pagingInfo)
         {
-            SubjectReadModels = subjectReadModels;
+            Data = data;
         }
     }
 }

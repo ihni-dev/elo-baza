@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 namespace EloBaza.WebApi.Controllers.Subject.Dtos
 {
     /// <summary>
-    /// Create subject DTO
+    /// Data required for creating a subject
     /// </summary>
-    public class CreateSubjectDto : ICreateSubjectData
+    public class CreateSubjectData : ICreateSubjectData
     {
         /// <summary>
         /// Name of the subject

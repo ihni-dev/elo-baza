@@ -72,7 +72,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<IActionResult> Create(CreateSubjectDto dto)
+        public async Task<IActionResult> Create(CreateSubjectData dto)
         {
             var id = await _mediator.Send(new CreateSubject(dto));
 

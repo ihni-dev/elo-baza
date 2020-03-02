@@ -2,21 +2,36 @@
 
 namespace EloBaza.Application.Queries.Common
 {
-    public class PagingInfo
+	/// <summary>
+	/// Information about queried resource pagination
+	/// </summary>
+	public class PagingInfo
 	{
+		/// <summary>
+		/// Total number of records
+		/// </summary>
 		public int TotalCount { get; private set; }
-		public int CurrentPage { get; private set; }
+		/// <summary>
+		/// Current page number
+		/// </summary>
+		public int Page { get; private set; }
+		/// <summary>
+		/// Current page size
+		/// </summary>
 		public int PageSize { get; private set; }
-		public int TotalPages { get; private set; }
-		public bool HasNext => CurrentPage < TotalPages - 1;
-		public bool HasPrevious => CurrentPage > 0;
+		/// <summary>
+		/// Last page number
+		/// </summary>
+		public int LastPage { get; private set; }
+		public bool HasNext => Page < LastPage - 1;
+		public bool HasPrevious => Page > 1;
 
-		public PagingInfo(int totalCount, int currentPage, int pageSize)
+		public PagingInfo(int totalCount, int page, int pageSize)
 		{
 			TotalCount = totalCount;
-			CurrentPage = currentPage;
+			Page = page;
 			PageSize = pageSize;
-			TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+			LastPage = (int)Math.Ceiling(totalCount / (double)pageSize);
 		}
 	}
 }

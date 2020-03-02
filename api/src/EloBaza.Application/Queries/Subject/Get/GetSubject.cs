@@ -12,8 +12,7 @@ namespace EloBaza.Application.Queries.Subject.Get
         {
             using (var validationContext = new ValidationContext())
             {
-                if (id == default)
-                    validationContext.AddError(nameof(id), "Not empty GUID must be provided");
+                validationContext.Validate(() => id == default, nameof(Id), "Not empty GUID must be provided");
             }
 
             Id = id;
