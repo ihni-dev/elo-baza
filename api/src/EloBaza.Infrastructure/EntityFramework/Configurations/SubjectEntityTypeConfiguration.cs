@@ -19,6 +19,9 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
 
             builder.HasIndex(nameof(Subject.Name))
                 .IsUnique();
+
+            builder.HasMany(s => s.Topics)
+                .WithOne();
         }
     }
 }

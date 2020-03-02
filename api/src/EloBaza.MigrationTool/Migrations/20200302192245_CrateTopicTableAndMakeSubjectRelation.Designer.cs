@@ -4,14 +4,16 @@ using EloBaza.Infrastructure.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EloBaza.MigrationTool.Migrations
 {
     [DbContext(typeof(SubjectDbContext))]
-    partial class SubjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200302192245_CrateTopicTableAndMakeSubjectRelation")]
+    partial class CrateTopicTableAndMakeSubjectRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
