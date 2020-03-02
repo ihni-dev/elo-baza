@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EloBaza.Domain.SharedKernel;
+using System;
 using System.Collections.Generic;
 
 namespace EloBaza.Domain
@@ -21,6 +22,16 @@ namespace EloBaza.Domain
             //Topics = new List<Topic>();
             //ExamSessions = new List<ExamSession>();
             //Questions = new List<Question>();
+        }
+
+        public void UpdateName(string name)
+        {
+            using (var validationContext = new ValidationContext())
+            {
+                validationContext.Validate(() => string.IsNullOrEmpty(name), nameof(Name), "Subject name must be provided");
+            }
+
+            Name = name;
         }
     }
 }

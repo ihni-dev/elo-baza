@@ -6,16 +6,16 @@ namespace EloBaza.Application.Commands.Create
 {
     public class CreateSubject : IRequest<Guid>
     {
-        public ICreateSubjectData Model { get; private set; }
+        public ICreateSubjectData Data { get; private set; }
 
-        public CreateSubject(ICreateSubjectData model)
+        public CreateSubject(ICreateSubjectData data)
         {
             using (var validationContext = new ValidationContext())
             {
-                validationContext.Validate(() => string.IsNullOrWhiteSpace(model.Name), nameof(model.Name), "Subject name must be provided");
+                validationContext.Validate(() => string.IsNullOrWhiteSpace(data.Name), nameof(data.Name), "Subject name must be provided");
             }
 
-            Model = model;
+            Data = data;
         }
     }
 }

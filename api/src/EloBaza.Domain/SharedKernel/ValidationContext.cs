@@ -19,9 +19,9 @@ namespace EloBaza.Domain.SharedKernel
                 throw new ValidationException(_errors);
         }
 
-        public void Validate(Func<bool> isValid, string validationSubject, string validationMessage)
+        public void Validate(Func<bool> isInvalid, string validationSubject, string validationMessage)
         {
-            if (!isValid())
+            if (isInvalid())
                 AddError(validationSubject, validationMessage);
         }
 

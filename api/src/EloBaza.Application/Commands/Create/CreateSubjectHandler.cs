@@ -20,10 +20,10 @@ namespace EloBaza.Application.Commands.Create
 
         public async Task<Guid> Handle(CreateSubject request, CancellationToken cancellationToken)
         {
-            var subject = new Subject(request.Model.Name);
+            var subject = new Subject(request.Data.Name);
 
             if (await _subjectRepository.Exists(subject, cancellationToken))
-                throw new AlreadyExistsException($"Subject {request.Model.Name} already exists");
+                throw new AlreadyExistsException($"Subject {request.Data.Name} already exists");
 
             await _subjectRepository.Add(subject, cancellationToken);
 

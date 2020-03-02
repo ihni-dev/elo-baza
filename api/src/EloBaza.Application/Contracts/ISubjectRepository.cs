@@ -10,10 +10,12 @@ namespace EloBaza.Application.Contracts
     public interface ISubjectRepository
     {
         Task<bool> Exists(Subject subject, CancellationToken cancellationToken = default);
+        Task<bool> Exists(string name, CancellationToken cancellationToken = default);
         Task<int> GetTotalCount(Expression<Func<Subject, bool>> condition, CancellationToken cancellationToken = default);
         Task<Subject> Find(Guid id, CancellationToken cancellationToken = default);
         Task<GetAllResult<Subject>> GetAll(Expression<Func<Subject, bool>> condition, IPagingParameters pagingParameters, CancellationToken cancellationToken = default);
         Task Add(Subject subject, CancellationToken cancellationToken = default);
         Task Update(Subject subject, CancellationToken cancellationToken = default);
+        Task Delete(Subject subject, CancellationToken cancellationToken = default);
     }
 }
