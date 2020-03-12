@@ -1,9 +1,12 @@
 ﻿using EloBaza.Application.Commands.Update;
 using System.ComponentModel.DataAnnotations;
 
-namespace EloBaza.WebApi.Controllers.Subject.Dtos
+namespace EloBaza.WebApi.Controllers.Subject.Models
 {
-    public class UpdateSubjectData : IUpdateSubjectData
+    /// <summary>
+    /// Data required for updating a subject
+    /// </summary>
+    public class UpdateSubjectModel
     {
         /// <summary>
         /// Name of the subject to update

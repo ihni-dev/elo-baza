@@ -32,19 +32,12 @@ namespace EloBaza.Infrastructure.EntityFramework.Repositories
             return await _subjectDbContext.Subjects.AnyAsync(s => s.Name == name, cancellationToken);
         }
 
-        public async Task<int> GetTotalCount(Expression<Func<Subject, bool>> condition, CancellationToken cancellationToken = default)
-        {
-            return await _subjectDbContext.Subjects
-                .Where(condition)
-                .CountAsync(cancellationToken);
-        }
-
         public async Task<Subject> Find(Guid id, CancellationToken cancellationToken = default)
         {
             return await _subjectDbContext.Subjects.FindAsync(new object[] { id }, cancellationToken);
         }
 
-        public async Task<GetAllResult<Subject>> GetAll(Expression<Func<Subject, bool>> condition, IPagingParameters pagingParameters, CancellationToken cancellationToken = default)
+        public async Task<GetAllResult<Subject>> GetAll(Expression<Func<Subject, bool>> condition, PagingParameters pagingParameters, CancellationToken cancellationToken = default)
         {
             var data = await _subjectDbContext.Subjects
                 .Where(condition)

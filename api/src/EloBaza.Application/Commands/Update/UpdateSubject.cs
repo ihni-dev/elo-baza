@@ -7,14 +7,13 @@ namespace EloBaza.Application.Commands.Update
     public class UpdateSubject : IRequest
     {
         public Guid Id { get; private set; }
-        public IUpdateSubjectData Data { get; private set; }
+        public UpdateSubjectData Data { get; private set; }
 
-        public UpdateSubject(Guid id, IUpdateSubjectData data)
+        public UpdateSubject(Guid id, UpdateSubjectData data)
         {
             using (var validationContext = new ValidationContext())
             {
                 validationContext.Validate(() => id == default, nameof(Id), "Not empty GUID must be provided");
-                validationContext.Validate(() => string.IsNullOrWhiteSpace(data.Name), nameof(data.Name), "Subject name must be provided");
             }
 
             Id = id;

@@ -1,20 +1,14 @@
-﻿using EloBaza.Domain.SharedKernel;
+﻿using EloBaza.Application.Queries.Subject;
 using MediatR;
-using System;
 
 namespace EloBaza.Application.Commands.Create
 {
-    public class CreateSubject : IRequest<Guid>
+    public class CreateSubject : IRequest<SubjectReadModel>
     {
-        public ICreateSubjectData Data { get; private set; }
+        public CreateSubjectData Data { get; private set; }
 
-        public CreateSubject(ICreateSubjectData data)
+        public CreateSubject(CreateSubjectData data)
         {
-            using (var validationContext = new ValidationContext())
-            {
-                validationContext.Validate(() => string.IsNullOrWhiteSpace(data.Name), nameof(data.Name), "Subject name must be provided");
-            }
-
             Data = data;
         }
     }

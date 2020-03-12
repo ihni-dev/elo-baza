@@ -1,11 +1,11 @@
 ﻿using EloBaza.Application.Queries.Subject;
 
-namespace EloBaza.WebApi.Controllers.Subject
+namespace EloBaza.WebApi.Controllers.Subject.Models
 {
     /// <summary>
     /// Parameters for filtering results by subject properites
     /// </summary>
-    public class SubjectFilteringParameters : ISubjectFilteringParameters
+    public class SubjectFilteringParametersModel
     {
         /// <summary>
         /// Name of the subject to filter by

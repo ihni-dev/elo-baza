@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using AutoMapper;
+using System.Reflection;
 
 namespace EloBaza.WebApi
 {
@@ -28,6 +30,7 @@ namespace EloBaza.WebApi
             services.AddDbContexts(Configuration.GetConnectionString("DB"))
                 .AddInfrastructureServices()
                 .AddApplicationServices()
+                .AddAutoMapper(typeof(Program).GetTypeInfo().Assembly)
                 .AddSwagger();
         }
 

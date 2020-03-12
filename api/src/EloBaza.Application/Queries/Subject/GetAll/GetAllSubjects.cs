@@ -5,9 +5,9 @@ namespace EloBaza.Application.Queries.Subject.GetAll
 {
     public class GetAllSubjects : PagedQuery, IRequest<GetAllSubjectsResult>
     {
-        public ISubjectFilteringParameters SubjectFilteringParameters { get; private set; }
+        public SubjectFilteringParameters SubjectFilteringParameters { get; private set; }
 
-        public GetAllSubjects(ISubjectFilteringParameters subjectFilteringParameters, IPagingParameters pagingParameters) 
+        public GetAllSubjects(SubjectFilteringParameters subjectFilteringParameters, PagingParameters pagingParameters) 
             : base(pagingParameters)
         {
             SubjectFilteringParameters = subjectFilteringParameters;

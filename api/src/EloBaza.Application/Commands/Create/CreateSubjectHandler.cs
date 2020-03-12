@@ -1,15 +1,14 @@
 ﻿using EloBaza.Application.Contracts;
+using EloBaza.Application.Queries.Subject;
 using EloBaza.Domain;
 using EloBaza.Domain.SharedKernel;
 using MediatR;
-using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace EloBaza.Application.Commands.Create
 {
-    class CreateSubjectHandler : IRequestHandler<CreateSubject, Guid>
+    class CreateSubjectHandler : IRequestHandler<CreateSubject, SubjectReadModel>
     {
         private readonly ISubjectRepository _subjectRepository;
 
@@ -18,7 +17,7 @@ namespace EloBaza.Application.Commands.Create
             _subjectRepository = subjectRepository;
         }
 
-        public async Task<Guid> Handle(CreateSubject request, CancellationToken cancellationToken)
+        public async Task<SubjectReadModel> Handle(CreateSubject request, CancellationToken cancellationToken)
         {
             var subject = new Subject(request.Data.Name);
 
@@ -27,7 +26,7 @@ namespace EloBaza.Application.Commands.Create
 
             await _subjectRepository.Add(subject, cancellationToken);
 
-            return subject.Id;
+            return new SubjectReadModel(subject.Id, subject.Name);
         }
     }
 }
