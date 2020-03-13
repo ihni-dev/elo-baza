@@ -14,7 +14,7 @@ namespace EloBaza.Application.Commands.Update
                     {
                         if (!(name is null))
                             return string.IsNullOrWhiteSpace(name);
-                        return true;
+                        return false;
                     }, nameof(name), "Subject name must be provided");
             }
 

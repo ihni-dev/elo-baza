@@ -103,11 +103,11 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// </summary>
         /// <param name="name">Name of subject to update</param>
         /// <param name="updateSubjectModel">Data to update</param>
-        /// <response code="204">If deletion succeeded</response>
+        /// <response code="204">If update succeeded</response>
         /// <response code="400">If validation failed</response> 
         /// <response code="404">If subject does not exists</response>
         /// <response code="409">If subject with given name already exists</response>
-        [HttpPut("{name}")]
+        [HttpPatch("{name}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
