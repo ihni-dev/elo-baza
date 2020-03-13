@@ -23,18 +23,20 @@ namespace EloBaza.Infrastructure.EntityFramework.Repositories
             _logger = logger;
         }
 
-        public async Task<bool> Exists(Subject subject, CancellationToken cancellationToken = default)
-        {
-            return await _subjectDbContext.Subjects.AnyAsync(s => s.Id == subject.Id || s.Name == subject.Name, cancellationToken);
-        }
         public async Task<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            return await _subjectDbContext.Subjects.AnyAsync(s => s.Name == name, cancellationToken);
+            return await (from subject in _subjectDbContext.Subjects
+                          where subject.Name == name
+                          select 1)
+                    .AnyAsync(cancellationToken);
         }
 
-        public async Task<Subject> Find(Guid id, CancellationToken cancellationToken = default)
+        public async Task<Subject> Find(string name, CancellationToken cancellationToken = default)
         {
-            return await _subjectDbContext.Subjects.FindAsync(new object[] { id }, cancellationToken);
+            return await (from subject in _subjectDbContext.Subjects
+                          where subject.Name == name
+                          select subject)
+                    .SingleOrDefaultAsync(cancellationToken);
         }
 
         public async Task<GetAllResult<Subject>> GetAll(Expression<Func<Subject, bool>> condition, PagingParameters pagingParameters, CancellationToken cancellationToken = default)
@@ -52,21 +54,23 @@ namespace EloBaza.Infrastructure.EntityFramework.Repositories
             return new GetAllResult<Subject>(data, totalCount);
         }
 
-        public async Task Add(Subject subject, CancellationToken cancellationToken = default)
+        public void Add(Subject subject)
         {
             _subjectDbContext.Subjects.Add(subject);
-            await _subjectDbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task Update(Subject subject, CancellationToken cancellationToken = default)
+        public void Update(Subject subject)
         {
             _subjectDbContext.Subjects.Update(subject);
-            await _subjectDbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task Delete(Subject subject, CancellationToken cancellationToken = default)
+        public void Delete(Subject subject)
         {
             _subjectDbContext.Subjects.Remove(subject);
+        }
+
+        public async Task SaveChanges(CancellationToken cancellationToken = default)
+        {
             await _subjectDbContext.SaveChangesAsync(cancellationToken);
         }
     }

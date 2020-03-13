@@ -6,16 +6,16 @@ namespace EloBaza.Application.Commands.Delete
 {
     public class DeleteSubject : IRequest
     {
-        public Guid Id { get; private set; }
+        public string Name { get; private set; }
 
-        public DeleteSubject(Guid id)
+        public DeleteSubject(string name)
         {
             using (var validationContext = new ValidationContext())
             {
-                validationContext.Validate(() => id == default, nameof(Id), "Not empty GUID must be provided");
+                validationContext.Validate(() => string.IsNullOrWhiteSpace(name), nameof(name), "Subject name must be provided");
             }
 
-            Id = id;
+            Name = name;
         }
     }
 }

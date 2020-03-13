@@ -23,7 +23,7 @@ namespace EloBaza.Application.Queries.Subject.GetAll
                 request.PagingParameters,
                 cancellationToken);
 
-            var subjectsReadModels = result.Data.Select(s => new SubjectReadModel(s.Id, s.Name));
+            var subjectsReadModels = result.Data.Select(s => new SubjectReadModel(s.Name));
             var pagingInfo = new PagingInfo(result.TotalCount, request.PagingParameters.Page, request.PagingParameters.PageSize);
 
             return new GetAllSubjectsResult(subjectsReadModels, pagingInfo);

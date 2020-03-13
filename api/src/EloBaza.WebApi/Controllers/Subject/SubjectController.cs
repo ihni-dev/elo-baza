@@ -45,18 +45,18 @@ namespace EloBaza.WebApi.Controllers.Subject
         }
 
         /// <summary>
-        /// Gets a subject by Id
+        /// Gets a subject by Name
         /// </summary>
-        /// <param name="id">Id of a subject</param>
-        /// <response code="200">Subject if found</response>
+        /// <param name="name">Name of a subject</param>
+        /// <response code="200">Subject read model if found</response>
         /// <response code="400">If validation failed</response> 
         /// <response code="404">If not found</response>
-        [HttpGet("{id}")]
-        [ProducesResponseType(typeof(GetSubjectResult), StatusCodes.Status200OK)]
+        [HttpGet("{name}")]
+        [ProducesResponseType(typeof(SubjectReadModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<IActionResult> GetByName(string name)
         {
-            var subject = await _mediator.Send(new GetSubject(id));
+            var subject = await _mediator.Send(new GetSubject(name));
 
             return Ok(subject);
         }
@@ -77,13 +77,13 @@ namespace EloBaza.WebApi.Controllers.Subject
             var createSubjectData = _mapper.Map<CreateSubjectData>(createSubjectModel);
             var subject = await _mediator.Send(new CreateSubject(createSubjectData));
 
-            return CreatedAtAction(nameof(GetById), new { subject.Id }, subject);
+            return CreatedAtAction(nameof(GetByName), new { subject.Name }, subject);
         }
 
         /// <summary>
         /// Deletes a Subject
         /// </summary>
-        /// <param name="id">Id of subject to delete</param>
+        /// <param name="name">Name of subject to delete</param>
         /// <response code="204">If deletion succeeded</response>
         /// <response code="400">If validation failed</response> 
         /// <response code="404">If subject does not exists</response>
@@ -91,9 +91,9 @@ namespace EloBaza.WebApi.Controllers.Subject
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(string name)
         {
-            await _mediator.Send(new DeleteSubject(id));
+            await _mediator.Send(new DeleteSubject(name));
 
             return NoContent();
         }
@@ -101,21 +101,21 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// <summary>
         /// Updates a Subject
         /// </summary>
-        /// <param name="id">Id of subject to update</param>
+        /// <param name="name">Name of subject to update</param>
         /// <param name="updateSubjectModel">Data to update</param>
         /// <response code="204">If deletion succeeded</response>
         /// <response code="400">If validation failed</response> 
         /// <response code="404">If subject does not exists</response>
         /// <response code="409">If subject with given name already exists</response>
-        [HttpPut("{id}")]
+        [HttpPut("{name}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<IActionResult> Update(Guid id, UpdateSubjectModel updateSubjectModel)
+        public async Task<IActionResult> Update(string name, UpdateSubjectModel updateSubjectModel)
         {
             var updateSubjectData = _mapper.Map<UpdateSubjectData>(updateSubjectModel);
-            await _mediator.Send(new UpdateSubject(id, updateSubjectData));
+            await _mediator.Send(new UpdateSubject(name, updateSubjectData));
 
             return NoContent();
         }

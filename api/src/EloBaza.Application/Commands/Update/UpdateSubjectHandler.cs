@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EloBaza.Application.Commands.Update
 {
-    class UpdateSubjectHandler : IRequestHandler<UpdateSubject>
+    class UpdateSubjectHandler : AsyncRequestHandler<UpdateSubject>
     {
         private readonly ISubjectRepository _subjectRepository;
 
@@ -16,11 +16,11 @@ namespace EloBaza.Application.Commands.Update
             _subjectRepository = subjectRepository;
         }
 
-        public async Task<Unit> Handle(UpdateSubject request, CancellationToken cancellationToken)
+        protected override async Task Handle(UpdateSubject request, CancellationToken cancellationToken)
         {
-            var subject = await _subjectRepository.Find(request.Id, cancellationToken);
+            var subject = await _subjectRepository.Find(request.Name, cancellationToken);
             if (subject is null)
-                throw new NotFoundException($"Subject with Id: {request.Id} does not exists");
+                throw new NotFoundException($"Subject with Id: {request.Name} does not exists");
 
             if (!(request.Data.Name is null))
             {
@@ -31,9 +31,8 @@ namespace EloBaza.Application.Commands.Update
                 subject.UpdateName(request.Data.Name);
             }
 
-            await _subjectRepository.Update(subject, cancellationToken);
-
-            return Unit.Value;
+            _subjectRepository.Update(subject);
+            await _subjectRepository.SaveChanges(cancellationToken);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EloBaza.Application.Commands.Delete
 {
-    class DeleteSubjectHandler : IRequestHandler<DeleteSubject>
+    class DeleteSubjectHandler : AsyncRequestHandler<DeleteSubject>
     {
         private readonly ISubjectRepository _subjectRepository;
 
@@ -15,15 +15,14 @@ namespace EloBaza.Application.Commands.Delete
             _subjectRepository = subjectRepository;
         }
 
-        public async Task<Unit> Handle(DeleteSubject request, CancellationToken cancellationToken)
+        protected override async Task Handle(DeleteSubject request, CancellationToken cancellationToken)
         {
-            var subject = await _subjectRepository.Find(request.Id, cancellationToken);
+            var subject = await _subjectRepository.Find(request.Name, cancellationToken);
             if (subject is null)
-                throw new NotFoundException($"Subject with Id: {request.Id} does not exists");
+                throw new NotFoundException($"Subject with Id: {request.Name} does not exists");
 
-            await _subjectRepository.Delete(subject, cancellationToken);
-
-            return Unit.Value;
+            _subjectRepository.Delete(subject);
+            await _subjectRepository.SaveChanges(cancellationToken);
         }
     }
 }

@@ -19,14 +19,15 @@ namespace EloBaza.Application.Commands.Create
 
         public async Task<SubjectReadModel> Handle(CreateSubject request, CancellationToken cancellationToken)
         {
-            var subject = new Subject(request.Data.Name);
-
-            if (await _subjectRepository.Exists(subject, cancellationToken))
+            if (await _subjectRepository.Exists(request.Data.Name, cancellationToken))
                 throw new AlreadyExistsException($"Subject {request.Data.Name} already exists");
 
-            await _subjectRepository.Add(subject, cancellationToken);
+            var subject = new Subject(request.Data.Name);
 
-            return new SubjectReadModel(subject.Id, subject.Name);
+            _subjectRepository.Add(subject);
+            await _subjectRepository.SaveChanges(cancellationToken);
+
+            return new SubjectReadModel(subject.Name);
         }
     }
 }
