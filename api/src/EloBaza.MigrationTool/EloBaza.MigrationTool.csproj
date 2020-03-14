@@ -9,6 +9,10 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200314085853_AddExamSessionTableAndSubjectRelation.cs" />
     <Compile Remove="Migrations\20200314085853_AddExamSessionTableAndSubjectRelation.Designer.cs" />
+    <Compile Remove="Migrations\20200314090031_AddExamSessionTableAndSubjectRelation.cs" />
+    <Compile Remove="Migrations\20200314090031_AddExamSessionTableAndSubjectRelation.Designer.cs" />
+    <Compile Remove="Migrations\20200314174226_AddExamSessionTableAndSubjectRelation.cs" />
+    <Compile Remove="Migrations\20200314174226_AddExamSessionTableAndSubjectRelation.Designer.cs" />
   </ItemGroup>
   
   <ItemGroup>

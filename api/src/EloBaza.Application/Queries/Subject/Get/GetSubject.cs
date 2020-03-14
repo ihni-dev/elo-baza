@@ -3,7 +3,7 @@ using MediatR;
 
 namespace EloBaza.Application.Queries.Subject.Get
 {
-    public class GetSubject : IRequest<SubjectReadModel>
+    public class GetSubject : IRequest<SubjectDetailsReadModel>
     {
         public string Name { get; private set; }
 

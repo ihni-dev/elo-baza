@@ -1,4 +1,4 @@
-﻿namespace EloBaza.Application.Queries.Subject
+﻿namespace EloBaza.Application.Queries.Subject.GetAll
 {
     /// <summary>
     /// Subject representation model
@@ -8,11 +8,6 @@
         /// <summary>
         /// Subject name
         /// </summary>
-        public string Name { get; private set; }
-
-        public SubjectReadModel(string name)
-        {
-            Name = name;
-        }
+        public string? Name { get; set; }
     }
 }

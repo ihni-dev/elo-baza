@@ -18,7 +18,8 @@ namespace EloBaza.WebApi.Extensions
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
-            });
+            })
+            .AddSwaggerGenNewtonsoftSupport();
         }
 
         public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app)

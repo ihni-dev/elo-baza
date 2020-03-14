@@ -2,7 +2,7 @@
 {
     public enum Semester
     {
-        S1 = 1,
-        S2 = 2
+        Winter,
+        Summer
     }
 }

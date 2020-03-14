@@ -1,5 +1,5 @@
 ﻿using EloBaza.Application.Contracts;
-using EloBaza.Application.Queries.Subject;
+using EloBaza.Application.Queries.Subject.GetAll;
 using EloBaza.Domain.SharedKernel;
 using MediatR;
 using System.Threading;
@@ -19,16 +19,17 @@ namespace EloBaza.Application.Commands.Subject.Create
         public async Task<SubjectReadModel> Handle(CreateSubject request, CancellationToken cancellationToken)
         {
             if (await _subjectRepository.Exists(request.Data.Name, cancellationToken))
-            {
-                throw new AlreadyExistsException($"Subject {request.Data.Name} already exists");
-            }
+                throw new AlreadyExistsException($"Subject with name: {request.Data.Name} already exists");
 
             var subject = new Domain.Subject(request.Data.Name);
 
             _subjectRepository.Add(subject);
             await _subjectRepository.SaveChanges(cancellationToken);
 
-            return new SubjectReadModel(subject.Name);
+            return new SubjectReadModel()
+            {
+                Name = subject.Name
+            };
         }
     }
 }

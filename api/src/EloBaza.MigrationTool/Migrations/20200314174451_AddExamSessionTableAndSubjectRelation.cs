@@ -14,7 +14,7 @@ namespace EloBaza.MigrationTool.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SubjectName = table.Column<string>(nullable: false),
                     Year = table.Column<int>(nullable: false),
-                    Semester = table.Column<int>(nullable: false),
+                    Semester = table.Column<string>(nullable: false),
                     SubjectId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

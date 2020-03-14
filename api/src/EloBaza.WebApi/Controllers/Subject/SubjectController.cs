@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EloBaza.Application.Commands.ExamSession.Create;
 using EloBaza.Application.Commands.Subject.Create;
 using EloBaza.Application.Commands.Subject.Delete;
 using EloBaza.Application.Commands.Subject.Update;
@@ -27,7 +28,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         }
 
         /// <summary>
-        /// Get all subjects
+        /// Get all subjects 
         /// </summary>
         /// <param name="subjectFilteringParametersModel">Parameters to filter result by</param>
         /// <param name="pagingParametersModel">Pagination parameters</param>
@@ -44,7 +45,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         }
 
         /// <summary>
-        /// Gets a subject by Name
+        /// Get a subject by name
         /// </summary>
         /// <param name="name">Name of a subject</param>
         /// <response code="200">Subject read model if found</response>
@@ -52,6 +53,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// <response code="404">If not found</response>
         [HttpGet("{name}")]
         [ProducesResponseType(typeof(SubjectReadModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByName(string name)
         {
@@ -61,7 +63,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         }
 
         /// <summary>
-        /// Creates a Subject
+        /// Create a subject
         /// </summary>
         /// <param name="createSubjectModel">Data required to create subject</param>
         /// <response code="201">Subject read model if succeeded</response>
@@ -80,7 +82,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         }
 
         /// <summary>
-        /// Deletes a Subject
+        /// Delete a subject
         /// </summary>
         /// <param name="name">Name of subject to delete</param>
         /// <response code="204">If deletion succeeded</response>
@@ -98,7 +100,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         }
 
         /// <summary>
-        /// Updates a Subject
+        /// Update a subject
         /// </summary>
         /// <param name="name">Name of subject to update</param>
         /// <param name="updateSubjectModel">Data to update</param>
@@ -117,6 +119,44 @@ namespace EloBaza.WebApi.Controllers.Subject
             await _mediator.Send(new UpdateSubject(name, updateSubjectData));
 
             return NoContent();
+        }
+
+        /// <summary>
+        /// Get an exam session by name
+        /// </summary>
+        /// <param name="subjectName">Name of a subject</param>
+        /// <param name="name">Name of an exam session</param>
+        /// <response code="200">Exam session read model if found</response>
+        /// <response code="400">If validation failed</response> 
+        /// <response code="404">If not found</response>
+        [HttpGet("{subjectName}/ExamSession/{name}")]
+        [ProducesResponseType(typeof(SubjectReadModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetExamSessionByName(string subjectName, string name)
+        {
+            return Ok();
+        }
+
+        /// <summary>
+        /// Create an exam session for a subject
+        /// </summary>
+        /// <param name="subjectName">Name of subject to create exam session for</param>
+        /// <param name="createExamSessionModel">Data required to create exam session</param>
+        /// <response code="201">Exam session read model if succeeded</response>
+        /// <response code="400">If validation failed</response> 
+        /// <response code="404">If subject does not exists</response>
+        /// <response code="409">If exam session in given subject already exists</response>
+        [HttpPost("{subjectName}/ExamSession")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<IActionResult> CreateExamSession(string subjectName, CreateExamSessionForSubjectModel createExamSessionModel)
+        {
+            var createExamSessionForSubjectData = _mapper.Map<CreateExamSessionForSubjectData>(createExamSessionModel);
+            var examSession = await _mediator.Send(new CreateExamSessionForSubject(subjectName, createExamSessionForSubjectData));
+
+            return CreatedAtAction(nameof(GetExamSessionByName), new { subjectName, name = examSession.Name }, examSession);
         }
     }
 }

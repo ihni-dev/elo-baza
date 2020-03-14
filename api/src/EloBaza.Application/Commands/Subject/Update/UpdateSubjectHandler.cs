@@ -21,7 +21,7 @@ namespace EloBaza.Application.Commands.Subject.Update
             var subject = await _subjectRepository.Find(request.Name, cancellationToken);
             if (subject is null)
             {
-                throw new NotFoundException($"Subject with Id: {request.Name} does not exists");
+                throw new NotFoundException($"Subject with name: {request.Name} does not exists");
             }
 
             if (!(request.Data.Name is null))

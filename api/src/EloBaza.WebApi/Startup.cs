@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Converters;
 using Serilog;
 using System.Reflection;
 
@@ -25,7 +26,9 @@ namespace EloBaza.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor()
-                .AddControllers();
+                .AddControllers()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter()));
 
             services.AddInfrastructureServices(Configuration.GetConnectionString("DB"))
                 .AddApplicationServices()

@@ -1,6 +1,7 @@
 ﻿using EloBaza.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 
 namespace EloBaza.Infrastructure.EntityFramework.Configurations
@@ -18,7 +19,7 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
                 .HasColumnName(nameof(ExamSession.SubjectName))
                 .IsRequired(true);
 
-            builder.Property<string>(nameof(ExamSession.Year))
+            builder.Property<int>(nameof(ExamSession.Year))
                 .UsePropertyAccessMode(PropertyAccessMode.Property)
                 .HasColumnName(nameof(ExamSession.Year))
                 .IsRequired(true);
@@ -27,9 +28,7 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
                 .UsePropertyAccessMode(PropertyAccessMode.Property)
                 .HasColumnName(nameof(ExamSession.Semester))
                 .IsRequired(true)
-                .HasConversion(
-                    s => s.ToString(),
-                    s => (Semester)Enum.Parse(typeof(Semester), s));
+                .HasConversion(new EnumToStringConverter<Semester>());
         }
     }
 }

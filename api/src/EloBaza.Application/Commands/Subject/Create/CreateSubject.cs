@@ -1,4 +1,4 @@
-﻿using EloBaza.Application.Queries.Subject;
+﻿using EloBaza.Application.Queries.Subject.GetAll;
 using MediatR;
 
 namespace EloBaza.Application.Commands.Subject.Create
