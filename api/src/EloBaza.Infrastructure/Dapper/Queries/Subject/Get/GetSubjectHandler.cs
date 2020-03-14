@@ -7,7 +7,7 @@ using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EloBaza.Infrastructure.Dapper.Queries.Subject
+namespace EloBaza.Infrastructure.Dapper.Queries.Subject.Get
 {
     class GetSubjectHandler : IRequestHandler<GetSubject, SubjectReadModel>
     {
@@ -16,7 +16,7 @@ namespace EloBaza.Infrastructure.Dapper.Queries.Subject
         private const string GetSubjectQuery = @"
 SELECT Name
 FROM Subject
-WHERE Name = @name
+WHERE Name = @Name
 ";
 
         public GetSubjectHandler(IDbConnection dbConnection)
@@ -26,7 +26,7 @@ WHERE Name = @name
 
         public async Task<SubjectReadModel> Handle(GetSubject request, CancellationToken cancellationToken)
         {
-            var subject = await _dbConnection.QuerySingleOrDefaultAsync<SubjectReadModel>(GetSubjectQuery, new { name = request.Name });
+            var subject = await _dbConnection.QuerySingleOrDefaultAsync<SubjectReadModel>(GetSubjectQuery, new { request.Name });
             if (subject is null)
                 throw new NotFoundException($"Subject {request.Name} not found");
 
