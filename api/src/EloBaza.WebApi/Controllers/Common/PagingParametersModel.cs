@@ -1,5 +1,4 @@
-﻿using EloBaza.Application.Queries.Common;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EloBaza.WebApi.Controllers.Common
 {

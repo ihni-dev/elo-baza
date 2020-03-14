@@ -15,7 +15,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EloBaza.Infrastructure", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EloBaza.Application", "src\EloBaza.Application\EloBaza.Application.csproj", "{17DC06F7-B1E4-4C97-8C83-FE4F9DA42E1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EloBaza.MigrationTool", "src\EloBaza.MigrationTool\EloBaza.MigrationTool.csproj", "{264CE388-8A02-41B6-BDC4-4E303DAD90EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EloBaza.MigrationTool", "src\EloBaza.MigrationTool\EloBaza.MigrationTool.csproj", "{264CE388-8A02-41B6-BDC4-4E303DAD90EE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4BBD72E3-818F-4FB9-8A7A-CF0667BD0D7B}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.editorconfig = .editorconfig
+		Dockerfile = Dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

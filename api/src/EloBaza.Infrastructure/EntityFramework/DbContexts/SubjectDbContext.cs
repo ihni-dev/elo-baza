@@ -8,7 +8,7 @@ namespace EloBaza.Infrastructure.EntityFramework.DbContexts
     {
         public DbSet<Subject> Subjects { get; private set; } = null!;
 
-        public SubjectDbContext(DbContextOptions<SubjectDbContext> options) : base(options) 
+        public SubjectDbContext(DbContextOptions<SubjectDbContext> options) : base(options)
         {
 
         }

@@ -5,6 +5,11 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200314085853_AddExamSessionTableAndSubjectRelation.cs" />
+    <Compile Remove="Migrations\20200314085853_AddExamSessionTableAndSubjectRelation.Designer.cs" />
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.2">

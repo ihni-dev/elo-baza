@@ -1,6 +1,4 @@
-﻿using EloBaza.Domain.SharedKernel;
-
-namespace EloBaza.Application.Queries.Common
+﻿namespace EloBaza.Application.Queries.Common
 {
     public abstract class PagedQuery
     {

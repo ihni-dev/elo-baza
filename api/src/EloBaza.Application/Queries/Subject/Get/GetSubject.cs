@@ -1,6 +1,5 @@
 ﻿using EloBaza.Domain.SharedKernel;
 using MediatR;
-using System;
 
 namespace EloBaza.Application.Queries.Subject.Get
 {

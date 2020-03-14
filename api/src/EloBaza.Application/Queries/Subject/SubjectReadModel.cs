@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EloBaza.Application.Queries.Subject
+﻿namespace EloBaza.Application.Queries.Subject
 {
     /// <summary>
     /// Subject representation model

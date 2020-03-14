@@ -11,7 +11,6 @@ using EloBaza.WebApi.Controllers.Subject.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace EloBaza.WebApi.Controllers.Subject

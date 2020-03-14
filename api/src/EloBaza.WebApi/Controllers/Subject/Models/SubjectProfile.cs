@@ -6,12 +6,12 @@ using EloBaza.Application.Queries.Subject;
 namespace EloBaza.WebApi.Controllers.Subject.Models
 {
     public class SubjectProfile : Profile
-	{
-		public SubjectProfile()
-		{
-			CreateMap<CreateSubjectModel, CreateSubjectData>();
-			CreateMap<UpdateSubjectModel, UpdateSubjectData>();
-			CreateMap<SubjectFilteringParametersModel, SubjectFilteringParameters>();
-		}
-	}
+    {
+        public SubjectProfile()
+        {
+            CreateMap<CreateSubjectModel, CreateSubjectData>();
+            CreateMap<UpdateSubjectModel, UpdateSubjectData>();
+            CreateMap<SubjectFilteringParametersModel, SubjectFilteringParameters>();
+        }
+    }
 }

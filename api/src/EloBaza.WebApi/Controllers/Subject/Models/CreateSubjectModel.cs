@@ -1,5 +1,4 @@
-﻿using EloBaza.Application.Commands.Create;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EloBaza.WebApi.Controllers.Subject.Models
 {

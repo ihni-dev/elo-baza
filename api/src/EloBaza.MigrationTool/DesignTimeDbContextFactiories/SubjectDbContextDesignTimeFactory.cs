@@ -7,23 +7,23 @@ using System.IO;
 
 namespace EloBaza.MigrationTool.DesignTimeDbContextFactiories
 {
-	class SubjectDbContextDesignTimeFactory : IDesignTimeDbContextFactory<SubjectDbContext>
-	{
-		public SubjectDbContext CreateDbContext(string[] args)
-		{
-			var configuration = new ConfigurationBuilder()
-				.SetBasePath(Directory.GetCurrentDirectory())
-				.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-				.AddEnvironmentVariables()
-				.Build();
+    class SubjectDbContextDesignTimeFactory : IDesignTimeDbContextFactory<SubjectDbContext>
+    {
+        public SubjectDbContext CreateDbContext(string[] args)
+        {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables()
+                .Build();
 
-			var connectionString = configuration.GetConnectionString("DB");
-			Console.WriteLine($"Using connection string: {connectionString}");
+            var connectionString = configuration.GetConnectionString("DB");
+            Console.WriteLine($"Using connection string: {connectionString}");
 
-			var builder = new DbContextOptionsBuilder<SubjectDbContext>()
-				.UseSqlServer(connectionString, b => b.MigrationsAssembly(typeof(SubjectDbContextDesignTimeFactory).Assembly.FullName));
+            var builder = new DbContextOptionsBuilder<SubjectDbContext>()
+                .UseSqlServer(connectionString, b => b.MigrationsAssembly(typeof(SubjectDbContextDesignTimeFactory).Assembly.FullName));
 
-			return new SubjectDbContext(builder.Options);
-		}
-	}
+            return new SubjectDbContext(builder.Options);
+        }
+    }
 }

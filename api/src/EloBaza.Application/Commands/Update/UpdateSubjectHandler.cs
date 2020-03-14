@@ -20,13 +20,17 @@ namespace EloBaza.Application.Commands.Update
         {
             var subject = await _subjectRepository.Find(request.Name, cancellationToken);
             if (subject is null)
+            {
                 throw new NotFoundException($"Subject with Id: {request.Name} does not exists");
+            }
 
             if (!(request.Data.Name is null))
             {
                 var nameChanged = !string.Equals(request.Data.Name, subject.Name, StringComparison.OrdinalIgnoreCase);
                 if (await _subjectRepository.Exists(request.Data.Name, cancellationToken) && nameChanged)
+                {
                     throw new AlreadyExistsException($"Subject with name: {request.Data.Name} already exists");
+                }
 
                 subject.UpdateName(request.Data.Name);
             }

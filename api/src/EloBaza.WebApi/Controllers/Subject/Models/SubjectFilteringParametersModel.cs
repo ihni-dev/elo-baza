@@ -1,6 +1,4 @@
-﻿using EloBaza.Application.Queries.Subject;
-
-namespace EloBaza.WebApi.Controllers.Subject.Models
+﻿namespace EloBaza.WebApi.Controllers.Subject.Models
 {
     /// <summary>
     /// Parameters for filtering results by subject properites

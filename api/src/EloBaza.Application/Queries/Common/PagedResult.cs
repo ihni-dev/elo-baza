@@ -1,14 +1,12 @@
-﻿using System.Text.Json.Serialization;
-
-namespace EloBaza.Application.Queries.Common
+﻿namespace EloBaza.Application.Queries.Common
 {
-	public abstract class PagedResult
-	{
-		public PagingInfo PagingInfo { get; private set; }
+    public abstract class PagedResult
+    {
+        public PagingInfo PagingInfo { get; private set; }
 
-		public PagedResult(PagingInfo pagingInfo)
-		{
-			PagingInfo = pagingInfo;
-		}
-	}
+        public PagedResult(PagingInfo pagingInfo)
+        {
+            PagingInfo = pagingInfo;
+        }
+    }
 }

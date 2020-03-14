@@ -19,7 +19,7 @@ namespace EloBaza.Application.Queries.Subject.GetAll
         public async Task<GetAllSubjectsResult> Handle(GetAllSubjects request, CancellationToken cancellationToken)
         {
             var result = await _subjectRepository.GetAll(
-                s => s.Name.Contains(request.SubjectFilteringParameters.Name), 
+                s => s.Name.Contains(request.SubjectFilteringParameters.Name),
                 request.PagingParameters,
                 cancellationToken);
 

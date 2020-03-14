@@ -7,7 +7,7 @@ namespace EloBaza.Application.Queries.Subject.GetAll
     {
         public SubjectFilteringParameters SubjectFilteringParameters { get; private set; }
 
-        public GetAllSubjects(SubjectFilteringParameters subjectFilteringParameters, PagingParameters pagingParameters) 
+        public GetAllSubjects(SubjectFilteringParameters subjectFilteringParameters, PagingParameters pagingParameters)
             : base(pagingParameters)
         {
             SubjectFilteringParameters = subjectFilteringParameters;

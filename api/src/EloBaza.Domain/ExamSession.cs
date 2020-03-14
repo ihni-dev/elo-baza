@@ -1,23 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using EloBaza.Domain.SharedKernel;
 
 namespace EloBaza.Domain
 {
     public class ExamSession
     {
-        public Guid Id { get; private set; }
+        public int Id { get; private set; }
+        public string Name { get => $"{SubjectName}-{Year}-{Semester}"; }
+        public string SubjectName { get; private set; }
         public int Year { get; private set; }
         public Semester Semester { get; private set; }
-        public List<Question> Questions { get; private set; }
+        //public List<Question> Questions { get; private set; }
 
-        public ExamSession(int year, Semester semester)
+        internal ExamSession(string subjectName, int year, Semester semester)
         {
-            if (year < 1950 || year > 2150)
-                throw new ArgumentException($"Year {year} is invalid. Please provide proper year between 1950 and 2150.");
+            using (var validationContext = new ValidationContext())
+            {
+                validationContext.Validate(() => string.IsNullOrWhiteSpace(subjectName), nameof(subjectName), "Subject name must be provided");
+                validationContext.Validate(() => year < 1950 || year > 2150,
+                    nameof(year),
+                    $"Year {year} is invalid. Please provide year between 1950 and 2150.");
+            }
 
+            SubjectName = subjectName;
             Year = year;
             Semester = semester;
-            Questions = new List<Question>();
+            //Questions = new List<Question>();
+        }
+
+        internal void UpdateSubjectName(string subjectName)
+        {
+            using (var validationContext = new ValidationContext())
+            {
+                validationContext.Validate(() => string.IsNullOrWhiteSpace(subjectName), nameof(subjectName), "Subject name must be provided");
+            }
+
+            SubjectName = subjectName;
         }
     }
 }

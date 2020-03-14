@@ -1,14 +1,14 @@
+using AutoMapper;
 using EloBaza.Application.IoC;
-using EloBaza.WebApi.Middleware;
-using EloBaza.WebApi.Extensions;
 using EloBaza.Infrastructure.EntityFramework.IoC;
+using EloBaza.WebApi.Extensions;
+using EloBaza.WebApi.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using AutoMapper;
 using System.Reflection;
 
 namespace EloBaza.WebApi

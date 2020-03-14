@@ -19,6 +19,11 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
 
             builder.HasIndex(nameof(Subject.Name))
                 .IsUnique();
+
+            builder.HasMany(s => s.ExamSessions)
+                .WithOne()
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
