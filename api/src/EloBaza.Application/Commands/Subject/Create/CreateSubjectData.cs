@@ -1,6 +1,6 @@
 ﻿using EloBaza.Domain.SharedKernel;
 
-namespace EloBaza.Application.Commands.Create
+namespace EloBaza.Application.Commands.Subject.Create
 {
     public class CreateSubjectData
     {

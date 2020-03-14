@@ -4,7 +4,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EloBaza.Application.Commands.Delete
+namespace EloBaza.Application.Commands.Subject.Delete
 {
     class DeleteSubjectHandler : AsyncRequestHandler<DeleteSubject>
     {

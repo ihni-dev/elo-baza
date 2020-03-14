@@ -1,12 +1,8 @@
 ﻿using EloBaza.Application.Contracts;
-using EloBaza.Application.Queries.Common;
 using EloBaza.Domain;
 using EloBaza.Infrastructure.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,12 +11,10 @@ namespace EloBaza.Infrastructure.EntityFramework.Repositories
     public class SubjectRepository : ISubjectRepository
     {
         private readonly SubjectDbContext _subjectDbContext;
-        private readonly ILogger<SubjectRepository> _logger;
 
-        public SubjectRepository(SubjectDbContext subjectDbContext, ILogger<SubjectRepository> logger)
+        public SubjectRepository(SubjectDbContext subjectDbContext)
         {
             _subjectDbContext = subjectDbContext;
-            _logger = logger;
         }
 
         public async Task<bool> Exists(string name, CancellationToken cancellationToken = default)
@@ -36,22 +30,8 @@ namespace EloBaza.Infrastructure.EntityFramework.Repositories
             return await (from subject in _subjectDbContext.Subjects
                           where subject.Name == name
                           select subject)
+                          .Include(s => s.ExamSessions)
                     .SingleOrDefaultAsync(cancellationToken);
-        }
-
-        public async Task<GetAllResult<Subject>> GetAll(Expression<Func<Subject, bool>> condition, PagingParameters pagingParameters, CancellationToken cancellationToken = default)
-        {
-            var data = await _subjectDbContext.Subjects
-                .Where(condition)
-                .Skip((pagingParameters.Page - 1) * pagingParameters.PageSize)
-                .Take(pagingParameters.PageSize)
-                .ToListAsync(cancellationToken);
-
-            var totalCount = await _subjectDbContext.Subjects
-                .Where(condition)
-                .CountAsync();
-
-            return new GetAllResult<Subject>(data, totalCount);
         }
 
         public void Add(Subject subject)

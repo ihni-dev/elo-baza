@@ -1,7 +1,7 @@
 ﻿using EloBaza.Application.Queries.Subject;
 using MediatR;
 
-namespace EloBaza.Application.Commands.Create
+namespace EloBaza.Application.Commands.Subject.Create
 {
     public class CreateSubject : IRequest<SubjectReadModel>
     {

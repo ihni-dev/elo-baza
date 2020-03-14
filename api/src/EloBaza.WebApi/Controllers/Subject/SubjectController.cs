@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using EloBaza.Application.Commands.Create;
-using EloBaza.Application.Commands.Delete;
-using EloBaza.Application.Commands.Update;
+using EloBaza.Application.Commands.Subject.Create;
+using EloBaza.Application.Commands.Subject.Delete;
+using EloBaza.Application.Commands.Subject.Update;
 using EloBaza.Application.Queries.Common;
 using EloBaza.Application.Queries.Subject;
 using EloBaza.Application.Queries.Subject.Get;

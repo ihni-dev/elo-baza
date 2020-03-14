@@ -1,7 +1,7 @@
 ﻿using EloBaza.Domain.SharedKernel;
 using MediatR;
 
-namespace EloBaza.Application.Commands.Delete
+namespace EloBaza.Application.Commands.Subject.Delete
 {
     public class DeleteSubject : IRequest
     {

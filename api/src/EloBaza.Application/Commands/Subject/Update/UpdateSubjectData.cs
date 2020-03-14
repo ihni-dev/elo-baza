@@ -1,6 +1,6 @@
 ﻿using EloBaza.Domain.SharedKernel;
 
-namespace EloBaza.Application.Commands.Update
+namespace EloBaza.Application.Commands.Subject.Update
 {
     public class UpdateSubjectData
     {

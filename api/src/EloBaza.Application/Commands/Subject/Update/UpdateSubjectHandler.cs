@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EloBaza.Application.Commands.Update
+namespace EloBaza.Application.Commands.Subject.Update
 {
     class UpdateSubjectHandler : AsyncRequestHandler<UpdateSubject>
     {

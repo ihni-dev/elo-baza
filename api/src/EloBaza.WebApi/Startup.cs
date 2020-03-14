@@ -27,8 +27,7 @@ namespace EloBaza.WebApi
             services.AddHttpContextAccessor()
                 .AddControllers();
 
-            services.AddDbContexts(Configuration.GetConnectionString("DB"))
-                .AddInfrastructureServices()
+            services.AddInfrastructureServices(Configuration.GetConnectionString("DB"))
                 .AddApplicationServices()
                 .AddAutoMapper(typeof(Program).GetTypeInfo().Assembly)
                 .AddSwagger();

@@ -1,12 +1,11 @@
 ﻿using EloBaza.Application.Contracts;
 using EloBaza.Application.Queries.Subject;
-using EloBaza.Domain;
 using EloBaza.Domain.SharedKernel;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EloBaza.Application.Commands.Create
+namespace EloBaza.Application.Commands.Subject.Create
 {
     class CreateSubjectHandler : IRequestHandler<CreateSubject, SubjectReadModel>
     {
@@ -24,7 +23,7 @@ namespace EloBaza.Application.Commands.Create
                 throw new AlreadyExistsException($"Subject {request.Data.Name} already exists");
             }
 
-            var subject = new Subject(request.Data.Name);
+            var subject = new Domain.Subject(request.Data.Name);
 
             _subjectRepository.Add(subject);
             await _subjectRepository.SaveChanges(cancellationToken);

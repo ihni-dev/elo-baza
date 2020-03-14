@@ -1,7 +1,7 @@
 ﻿using EloBaza.Domain.SharedKernel;
 using MediatR;
 
-namespace EloBaza.Application.Commands.Update
+namespace EloBaza.Application.Commands.Subject.Update
 {
     public class UpdateSubject : IRequest
     {
