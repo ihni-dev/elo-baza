@@ -6,8 +6,8 @@ using EloBaza.Application.Commands.Subject.Create;
 using EloBaza.Application.Commands.Subject.Delete;
 using EloBaza.Application.Commands.Subject.Update;
 using EloBaza.Application.Queries.Common;
+using EloBaza.Application.Queries.ExamSession;
 using EloBaza.Application.Queries.ExamSession.Get;
-using EloBaza.Application.Queries.Subject;
 using EloBaza.Application.Queries.Subject.Get;
 using EloBaza.Application.Queries.Subject.GetAll;
 using EloBaza.WebApi.Controllers.Common;
@@ -139,7 +139,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// <response code="400">If validation failed</response> 
         /// <response code="404">If not found</response>
         [HttpGet("{subjectName}/ExamSession/{name}")]
-        [ProducesResponseType(typeof(SubjectReadModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ExamSessionDetailsReadModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetExamSessionByName(string subjectName, string name)
         {
@@ -158,7 +158,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// <response code="404">If subject does not exists</response>
         /// <response code="409">If exam session in given subject already exists</response>
         [HttpPost("{subjectName}/ExamSession")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ExamSessionReadModel), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
