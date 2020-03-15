@@ -53,7 +53,7 @@ namespace EloBaza.WebApi.Middleware
                 {
                     Detail = ex.Message,
                     Status = StatusCodes.Status400BadRequest,
-                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                    Type = "https://httpstatuses.com/400",
                     Instance = httpContext.Request.Path,
                     Title = ex.GetType().Name
                 };
@@ -66,7 +66,7 @@ namespace EloBaza.WebApi.Middleware
                 {
                     Detail = ex.Message,
                     Status = StatusCodes.Status404NotFound,
-                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+                    Type = "https://httpstatuses.com/404",
                     Instance = httpContext.Request.Path,
                     Title = ex.GetType().Name
                 };
@@ -79,7 +79,7 @@ namespace EloBaza.WebApi.Middleware
                 {
                     Detail = ex.Message,
                     Status = StatusCodes.Status409Conflict,
-                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.8",
+                    Type = "https://httpstatuses.com/409",
                     Instance = httpContext.Request.Path,
                     Title = ex.GetType().Name
                 };
@@ -87,9 +87,7 @@ namespace EloBaza.WebApi.Middleware
                 return new ConflictObjectResult(problemDetails);
             }
             else
-            {
                 throw ex;
-            }
         }
     }
 }

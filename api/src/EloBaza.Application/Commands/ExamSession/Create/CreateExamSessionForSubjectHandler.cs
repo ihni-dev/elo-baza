@@ -20,9 +20,7 @@ namespace EloBaza.Application.Commands.ExamSession.Create
         {
             var subject = await _subjectRepository.Find(request.SubjectName);
             if (subject is null)
-            {
                 throw new NotFoundException($"Subject with Name: {request.SubjectName} does not exists");
-            }
 
             subject.CreateExamSession(request.Data.Year, request.Data.Semester);
 

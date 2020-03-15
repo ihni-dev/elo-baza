@@ -13,9 +13,7 @@ namespace EloBaza.Application.Commands.Subject.Update
                 validationContext.Validate(() =>
                     {
                         if (!(name is null))
-                        {
                             return string.IsNullOrWhiteSpace(name);
-                        }
 
                         return false;
                     }, nameof(name), "Subject name must be provided");

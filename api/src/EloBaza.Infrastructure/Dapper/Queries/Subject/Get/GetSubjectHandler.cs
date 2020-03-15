@@ -39,8 +39,8 @@ WHERE Name = @Name
                 {
                     SubjectDetailsReadModel subjectDetailsReadModel;
 
-                    if (!lookup.TryGetValue(sdrm.Name, out subjectDetailsReadModel))
-                        lookup.Add(sdrm.Name, subjectDetailsReadModel = sdrm);
+                    if (!lookup.TryGetValue(sdrm.Name!, out subjectDetailsReadModel))
+                        lookup.Add(sdrm.Name!, subjectDetailsReadModel = sdrm);
 
                     if (subjectDetailsReadModel.ExamSessions == null)
                         subjectDetailsReadModel.ExamSessions = new List<ExamSessionReadModel>();

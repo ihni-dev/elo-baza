@@ -15,9 +15,7 @@ namespace EloBaza.Domain
         public Subject(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
-            {
                 throw new ArgumentException("Subject name must be provided");
-            }
 
             Name = name;
             ExamSessions = new List<ExamSession>();
@@ -28,9 +26,7 @@ namespace EloBaza.Domain
         {
             var examSession = new ExamSession(Name, year, semester);
             if (ExamSessions.Any(s => s.Name.Equals(examSession.Name, StringComparison.OrdinalIgnoreCase)))
-            {
-                throw new AlreadyExistsException($"Session {examSession.Name} already exists");
-            }
+                throw new AlreadyExistsException($"Exam session {examSession.Name} already exists");
 
             ExamSessions.Add(examSession);
         }
@@ -43,9 +39,7 @@ namespace EloBaza.Domain
             }
 
             foreach (var examSession in ExamSessions)
-            {
                 examSession.UpdateSubjectName(name);
-            }
 
             Name = name;
         }
