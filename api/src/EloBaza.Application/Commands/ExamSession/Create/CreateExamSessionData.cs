@@ -3,12 +3,12 @@ using EloBaza.Domain.SharedKernel;
 
 namespace EloBaza.Application.Commands.ExamSession.Create
 {
-    public class CreateExamSessionForSubjectData
+    public class CreateExamSessionData
     {
         public int Year { get; private set; }
         public Semester Semester { get; private set; }
 
-        public CreateExamSessionForSubjectData(int year, Semester semester)
+        public CreateExamSessionData(int year, Semester semester)
         {
             using (var validationContext = new ValidationContext())
             {

@@ -3,11 +3,11 @@ using MediatR;
 
 namespace EloBaza.Application.Queries.Subject.Get
 {
-    public class GetSubject : IRequest<SubjectDetailsReadModel>
+    public class GetSubjectDetails : IRequest<SubjectDetailsReadModel>
     {
         public string Name { get; private set; }
 
-        public GetSubject(string name)
+        public GetSubjectDetails(string name)
         {
             using (var validationContext = new ValidationContext())
             {

@@ -19,7 +19,7 @@ namespace EloBaza.Application.Commands.Subject.Delete
         {
             var subject = await _subjectRepository.Find(request.Name, cancellationToken);
             if (subject is null)
-                throw new NotFoundException($"Subject with Id: {request.Name} does not exists");
+                throw new NotFoundException($"Subject with Name: {request.Name} does not exists");
 
             _subjectRepository.Delete(subject);
             await _subjectRepository.SaveChanges(cancellationToken);

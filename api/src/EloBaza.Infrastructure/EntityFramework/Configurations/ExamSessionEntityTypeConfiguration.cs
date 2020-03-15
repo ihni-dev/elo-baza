@@ -14,9 +14,9 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
 
             builder.HasKey(s => s.Id);
 
-            builder.Property<string>(nameof(ExamSession.SubjectName))
+            builder.Property<string>(nameof(ExamSession.Name))
                 .UsePropertyAccessMode(PropertyAccessMode.Property)
-                .HasColumnName(nameof(ExamSession.SubjectName))
+                .HasColumnName(nameof(ExamSession.Name))
                 .IsRequired(true);
 
             builder.Property<int>(nameof(ExamSession.Year))

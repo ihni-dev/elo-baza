@@ -12,7 +12,7 @@ namespace EloBaza.MigrationTool.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SubjectName = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Year = table.Column<int>(nullable: false),
                     Semester = table.Column<string>(nullable: false),
                     SubjectId = table.Column<int>(nullable: false)

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EloBaza.MigrationTool.Migrations
 {
     [DbContext(typeof(SubjectDbContext))]
-    [Migration("20200314174451_AddExamSessionTableAndSubjectRelation")]
+    [Migration("20200315175543_AddExamSessionTableAndSubjectRelation")]
     partial class AddExamSessionTableAndSubjectRelation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,6 +27,11 @@ namespace EloBaza.MigrationTool.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnName("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Semester")
                         .IsRequired()
                         .HasColumnName("Semester")
@@ -34,11 +39,6 @@ namespace EloBaza.MigrationTool.Migrations
 
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
-
-                    b.Property<string>("SubjectName")
-                        .IsRequired()
-                        .HasColumnName("SubjectName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Year")
                         .HasColumnName("Year")

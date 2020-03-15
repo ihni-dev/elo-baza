@@ -10,7 +10,6 @@ namespace EloBaza.Application.Contracts
         Task<bool> Exists(string name, CancellationToken cancellationToken = default);
         Task<Subject> Find(string name, CancellationToken cancellationToken = default);
         void Add(Subject subject);
-        void Update(Subject subject);
         void Delete(Subject subject);
         Task SaveChanges(CancellationToken cancellationToken = default);
     }

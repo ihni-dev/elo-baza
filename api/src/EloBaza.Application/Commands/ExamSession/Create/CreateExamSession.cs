@@ -4,12 +4,12 @@ using MediatR;
 
 namespace EloBaza.Application.Commands.ExamSession.Create
 {
-    public class CreateExamSessionForSubject : IRequest<ExamSessionReadModel>
+    public class CreateExamSession : IRequest<ExamSessionReadModel>
     {
         public string SubjectName { get; private set; }
-        public CreateExamSessionForSubjectData Data { get; private set; }
+        public CreateExamSessionData Data { get; private set; }
 
-        public CreateExamSessionForSubject(string subjectName, CreateExamSessionForSubjectData data)
+        public CreateExamSession(string subjectName, CreateExamSessionData data)
         {
             using (var validationContext = new ValidationContext())
             {

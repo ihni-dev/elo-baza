@@ -22,16 +22,15 @@ namespace EloBaza.Application.Commands.Subject.Update
             if (subject is null)
                 throw new NotFoundException($"Subject with name: {request.Name} does not exists");
 
-            if (!(request.Data.Name is null))
+            var nameChanged = !string.Equals(request.Data.Name, subject.Name, StringComparison.OrdinalIgnoreCase);
+            if (!string.IsNullOrWhiteSpace(request.Data.Name) && nameChanged)
             {
-                var nameChanged = !string.Equals(request.Data.Name, subject.Name, StringComparison.OrdinalIgnoreCase);
-                if (await _subjectRepository.Exists(request.Data.Name, cancellationToken) && nameChanged)
+                if (await _subjectRepository.Exists(request.Data.Name, cancellationToken))
                     throw new AlreadyExistsException($"Subject with name: {request.Data.Name} already exists");
 
                 subject.UpdateName(request.Data.Name);
             }
 
-            _subjectRepository.Update(subject);
             await _subjectRepository.SaveChanges(cancellationToken);
         }
     }

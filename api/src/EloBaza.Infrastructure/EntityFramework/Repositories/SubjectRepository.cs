@@ -39,11 +39,6 @@ namespace EloBaza.Infrastructure.EntityFramework.Repositories
             _subjectDbContext.Subjects.Add(subject);
         }
 
-        public void Update(Subject subject)
-        {
-            _subjectDbContext.Subjects.Update(subject);
-        }
-
         public void Delete(Subject subject)
         {
             _subjectDbContext.Subjects.Remove(subject);

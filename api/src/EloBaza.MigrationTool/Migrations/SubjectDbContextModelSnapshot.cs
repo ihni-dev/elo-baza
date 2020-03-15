@@ -25,6 +25,11 @@ namespace EloBaza.MigrationTool.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnName("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Semester")
                         .IsRequired()
                         .HasColumnName("Semester")
@@ -32,11 +37,6 @@ namespace EloBaza.MigrationTool.Migrations
 
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
-
-                    b.Property<string>("SubjectName")
-                        .IsRequired()
-                        .HasColumnName("SubjectName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Year")
                         .HasColumnName("Year")

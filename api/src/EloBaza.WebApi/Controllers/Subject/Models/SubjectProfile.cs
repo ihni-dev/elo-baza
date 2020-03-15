@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using EloBaza.Application.Commands.ExamSession.Create;
+using EloBaza.Application.Commands.ExamSession.Update;
 using EloBaza.Application.Commands.Subject.Create;
 using EloBaza.Application.Commands.Subject.Update;
-using EloBaza.Application.Queries.Subject;
+using EloBaza.Application.Queries.Subject.GetAll;
 
 namespace EloBaza.WebApi.Controllers.Subject.Models
 {
@@ -14,7 +15,8 @@ namespace EloBaza.WebApi.Controllers.Subject.Models
             CreateMap<UpdateSubjectModel, UpdateSubjectData>();
             CreateMap<SubjectFilteringParametersModel, SubjectFilteringParameters>();
 
-            CreateMap<CreateExamSessionForSubjectModel, CreateExamSessionForSubjectData>();
+            CreateMap<CreateExamSessionModel, CreateExamSessionData>();
+            CreateMap<UpdateExamSessionModel, UpdateExamSessionData>();
         }
     }
 }

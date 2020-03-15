@@ -13,6 +13,8 @@
     <Compile Remove="Migrations\20200314090031_AddExamSessionTableAndSubjectRelation.Designer.cs" />
     <Compile Remove="Migrations\20200314174226_AddExamSessionTableAndSubjectRelation.cs" />
     <Compile Remove="Migrations\20200314174226_AddExamSessionTableAndSubjectRelation.Designer.cs" />
+    <Compile Remove="Migrations\20200314174451_AddExamSessionTableAndSubjectRelation.cs" />
+    <Compile Remove="Migrations\20200314174451_AddExamSessionTableAndSubjectRelation.Designer.cs" />
   </ItemGroup>
   
   <ItemGroup>

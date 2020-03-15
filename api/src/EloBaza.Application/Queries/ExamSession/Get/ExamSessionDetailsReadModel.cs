@@ -1,11 +1,11 @@
 ﻿using EloBaza.Domain;
 
-namespace EloBaza.Application.Queries.ExamSession
+namespace EloBaza.Application.Queries.ExamSession.Get
 {
     /// <summary>
     /// Exam session representation model
     /// </summary>
-    public class ExamSessionReadModel
+    public class ExamSessionDetailsReadModel
     {
         /// <summary>
         /// Exam session name

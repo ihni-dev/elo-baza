@@ -7,30 +7,30 @@ using System.Threading.Tasks;
 
 namespace EloBaza.Application.Commands.ExamSession.Create
 {
-    class CreateExamSessionForSubjectHandler : IRequestHandler<CreateExamSessionForSubject, ExamSessionReadModel>
+    class CreateExamSessionHandler : IRequestHandler<CreateExamSession, ExamSessionReadModel>
     {
         private readonly ISubjectRepository _subjectRepository;
 
-        public CreateExamSessionForSubjectHandler(ISubjectRepository subjectRepository)
+        public CreateExamSessionHandler(ISubjectRepository subjectRepository)
         {
             _subjectRepository = subjectRepository;
         }
 
-        public async Task<ExamSessionReadModel> Handle(CreateExamSessionForSubject request, CancellationToken cancellationToken)
+        public async Task<ExamSessionReadModel> Handle(CreateExamSession request, CancellationToken cancellationToken)
         {
             var subject = await _subjectRepository.Find(request.SubjectName);
             if (subject is null)
                 throw new NotFoundException($"Subject with Name: {request.SubjectName} does not exists");
 
-            subject.CreateExamSession(request.Data.Year, request.Data.Semester);
+            var examSessionName = subject.CreateExamSession(request.Data.Year, request.Data.Semester);
 
             await _subjectRepository.SaveChanges(cancellationToken);
 
             return new ExamSessionReadModel() 
             {
-                SubjectName = subject.Name, 
-                Year = request.Data.Year, 
-                Semester = request.Data.Semester 
+                Name = examSessionName.Name,
+                Year = examSessionName.Year, 
+                Semester = examSessionName.Semester 
             };
         }
     }

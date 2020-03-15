@@ -10,26 +10,26 @@ using System.Threading.Tasks;
 
 namespace EloBaza.Infrastructure.Dapper.Queries.Subject.Get
 {
-    class GetSubjectHandler : IRequestHandler<GetSubject, SubjectDetailsReadModel>
+    class GetSubjectDetailsHandler : IRequestHandler<GetSubjectDetails, SubjectDetailsReadModel>
     {
         private readonly IDbConnection _dbConnection;
 
         private const string GetSubjectQuery = @"
 SELECT s.Name,
-    es.SubjectName,
+    es.Name,
     es.Year,
     es.Semester
 FROM Subject s
     INNER JOIN ExamSession es ON s.Id = es.SubjectId 
-WHERE Name = @Name
+WHERE s.Name = @Name
 ";
 
-        public GetSubjectHandler(IDbConnection dbConnection)
+        public GetSubjectDetailsHandler(IDbConnection dbConnection)
         {
             _dbConnection = dbConnection;
         }
 
-        public async Task<SubjectDetailsReadModel> Handle(GetSubject request, CancellationToken cancellationToken)
+        public async Task<SubjectDetailsReadModel> Handle(GetSubjectDetails request, CancellationToken cancellationToken)
         {
             var lookup = new Dictionary<string, SubjectDetailsReadModel>();
 
@@ -49,7 +49,7 @@ WHERE Name = @Name
                     return subjectDetailsReadModel;
                 },
                 param: new { request.Name },
-                splitOn: "SubjectName");
+                splitOn: "Name");
 
             var subject = lookup.GetValueOrDefault(request.Name);
             if (subject is null)
