@@ -26,11 +26,11 @@ namespace EloBaza.Application.Commands.ExamSession.Create
 
             await _subjectRepository.SaveChanges(cancellationToken);
 
-            return new ExamSessionReadModel() 
+            return new ExamSessionReadModel()
             {
                 Name = examSessionName.Name,
-                Year = examSessionName.Year, 
-                Semester = examSessionName.Semester 
+                Year = examSessionName.Year,
+                Semester = examSessionName.Semester
             };
         }
     }

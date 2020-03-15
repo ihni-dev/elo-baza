@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using EloBaza.Application.Queries.Common;
-using EloBaza.Application.Queries.Subject;
 using EloBaza.Application.Queries.Subject.GetAll;
 using MediatR;
 using System;
@@ -51,9 +50,9 @@ ORDER BY SubjectResult.Id
             };
 
             var subjects = await _dbConnection.QueryAsync(
-                GetAllSubjectsQuery, 
+                GetAllSubjectsQuery,
                 map,
-                new 
+                new
                 {
                     request.SubjectFilteringParameters.Name,
                     request.PagingParameters.Page,

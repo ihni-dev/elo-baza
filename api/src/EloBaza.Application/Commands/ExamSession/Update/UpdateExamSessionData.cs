@@ -1,8 +1,5 @@
 ﻿using EloBaza.Domain;
 using EloBaza.Domain.SharedKernel;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EloBaza.Application.Commands.ExamSession.Update
 {

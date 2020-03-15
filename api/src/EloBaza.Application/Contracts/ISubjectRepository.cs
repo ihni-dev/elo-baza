@@ -1,5 +1,4 @@
-﻿using EloBaza.Application.Queries.Common;
-using EloBaza.Domain;
+﻿using EloBaza.Domain;
 using System.Threading;
 using System.Threading.Tasks;
 
