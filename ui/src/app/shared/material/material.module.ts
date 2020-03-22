@@ -19,6 +19,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [],
@@ -41,7 +42,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSlideToggleModule,
     MatDividerModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    LayoutModule
   ],
   exports: [
     MatButtonModule,
@@ -62,7 +64,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSlideToggleModule,
     MatDividerModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    LayoutModule
   ]
 })
 export class MaterialModule {}
