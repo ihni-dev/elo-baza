@@ -24,14 +24,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   exports: [
     MaterialModule,
 
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule,
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule
+    RouterModule
   ]
 })
 export class SharedModule { }

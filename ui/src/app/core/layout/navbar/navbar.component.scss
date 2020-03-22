@@ -1,0 +1,10 @@
+@import '~@angular/material/theming';
+
+.navbar-header {
+    @include mat-elevation(8);
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 8px 16px;
+    height: 56px;
+  }

@@ -1,0 +1,30 @@
+@import '~@angular/material/theming';
+
+.page {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  top: 56px;
+  left: 0;
+  right: 0;
+
+  &-navbar {
+    @extend .page;
+    position: fixed;
+    top: 0;
+    z-index: 2;
+  }
+
+  &-content {
+    @extend .page;
+    position: absolute;
+    bottom: 0;
+
+    &-footer {
+      @extend .page-content;
+      display: block;
+    }
+  }
+}
