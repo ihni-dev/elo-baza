@@ -1,1 +1,13 @@
-<mat-toolbar class="navbar-header" color="primary"></mat-toolbar>
+<nav color="primary" class="navbar-header" aria-label="Top Toolbar">
+    <a mat-button class="button" routerLink="/" aria-label="Angular Material">
+        <img class="logo" src="../../../../assets/img/angular-white-transparent.svg" alt="logo">
+        <span>Logo</span>
+    </a>
+    <a mat-button class="navbar-hide-small button" *ngFor="let key of sectionKeys"
+        [routerLink]="key">{{sections[key].name}}</a>
+    <div class="flex-spacer"></div>
+    <app-theme-picker></app-theme-picker>
+</nav>
+<nav class="navbar navbar-show-small" aria-label="Section Nav Bar">
+    <a mat-button class="navbar-link" *ngFor="let key of sectionKeys" [routerLink]="key">{{sections[key].name}}</a>
+</nav>

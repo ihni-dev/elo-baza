@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { SECTIONS } from './sections';
+
+const SECTIONS_KEYS = Object.keys(SECTIONS);
 
 @Component({
   selector: 'app-navbar',
@@ -10,11 +10,11 @@ import { map, shareReplay } from 'rxjs/operators';
 })
 export class NavbarComponent {
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
+  get sections() {
+    return SECTIONS;
+  }
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  get sectionKeys() {
+    return SECTIONS_KEYS;
+  }
 }
