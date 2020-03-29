@@ -1,0 +1,64 @@
+<header class="header-background">
+  <div class="header-section">
+    <div class="header-headline">
+      <h1 class="mat-h1">Angular Material</h1>
+      <h2> Material Design components for Angular</h2>
+    </div>
+    <div class="header-start">
+     <a mat-raised-button class="raised-button" routerLink="/">Home</a>
+    </div>
+  </div>
+</header>
+
+<main class="homepage-promo">
+  <div class="homepage-row">
+    <div class="homepage-promo-img">
+      <app-svg-viewer src="../assets/img/homepage/sprintzerotoapp.svg"
+                       [scaleToContainer]="true"></app-svg-viewer>
+    </div>
+    <div class="homepage-promo-desc">
+      <h2>Sprint from Zero to App</h2>
+      <p>Hit the ground running with comprehensive, modern UI components that work across
+        the web, mobile, and desktop.</p>
+    </div>
+  </div>
+  <div class="homepage-row homepage-reverse-row">
+    <div class="homepage-promo-img">
+      <app-svg-viewer src="../assets/img/homepage/fastandconsistent.svg"
+                       [scaleToContainer]="true"></app-svg-viewer>
+    </div>
+    <div class="homepage-promo-desc">
+      <h2>Fast and Consistent</h2>
+      <p>Finely tuned performance, because every millisecond counts. Fully tested across
+        modern browsers.</p>
+    </div>
+  </div>
+  <div class="homepage-row">
+    <div class="homepage-promo-img">
+      <app-svg-viewer src="../assets/img/homepage/versatile.svg"
+                       [scaleToContainer]="true"></app-svg-viewer>
+    </div>
+    <div class="homepage-promo-desc">
+      <h2>Versatile</h2>
+      <p>Themeable, for when you need to stay on brand or just have a favorite color.
+        Accessible and internationalized so that all users are welcome.</p>
+    </div>
+  </div>
+  <div class="homepage-row homepage-reverse-row">
+    <div class="homepage-promo-img">
+      <app-svg-viewer src="../assets/img/homepage/optimized.svg"
+                       [scaleToContainer]="true"></app-svg-viewer>
+    </div>
+    <div class="homepage-promo-desc">
+      <h2>Optimized for Angular</h2>
+      <p>Built by the Angular team to integrate seamlessly with Angular.</p>
+    </div>
+  </div>
+  <div class="homepage-bottom-start">
+    <a mat-raised-button class="raised-button" routerLink="/" color="accent">
+      Get started
+    </a>
+  </div>
+</main>
+
+<app-footer></app-footer>

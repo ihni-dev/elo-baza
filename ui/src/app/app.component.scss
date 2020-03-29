@@ -16,9 +16,17 @@ app-navbar {
   z-index: 2;
 }
 
+app-root > app-home-page {
+  overflow-y: auto;
+}
+
 @media (max-width: 720px) {
   app-root {
     top: 92px;
+  }
+
+  app-root > app-home-page {
+    overflow-y: visible;
   }
 }
 
