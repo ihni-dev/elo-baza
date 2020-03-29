@@ -6,7 +6,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { StyleManagerService } from './services/style-manager.service';
-import { SiteTheme, ThemeStorageService } from './services/theme-storage.service';
+import { ThemeStorageService } from './services/theme-storage.service';
+import { SiteTheme } from './services/site-theme';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -18,7 +19,7 @@ import { MatIconRegistry } from '@angular/material/icon';
   templateUrl: 'theme-picker.component.html',
   styleUrls: ['theme-picker.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class ThemePickerComponent implements OnInit, OnDestroy {
   private queryParamSubscription = Subscription.EMPTY;
@@ -56,14 +57,19 @@ export class ThemePickerComponent implements OnInit, OnDestroy {
     },
   ];
 
-  constructor(public styleManager: StyleManagerService,
-              private themeStorage: ThemeStorageService,
-              private activatedRoute: ActivatedRoute,
-              iconRegistry: MatIconRegistry,
-              sanitizer: DomSanitizer) {
-    iconRegistry.addSvgIcon('theme-example',
-                            sanitizer.bypassSecurityTrustResourceUrl(
-                                'assets/img/theme-demo-icon.svg'));
+  constructor(
+    public styleManager: StyleManagerService,
+    private themeStorage: ThemeStorageService,
+    private activatedRoute: ActivatedRoute,
+    iconRegistry: MatIconRegistry,
+    sanitizer: DomSanitizer,
+  ) {
+    iconRegistry.addSvgIcon(
+      'theme-example',
+      sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/img/theme-demo-icon.svg',
+      ),
+    );
     const themeName = this.themeStorage.getStoredThemeName();
     if (themeName) {
       this.selectTheme(themeName);
@@ -77,7 +83,7 @@ export class ThemePickerComponent implements OnInit, OnDestroy {
         if (themeName) {
           this.selectTheme(themeName);
         }
-    });
+      });
   }
 
   ngOnDestroy() {
@@ -85,7 +91,9 @@ export class ThemePickerComponent implements OnInit, OnDestroy {
   }
 
   selectTheme(themeName: string) {
-    const theme = this.themes.find(currentTheme => currentTheme.name === themeName);
+    const theme = this.themes.find(
+      (currentTheme) => currentTheme.name === themeName,
+    );
 
     if (!theme) {
       return;

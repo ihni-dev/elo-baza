@@ -2,26 +2,20 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
-import { CoreModule } from './core/core.module';
-import { FeaturesModule } from './features/features.module';
-import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
+import { NavbarModule } from './core/layout/navbar/navbar.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
 
-    CoreModule,
-    FeaturesModule,
-    SharedModule,
+    NavbarModule,
 
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,13 +1,5 @@
-import {Injectable, EventEmitter} from '@angular/core';
-
-export interface SiteTheme {
-  name: string;
-  displayName?: string;
-  accent: string;
-  primary: string;
-  isDark?: boolean;
-  isDefault?: boolean;
-}
+import { Injectable, EventEmitter } from '@angular/core';
+import { SiteTheme } from './site-theme';
 
 
 @Injectable()
