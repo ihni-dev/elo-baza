@@ -66,9 +66,7 @@ export class ThemePickerComponent implements OnInit, OnDestroy {
   ) {
     iconRegistry.addSvgIcon(
       'theme-example',
-      sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/img/theme-demo-icon.svg',
-      ),
+      sanitizer.bypassSecurityTrustResourceUrl('assets/img/theme-picker.svg'),
     );
     const themeName = this.themeStorage.getStoredThemeName();
     if (themeName) {
