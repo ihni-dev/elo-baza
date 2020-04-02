@@ -3,15 +3,10 @@
   "profiles": {
     "EloBaza.WebApi": {
       "commandName": "Project",
+      "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "ConnectionStrings__DB": "Server=127.0.0.1;Database=master;User=sa;Password=1Secure*Password1"
-      },
-      "applicationUrl": "http://localhost:5000"
-    },
-    "Docker": {
-      "commandName": "Docker",
-      "publishAllPorts": true
+        "ASPNETCORE_ENVIRONMENT": "Developement"
+      }
     }
   }
 }
