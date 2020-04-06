@@ -1,4 +1,4 @@
-export interface SiteTheme {
+export interface ThemeModel {
   name: string;
   displayName?: string;
   accent: string;

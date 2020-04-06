@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { StyleManagerService } from './services/style-manager.service';
 import { ThemeStorageService } from './services/theme-storage.service';
-import { SiteTheme } from './services/site-theme';
+import { ThemeModel } from './services/theme.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -23,9 +23,9 @@ import { MatIconRegistry } from '@angular/material/icon';
 })
 export class ThemePickerComponent implements OnInit, OnDestroy {
   private queryParamSubscription = Subscription.EMPTY;
-  currentTheme: SiteTheme;
+  currentTheme: ThemeModel;
 
-  themes: SiteTheme[] = [
+  themes: ThemeModel[] = [
     {
       primary: '#673AB7',
       accent: '#FFC107',

@@ -9,11 +9,12 @@ import { NgxsModule } from '@ngxs/store';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { PageTitleState } from './core/services/page-title/page-title-state';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    NgxsModule.forRoot([]),
+    NgxsModule.forRoot([PageTitleState]),
     NgxsRouterPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),

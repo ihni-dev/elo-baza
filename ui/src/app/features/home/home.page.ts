@@ -3,7 +3,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule, Routes } from '@angular/router';
 import { FooterModule } from 'src/app/core/layout/footer/footer.module';
 import { SvgViewerModule } from 'src/app/shared/svg-viewer/svg-viewer.module';
-import { PageTitleService } from 'src/app/core/services/page-title.service';
+import { Store, Select } from '@ngxs/store';
+import { ChangePageTitle } from 'src/app/core/services/page-title/page-title-actions';
+import { PageTitleState } from 'src/app/core/services/page-title/page-title-state';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home-page',
@@ -11,10 +14,14 @@ import { PageTitleService } from 'src/app/core/services/page-title.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  constructor(public _pageTitleService: PageTitleService) {}
+  @Select(PageTitleState.pageTitle) pageTitle$: Observable<string>;
+  pageTitle: string;
+
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this._pageTitleService.title = '';
+    this.store.dispatch(new ChangePageTitle('Home'));
+    this.pageTitle$.subscribe((pageTitle) => (this.pageTitle = pageTitle));
   }
 }
 
