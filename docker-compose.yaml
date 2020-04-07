@@ -19,6 +19,7 @@ services:
       ConnectionStrings__DB: Server=db;Database=master;User=sa;Password=1Secure*Password1
     depends_on:
       - db
+
   db:
     image: "mcr.microsoft.com/mssql/server:2019-CU2-ubuntu-16.04"
     ports:
