@@ -14,7 +14,6 @@ const routes: Routes = [{ path: '', component: HomePage }];
     FooterModule,
     RouterModule.forChild(routes),
   ],
-  exports: [HomePage],
   declarations: [HomePage],
 })
 export class HomePageModule {}
