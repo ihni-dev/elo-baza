@@ -1,18 +1,14 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
-  OnInit,
   ViewEncapsulation,
 } from '@angular/core';
 import { StyleManagerService } from './services/style-manager.service';
 import { ThemeStorageService } from './services/theme-storage.service';
-import { ThemeModel } from './services/theme.model';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { ThemeModel } from './models/theme.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
+import { THEMES } from './models/themes';
 
 @Component({
   selector: 'app-theme-picker',
@@ -21,46 +17,13 @@ import { MatIconRegistry } from '@angular/material/icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class ThemePickerComponent implements OnInit, OnDestroy {
-  private queryParamSubscription = Subscription.EMPTY;
+export class ThemePickerComponent {
+  themes = THEMES;
   currentTheme: ThemeModel;
-
-  themes: ThemeModel[] = [
-    {
-      primary: '#673AB7',
-      accent: '#FFC107',
-      displayName: 'Deep Purple & Amber',
-      name: 'deeppurple-amber',
-      isDark: false,
-    },
-    {
-      primary: '#3F51B5',
-      accent: '#E91E63',
-      displayName: 'Indigo & Pink',
-      name: 'indigo-pink',
-      isDark: false,
-      isDefault: true,
-    },
-    {
-      primary: '#E91E63',
-      accent: '#607D8B',
-      displayName: 'Pink & Blue-grey',
-      name: 'pink-bluegrey',
-      isDark: true,
-    },
-    {
-      primary: '#9C27B0',
-      accent: '#4CAF50',
-      displayName: 'Purple & Green',
-      name: 'purple-green',
-      isDark: true,
-    },
-  ];
 
   constructor(
     public styleManager: StyleManagerService,
     private themeStorage: ThemeStorageService,
-    private activatedRoute: ActivatedRoute,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
   ) {
@@ -68,30 +31,17 @@ export class ThemePickerComponent implements OnInit, OnDestroy {
       'theme-example',
       sanitizer.bypassSecurityTrustResourceUrl('assets/img/theme-picker.svg'),
     );
-    const themeName = this.themeStorage.getStoredThemeName();
-    if (themeName) {
-      this.selectTheme(themeName);
-    }
-  }
 
-  ngOnInit() {
-    this.queryParamSubscription = this.activatedRoute.queryParamMap
-      .pipe(map((params: ParamMap) => params.get('theme')))
-      .subscribe((themeName: string | null) => {
-        if (themeName) {
-          this.selectTheme(themeName);
-        }
-      });
-  }
+    const defaultThemeName = this.themes.find((t) => t.isDefault).name;
+    const themeName =
+      this.themeStorage.getStoredThemeName() ?? defaultThemeName;
 
-  ngOnDestroy() {
-    this.queryParamSubscription.unsubscribe();
+    this.selectTheme(themeName);
+    this.currentTheme = this.themes.find((t) => t.name === themeName);
   }
 
   selectTheme(themeName: string) {
-    const theme = this.themes.find(
-      (currentTheme) => currentTheme.name === themeName,
-    );
+    const theme = this.themes.find((t) => t.name === themeName);
 
     if (!theme) {
       return;

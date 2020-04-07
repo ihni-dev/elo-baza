@@ -1,18 +1,14 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import { ThemeModel } from './theme.model';
+import { Injectable } from '@angular/core';
+import { ThemeModel } from '../models/theme.model';
 
 @Injectable()
 export class ThemeStorageService {
   static storageKey = 'theme-storage-current-name';
 
-  onThemeUpdate: EventEmitter<ThemeModel> = new EventEmitter<ThemeModel>();
-
   storeTheme(theme: ThemeModel) {
     try {
       window.localStorage[ThemeStorageService.storageKey] = theme.name;
     } catch {}
-
-    this.onThemeUpdate.emit(theme);
   }
 
   getStoredThemeName(): string | null {

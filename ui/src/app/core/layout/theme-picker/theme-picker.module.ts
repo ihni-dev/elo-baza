@@ -20,4 +20,4 @@ import { ThemeStorageService } from './services/theme-storage.service';
   declarations: [ThemePickerComponent],
   providers: [StyleManagerService, ThemeStorageService],
 })
-export class ThemePickerModule { }
+export class ThemePickerModule {}
