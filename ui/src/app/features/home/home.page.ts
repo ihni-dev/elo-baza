@@ -1,12 +1,9 @@
-import { Component, NgModule, OnInit } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { RouterModule, Routes } from '@angular/router';
-import { FooterModule } from 'src/app/core/layout/footer/footer.module';
-import { SvgViewerModule } from 'src/app/shared/svg-viewer/svg-viewer.module';
+import { Component, OnInit } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { ChangePageTitle } from 'src/app/core/layout/page-title/page-title-actions';
 import { PageTitleState } from 'src/app/core/layout/page-title/page-title-state';
 import { Observable } from 'rxjs';
+import { PageTitleStateModel } from 'src/app/core/layout/page-title/page-title-state.model';
 
 @Component({
   selector: 'app-home-page',
@@ -14,27 +11,15 @@ import { Observable } from 'rxjs';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  @Select(PageTitleState.pageTitle) pageTitle$: Observable<string>;
-  pageTitle: string;
+  @Select(PageTitleState.pageTitle) pageTitle$: Observable<PageTitleStateModel>;
+  pageTitleState: PageTitleStateModel;
 
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.store.dispatch(new ChangePageTitle('Home'));
-    this.pageTitle$.subscribe((pageTitle) => (this.pageTitle = pageTitle));
+    this.store.dispatch(
+      new ChangePageTitle('Home', 'Elo-Baza', 'Baza pytań do zakucia'),
+    );
+    this.pageTitle$.subscribe((pageTitle) => (this.pageTitleState = pageTitle));
   }
 }
-
-const routes: Routes = [{ path: '', component: HomePage }];
-
-@NgModule({
-  imports: [
-    SvgViewerModule,
-    MatButtonModule,
-    FooterModule,
-    RouterModule.forChild(routes),
-  ],
-  exports: [HomePage],
-  declarations: [HomePage],
-})
-export class HomePageModule {}

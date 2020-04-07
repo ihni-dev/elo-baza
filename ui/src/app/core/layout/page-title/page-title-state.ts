@@ -9,7 +9,9 @@ const DEFAULT_TITLE: string = 'Elo-Baza';
 @State<PageTitleStateModel>({
   name: 'pageTitle',
   defaults: {
-    pageTitle: DEFAULT_TITLE,
+    tabTitle: DEFAULT_TITLE,
+    headerTitle: DEFAULT_TITLE,
+    headerSubtitle: '',
   },
 })
 @Injectable()
@@ -18,7 +20,7 @@ export class PageTitleState {
 
   @Selector()
   static pageTitle(state: PageTitleStateModel) {
-    return state.pageTitle;
+    return state;
   }
 
   @Action(ChangePageTitle)
@@ -28,15 +30,17 @@ export class PageTitleState {
   ) {
     const state = ctx.getState();
 
-    const newPageTitle = action.pageTitle
-      ? `${action.pageTitle} | ${DEFAULT_TITLE}`
+    const newTabTitle = action.tabTitle
+      ? `${action.tabTitle} | ${DEFAULT_TITLE}`
       : DEFAULT_TITLE;
 
-    this.bodyTitle.setTitle(newPageTitle);
+    this.bodyTitle.setTitle(newTabTitle);
 
     ctx.setState({
       ...state,
-      pageTitle: newPageTitle,
+      tabTitle: newTabTitle,
+      headerTitle: action.headerTitle ?? DEFAULT_TITLE,
+      headerSubtitle: action.headerSubtitle,
     });
   }
 }

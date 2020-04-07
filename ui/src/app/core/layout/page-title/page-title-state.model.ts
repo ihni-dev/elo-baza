@@ -1,3 +1,5 @@
 export interface PageTitleStateModel {
-  pageTitle: string;
+  tabTitle: string;
+  headerTitle: string;
+  headerSubtitle: string;
 }
