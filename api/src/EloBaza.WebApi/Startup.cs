@@ -33,13 +33,17 @@ namespace EloBaza.WebApi
             services.AddInfrastructureServices(Configuration.GetConnectionString("DB"))
                 .AddApplicationServices()
                 .AddAutoMapper(typeof(Program).GetTypeInfo().Assembly)
-                .AddSwagger();
+                .AddSwagger()
+                .AddCustomCors();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
+                app.UseDevelopmentCors();
+            }
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
