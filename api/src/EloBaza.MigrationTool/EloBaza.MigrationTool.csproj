@@ -7,17 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200314085853_AddExamSessionTableAndSubjectRelation.cs" />
-    <Compile Remove="Migrations\20200314085853_AddExamSessionTableAndSubjectRelation.Designer.cs" />
-    <Compile Remove="Migrations\20200314090031_AddExamSessionTableAndSubjectRelation.cs" />
-    <Compile Remove="Migrations\20200314090031_AddExamSessionTableAndSubjectRelation.Designer.cs" />
-    <Compile Remove="Migrations\20200314174226_AddExamSessionTableAndSubjectRelation.cs" />
-    <Compile Remove="Migrations\20200314174226_AddExamSessionTableAndSubjectRelation.Designer.cs" />
-    <Compile Remove="Migrations\20200314174451_AddExamSessionTableAndSubjectRelation.cs" />
-    <Compile Remove="Migrations\20200314174451_AddExamSessionTableAndSubjectRelation.Designer.cs" />
-  </ItemGroup>
-  
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -29,6 +18,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,5 +30,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
 </Project>

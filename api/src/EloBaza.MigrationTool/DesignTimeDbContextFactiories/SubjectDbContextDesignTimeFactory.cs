@@ -12,8 +12,7 @@ namespace EloBaza.MigrationTool.DesignTimeDbContextFactiories
         public SubjectDbContext CreateDbContext(string[] args)
         {
             var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("appsettings.json", optional: true)
                 .AddEnvironmentVariables()
                 .Build();
 
@@ -21,7 +20,14 @@ namespace EloBaza.MigrationTool.DesignTimeDbContextFactiories
             Console.WriteLine($"Using connection string: {connectionString}");
 
             var builder = new DbContextOptionsBuilder<SubjectDbContext>()
-                .UseSqlServer(connectionString, b => b.MigrationsAssembly(typeof(SubjectDbContextDesignTimeFactory).Assembly.FullName));
+                .UseSqlServer(connectionString, sqlServerOptionsAction: o =>
+                {
+                    o.MigrationsAssembly(typeof(SubjectDbContextDesignTimeFactory).Assembly.FullName);
+                    o.EnableRetryOnFailure(
+                        maxRetryCount: 10,
+                        maxRetryDelay: TimeSpan.FromSeconds(30),
+                        errorNumbersToAdd: null);
+                });
 
             return new SubjectDbContext(builder.Options);
         }

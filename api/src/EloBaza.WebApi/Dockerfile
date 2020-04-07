@@ -1,5 +1,3 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
 WORKDIR /app
 EXPOSE 80
@@ -7,6 +5,9 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["src/EloBaza.WebApi/EloBaza.WebApi.csproj", "src/EloBaza.WebApi/"]
+COPY ["src/EloBaza.Infrastructure/EloBaza.Infrastructure.csproj", "src/EloBaza.Infrastructure/"]
+COPY ["src/EloBaza.Application/EloBaza.Application.csproj", "src/EloBaza.Application/"]
+COPY ["src/EloBaza.Domain/EloBaza.Domain.csproj", "src/EloBaza.Domain/"]
 RUN dotnet restore "src/EloBaza.WebApi/EloBaza.WebApi.csproj"
 COPY . .
 WORKDIR "src/EloBaza.WebApi"
