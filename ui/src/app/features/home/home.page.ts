@@ -4,8 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { FooterModule } from 'src/app/core/layout/footer/footer.module';
 import { SvgViewerModule } from 'src/app/shared/svg-viewer/svg-viewer.module';
 import { Store, Select } from '@ngxs/store';
-import { ChangePageTitle } from 'src/app/core/services/page-title/page-title-actions';
-import { PageTitleState } from 'src/app/core/services/page-title/page-title-state';
+import { ChangePageTitle } from 'src/app/core/layout/page-title/page-title-actions';
+import { PageTitleState } from 'src/app/core/layout/page-title/page-title-state';
 import { Observable } from 'rxjs';
 
 @Component({
