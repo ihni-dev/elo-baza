@@ -3,6 +3,7 @@
 @import "./app/core/layout/navbar/navbar-theme";
 @import "./app/core/layout/footer/footer-theme";
 @import "./app/features/home/home-page-theme";
+@import "./app/features/admin/admin-page-theme";
 @import "./app/shared/svg-viewer/svg-viewer-theme";
 
 @mixin material-app-theme($theme) {
@@ -34,6 +35,7 @@
   @include footer-theme($theme);
 
   @include home-page-theme($theme);
+  @include admin-page-theme($theme);
 
   @include svg-viewer-theme($theme);
 }

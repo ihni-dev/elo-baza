@@ -19,8 +19,18 @@ export class PageTitleState {
   constructor(private bodyTitle: Title) {}
 
   @Selector()
-  static pageTitle(state: PageTitleStateModel) {
-    return state;
+  static tabTitle(state: PageTitleStateModel) {
+    return state.tabTitle;
+  }
+
+  @Selector()
+  static headerTitle(state: PageTitleStateModel) {
+    return state.headerTitle;
+  }
+
+  @Selector()
+  static headerSubtitle(state: PageTitleStateModel) {
+    return state.headerSubtitle;
   }
 
   @Action(ChangePageTitle)

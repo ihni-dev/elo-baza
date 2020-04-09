@@ -1,22 +1,12 @@
 export interface Section {
-    name: string;
-    summary: string;
+  name: string;
+  summary: string;
 }
 
-const FIRST = 'first';
-const SECOND = 'second';
-const THIRD = 'third';
-export const SECTIONS: {[key: string]: Section} = {
+const FIRST = 'admin';
+export const SECTIONS: { [key: string]: Section } = {
   [FIRST]: {
-    name: 'First',
-    summary: 'First section summary'
+    name: 'Admin',
+    summary: 'Admin section summary',
   },
-  [SECOND]: {
-    name: 'Second',
-    summary: 'Second section summary'
-  },
-  [THIRD]: {
-    name: 'Third',
-    summary: 'Third section summary'
-  }
 };

@@ -11,8 +11,8 @@ import { PageTitleStateModel } from 'src/app/core/layout/page-title/page-title-s
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  @Select(PageTitleState.pageTitle) pageTitle$: Observable<PageTitleStateModel>;
-  pageTitleState: PageTitleStateModel;
+  @Select(PageTitleState.headerTitle) headerTitle$: Observable<string>;
+  @Select(PageTitleState.headerSubtitle) headerSubtitle$: Observable<string>;
 
   constructor(private store: Store) {}
 
@@ -20,6 +20,5 @@ export class HomePage implements OnInit {
     this.store.dispatch(
       new ChangePageTitle('Home', 'Elo-Baza', 'Baza pytań do zakucia'),
     );
-    this.pageTitle$.subscribe((pageTitle) => (this.pageTitleState = pageTitle));
   }
 }
