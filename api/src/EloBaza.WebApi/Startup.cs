@@ -41,26 +41,20 @@ namespace EloBaza.WebApi
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseDevelopmentCors();
+                app.UseDeveloperExceptionPage()
+                   .UseDevelopmentCors();
             }
 
-            app.UseMiddleware<ErrorHandlingMiddleware>();
-
-            app.UseHttpsRedirection();
-
-            app.UseSerilogRequestLogging();
-
-            app.UseSwaggerDocumentation();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseMiddleware<ErrorHandlingMiddleware>()
+                .UseHttpsRedirection()
+                .UseSerilogRequestLogging()
+                .UseSwaggerDocumentation()
+                .UseRouting()
+                .UseAuthorization()
+                .UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllers();
+                });
         }
     }
 }

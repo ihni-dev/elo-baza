@@ -34,7 +34,7 @@ namespace EloBaza.MigrationTool
                     await Task.Delay(retryDelay);
                 }
             } while (!migrated && retries < maxRetries);
-            
+
             if (migrated)
                 Console.WriteLine("Done");
             else
