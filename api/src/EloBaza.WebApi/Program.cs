@@ -40,8 +40,6 @@ namespace EloBaza.WebApi
             var config = new ConfigurationBuilder()
                .AddJsonFile("appsettings.json", false, true)
                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", true)
-               .AddEnvironmentVariables()
-               .AddUserSecrets<Startup>()
                .Build();
 
             Log.Logger = new LoggerConfiguration()
