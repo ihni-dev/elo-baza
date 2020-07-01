@@ -6,7 +6,7 @@ using System;
 
 namespace EloBaza.WebApi
 {
-    public class Program
+    public sealed class Program
     {
         public static void Main(string[] args)
         {
@@ -39,7 +39,6 @@ namespace EloBaza.WebApi
         {
             var config = new ConfigurationBuilder()
                .AddJsonFile("appsettings.json", false, true)
-               .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", true)
                .Build();
 
             Log.Logger = new LoggerConfiguration()

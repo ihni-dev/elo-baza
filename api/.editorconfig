@@ -4,6 +4,10 @@ root = true
 # C# files
 [*.cs]
 
+#### Analyzers suppressions ####
+
+dotnet_diagnostic.CA1062.severity = none
+
 #### Core EditorConfig Options ####
 
 # Indentation and spacing

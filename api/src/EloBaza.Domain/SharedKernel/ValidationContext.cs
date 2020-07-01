@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EloBaza.Domain.SharedKernel
 {
-    public class ValidationContext : IDisposable
+    public sealed class ValidationContext : IDisposable
     {
         private readonly Dictionary<string, List<string>> _errors;
 
