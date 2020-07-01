@@ -14,18 +14,16 @@ namespace EloBaza.WebApi.Middleware
     {
         private readonly RequestDelegate _next;
         private readonly IActionResultExecutor<ObjectResult> _executor;
-        private readonly ILogger _logger;
+        private readonly ILogger<ErrorHandlingMiddleware> _logger;
 
-        public ErrorHandlingMiddleware(RequestDelegate next,
-            IActionResultExecutor<ObjectResult> executor,
-            ILogger<ErrorHandlingMiddleware> logger)
+        public ErrorHandlingMiddleware(RequestDelegate next, IActionResultExecutor<ObjectResult> executor, ILogger<ErrorHandlingMiddleware> logger)
         {
             _next = next;
             _executor = executor;
             _logger = logger;
         }
 
-        public async Task Invoke(HttpContext httpContext)
+        public async Task InvokeAsync(HttpContext httpContext)
         {
             try
             {
@@ -38,18 +36,20 @@ namespace EloBaza.WebApi.Middleware
                 var routeData = httpContext.GetRouteData();
                 var actionContext = new ActionContext(httpContext, routeData, new ActionDescriptor());
 
-                var result = CreateResult(ex, httpContext);
-                await _executor.ExecuteAsync(actionContext, result);
-                return;
+                var canBeHandeld = TryCreateResult(ex, httpContext, out var result);
+                if (!canBeHandeld)
+                    throw;
+
+                await _executor.ExecuteAsync(actionContext, result!);
             }
         }
 
-        private ObjectResult CreateResult(Exception ex, HttpContext httpContext)
+        private static bool TryCreateResult(Exception ex, HttpContext httpContext, out ObjectResult? result)
         {
             ProblemDetails problemDetails;
             if (ex is ValidationException)
             {
-                problemDetails = new ValidationProblemDetails((ex as ValidationException)?.Errors)
+                problemDetails = new ProblemDetails()
                 {
                     Detail = ex.Message,
                     Status = StatusCodes.Status400BadRequest,
@@ -58,7 +58,8 @@ namespace EloBaza.WebApi.Middleware
                     Title = ex.GetType().Name
                 };
 
-                return new BadRequestObjectResult(problemDetails);
+                result = new BadRequestObjectResult(problemDetails);
+                return true;
             }
             else if (ex is NotFoundException)
             {
@@ -71,7 +72,8 @@ namespace EloBaza.WebApi.Middleware
                     Title = ex.GetType().Name
                 };
 
-                return new NotFoundObjectResult(problemDetails);
+                result = new NotFoundObjectResult(problemDetails);
+                return true;
             }
             else if (ex is AlreadyExistsException)
             {
@@ -84,10 +86,14 @@ namespace EloBaza.WebApi.Middleware
                     Title = ex.GetType().Name
                 };
 
-                return new ConflictObjectResult(problemDetails);
+                result = new NotFoundObjectResult(problemDetails);
+                return true;
             }
             else
-                throw ex;
+            {
+                result = null;
+                return false;
+            }
         }
     }
 }
