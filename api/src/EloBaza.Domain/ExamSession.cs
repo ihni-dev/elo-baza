@@ -1,30 +1,29 @@
-﻿using EloBaza.Domain.SharedKernel;
+﻿using System.Collections.Generic;
 
 namespace EloBaza.Domain
 {
     public class ExamSession
     {
         public int Id { get; private set; }
-        public string Name { get; private set; }
+        public string Name => $"{Subject.Name}-{Year}-{Semester}";
         public int Year { get; private set; }
         public Semester Semester { get; private set; }
-        //public List<Question> Questions { get; private set; }
+        public ICollection<Question> Questions { get; private set; } = new List<Question>();
 
-        internal ExamSession(int year, Semester semester)
+        public Subject Subject { get; private set; }
+
+        internal ExamSession(Subject subject, int year, Semester semester)
         {
-            Name = CreateName(year, semester);
+            Subject = subject;
+
             Year = year;
             Semester = semester;
-            //Questions = new List<Question>();
         }
 
         internal void Update(int year, Semester semester)
         {
-            Name = CreateName(year, semester);
             Year = year;
             Semester = semester;
         }
-
-        private static string CreateName(int year, Semester semester) => $"{year}-{semester}";
     }
 }

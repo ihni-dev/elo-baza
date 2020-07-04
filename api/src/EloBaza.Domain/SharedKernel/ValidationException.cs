@@ -7,6 +7,7 @@ namespace EloBaza.Domain.SharedKernel
     public class ValidationException : Exception
     {
         private const string ValidationFailedMessage = "One or more validation errors occured";
+
         public IDictionary<string, string[]> Errors { get; }
 
         public ValidationException(IDictionary<string, List<string>> errors) : base(ValidationFailedMessage)

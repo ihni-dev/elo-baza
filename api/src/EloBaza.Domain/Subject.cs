@@ -9,22 +9,23 @@ namespace EloBaza.Domain
     {
         public int Id { get; private set; }
         public string Name { get; private set; }
-        public ICollection<ExamSession> ExamSessions { get; private set; }
-        //public List<Question> Questions { get; private set; }
+        public ICollection<ExamSession> ExamSessions { get; private set; } = new List<ExamSession>();
+        public ICollection<Category> Categories { get; private set; } = new List<Category>();
+        public ICollection<Question> Questions { get; private set; } = new List<Question>();
 
         public Subject(string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Subject name must be provided");
+            using (var validationContext = new ValidationContext())
+            {
+                validationContext.Validate(() => string.IsNullOrEmpty(name), nameof(Name), "Subject name must be provided");
+            }
 
             Name = name;
-            ExamSessions = new List<ExamSession>();
-            //Questions = new List<Question>();
         }
 
         public ExamSession CreateExamSession(int year, Semester semester)
         {
-            var examSession = new ExamSession(year, semester);
+            var examSession = new ExamSession(this, year, semester);
             if (!(FindExamSession(examSession.Name) is null))
                 throw new AlreadyExistsException($"Exam session {examSession.Name} already exists");
 

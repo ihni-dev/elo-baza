@@ -1,21 +1,26 @@
-﻿//using System;
+﻿using EloBaza.Domain.SharedKernel;
 
-//namespace EloBaza.Domain
-//{
-//    public class Answer
-//    {
-//        public Guid Id { get; private set; }
-//        public string Content { get; private set; }
-//        public bool IsValid { get; private set; }
+namespace EloBaza.Domain
+{
+    public class Answer
+    {
+        public int Id { get; private set; }
+        public string Content { get; private set; }
+        public bool IsValid { get; private set; }
 
-//        public Answer(Guid id, string content, bool isValid)
-//        {
-//            if (string.IsNullOrWhiteSpace(content))
-//                throw new ArgumentException("Answer content must have a value");
+        public Question Question { get; private set; }
 
-//            Id = id;
-//            Content = content;
-//            IsValid = isValid;
-//        }
-//    }
-//}
+        internal Answer(Question question, string content, bool isValid)
+        {
+            using (var validationContext = new ValidationContext())
+            {
+                validationContext.Validate(() => string.IsNullOrEmpty(content), nameof(content), "Answer content must have a value");
+            }
+
+            Question = question;
+
+            Content = content;
+            IsValid = isValid;
+        }
+    }
+}

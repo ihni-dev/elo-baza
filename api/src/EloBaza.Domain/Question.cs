@@ -1,26 +1,38 @@
-﻿//using System;
-//using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-//namespace EloBaza.Domain
-//{
-//    public class Question
-//    {
-//        public Guid Id { get; private set; }
-//        public string Content { get; private set; }
-//        public List<Answer> Answers { get; private set; }
-//        public List<Annotation> Annotations { get; private set; }
-//        public bool IsPublished { get; private set; }
+namespace EloBaza.Domain
+{
+    public class Question
+    {
+        public int Id { get; private set; }
+        public string Content { get; private set; }
+        public ICollection<Answer> Answers { get; private set; } = new List<Answer>();
+        public Explanation? Explanation { get; private set; }
+        public bool IsPublished { get; private set; }
+        public bool IsExamQuestion => !(ExamSession is null);
+        public bool HasExplanation => !(Explanation is null);
 
-//        public Question(string content, bool isPublished)
-//        {
-//            if (string.IsNullOrWhiteSpace(content))
-//                throw new ArgumentException("Question content must have a value");
+        public Subject Subject { get; private set; }
+        public Category Category { get; private set; }
+        public ExamSession? ExamSession { get; private set; }
 
-//            Id = Guid.NewGuid();
-//            Content = content;
-//            Answers = new List<Answer>();
-//            Annotations = new List<Annotation>();
-//            IsPublished = isPublished;
-//        }
-//    }
-//}
+        public Question(Subject subject, Category category, string content, bool isPublished)
+        {
+            Subject = subject;
+            Category = category;
+
+            Content = content;
+            IsPublished = isPublished;
+        }
+
+        public Question(Subject subject, Category category, ExamSession examSession, string content, bool isPublished)
+        {
+            Subject = subject;
+            Category = category;
+            ExamSession = examSession;
+
+            Content = content;
+            IsPublished = isPublished;
+        }
+    }
+}
