@@ -15,8 +15,7 @@ namespace EloBaza.Domain.SharedKernel
 
         public void Dispose()
         {
-            if (_errors.Any())
-                throw new ValidationException(_errors);
+            Validate();
         }
 
         public void Validate(Func<bool> isInvalid, string validationSubject, string validationMessage)
@@ -31,6 +30,12 @@ namespace EloBaza.Domain.SharedKernel
                 _errors[validationSubject].Add(validationMessage);
             else
                 _errors.Add(validationSubject, new List<string>() { validationMessage });
+        }
+
+        private void Validate()
+        {
+            if (_errors.Any())
+                throw new ValidationException(_errors);
         }
     }
 }

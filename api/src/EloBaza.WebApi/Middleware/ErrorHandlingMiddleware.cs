@@ -86,7 +86,7 @@ namespace EloBaza.WebApi.Middleware
                     Title = ex.GetType().Name
                 };
 
-                result = new NotFoundObjectResult(problemDetails);
+                result = new ConflictObjectResult(problemDetails);
                 return true;
             }
             else

@@ -14,9 +14,19 @@ namespace EloBaza.Domain.SharedKernel
             Errors = errors.ToDictionary(e => e.Key, e => e.Value.ToArray());
         }
 
-        public ValidationException(IDictionary<string, string[]> errors) : base(ValidationFailedMessage)
+        protected ValidationException()
         {
-            Errors = errors;
+            Errors = new Dictionary<string, string[]>();
+        }
+
+        protected ValidationException(string message) : base(message)
+        {
+            Errors = new Dictionary<string, string[]>();
+        }
+
+        protected ValidationException(string message, Exception innerException) : base(message, innerException)
+        {
+            Errors = new Dictionary<string, string[]>();
         }
     }
 }

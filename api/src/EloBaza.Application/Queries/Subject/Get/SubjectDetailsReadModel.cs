@@ -15,6 +15,6 @@ namespace EloBaza.Application.Queries.Subject.Get
         /// <summary>
         /// List of subject exam sessions
         /// </summary>
-        public ICollection<ExamSessionReadModel>? ExamSessions { get; set; }
+        public ICollection<ExamSessionReadModel> ExamSessions { get; private set; } = new List<ExamSessionReadModel>();
     }
 }

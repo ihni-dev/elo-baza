@@ -6,7 +6,12 @@ root = true
 
 #### Analyzers suppressions ####
 
-dotnet_diagnostic.CA1062.severity = none
+dotnet_diagnostic.CA1062.severity = none # validate null (non-nullable is turned on)
+dotnet_diagnostic.CA2007.severity = none # configure await
+dotnet_diagnostic.CA1303.severity = none # literal string passing
+dotnet_diagnostic.CA1812.severity = none # internal class not instantiated
+dotnet_diagnostic.CA1716.severity = none # conflicting with reserved names
+dotnet_diagnostic.CA1031.severity = none # catching Exception
 
 #### Core EditorConfig Options ####
 

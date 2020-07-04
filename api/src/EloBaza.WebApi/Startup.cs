@@ -30,25 +30,29 @@ namespace EloBaza.WebApi
                 .AddNewtonsoftJson(options =>
                     options.SerializerSettings.Converters.Add(new StringEnumConverter()));
 
-            services.AddInfrastructureServices(Configuration.GetConnectionString("DB"))
+            services.AddInfrastructureServices(Configuration)
                 .AddApplicationServices()
                 .AddAutoMapper(typeof(Program).GetTypeInfo().Assembly)
                 .AddSwagger()
-                .AddCustomCors();
+                .AddCorsPolicies();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (!env.IsProduction())
             {
                 app.UseDeveloperExceptionPage()
-                   .UseDevelopmentCors();
+                    .UseDevelopmentCors()
+                    .UseSwaggerDocumentation();
+            }
+            else
+            {
+                app.UseProductionCors();
             }
 
             app.UseMiddleware<ErrorHandlingMiddleware>()
                 .UseHttpsRedirection()
                 .UseSerilogRequestLogging()
-                .UseSwaggerDocumentation()
                 .UseRouting()
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>

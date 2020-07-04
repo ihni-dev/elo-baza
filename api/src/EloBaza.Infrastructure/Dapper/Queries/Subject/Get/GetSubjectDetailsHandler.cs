@@ -42,10 +42,8 @@ WHERE s.Name = @Name
                     if (!lookup.TryGetValue(sdrm.Name!, out subjectDetailsReadModel))
                         lookup.Add(sdrm.Name!, subjectDetailsReadModel = sdrm);
 
-                    if (subjectDetailsReadModel.ExamSessions == null)
-                        subjectDetailsReadModel.ExamSessions = new List<ExamSessionReadModel>();
-
                     subjectDetailsReadModel.ExamSessions.Add(esrm);
+
                     return subjectDetailsReadModel;
                 },
                 param: new { request.Name },

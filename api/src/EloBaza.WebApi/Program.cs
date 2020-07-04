@@ -20,6 +20,7 @@ namespace EloBaza.WebApi
             catch (Exception ex)
             {
                 Log.Fatal(ex, "Host terminated unexpectedly");
+                throw;
             }
             finally
             {
