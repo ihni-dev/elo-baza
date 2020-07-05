@@ -12,18 +12,15 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
 
             builder.HasKey(s => s.Id);
 
-            builder.Property<string>(nameof(Subject.Name))
-                .UsePropertyAccessMode(PropertyAccessMode.Property)
-                .HasColumnName(nameof(Subject.Name))
+            builder.Property(s => s.Id)
+                .HasColumnName($"{nameof(Subject)}{nameof(Subject.Id)}");
+
+            builder.Property(s => s.Name)
+                .HasMaxLength(Subject.NameMaxLength)
                 .IsRequired(true);
 
             builder.HasIndex(nameof(Subject.Name))
                 .IsUnique();
-
-            builder.HasMany(s => s.ExamSessions)
-                .WithOne()
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

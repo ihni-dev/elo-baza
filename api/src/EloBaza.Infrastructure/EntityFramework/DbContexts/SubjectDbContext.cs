@@ -17,6 +17,11 @@ namespace EloBaza.Infrastructure.EntityFramework.DbContexts
         {
             modelBuilder.ApplyConfiguration(new SubjectEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ExamSessionEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new QuestionEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new AnswerEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ExplanationEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new AttachmentEntityTypeConfiguration());
         }
     }
 }

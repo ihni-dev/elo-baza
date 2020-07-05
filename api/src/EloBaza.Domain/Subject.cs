@@ -7,6 +7,8 @@ namespace EloBaza.Domain
 {
     public class Subject
     {
+        public const int NameMaxLength = 50;
+
         public int Id { get; private set; }
         public string Name { get; private set; }
         public ICollection<ExamSession> ExamSessions { get; private set; } = new List<ExamSession>();
@@ -23,7 +25,7 @@ namespace EloBaza.Domain
             Name = name;
         }
 
-        public ExamSession CreateExamSession(int year, Semester semester)
+        public ExamSession CreateExamSession(short year, Semester semester)
         {
             var examSession = new ExamSession(this, year, semester);
             if (!(FindExamSession(examSession.Name) is null))
@@ -43,7 +45,7 @@ namespace EloBaza.Domain
             Name = name;
         }
 
-        public void UpdateExamSession(string name, int? year, Semester? semester)
+        public void UpdateExamSession(string name, short? year, Semester? semester)
         {
             var examSession = FindExamSession(name);
             if (examSession is null)

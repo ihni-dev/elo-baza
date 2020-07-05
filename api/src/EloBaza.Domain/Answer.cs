@@ -10,6 +10,8 @@ namespace EloBaza.Domain
 
         public Question Question { get; private set; }
 
+        protected Answer() { }
+
         internal Answer(Question question, string content, bool isValid)
         {
             using (var validationContext = new ValidationContext())

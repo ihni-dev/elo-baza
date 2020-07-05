@@ -29,7 +29,7 @@ WHERE s.Name = @SubjectName AND es.Name = @Name
         public async Task<ExamSessionDetailsReadModel> Handle(GetExamSessionDetails request, CancellationToken cancellationToken)
         {
             var examSession = await _dbConnection.QuerySingleOrDefaultAsync<ExamSessionDetailsReadModel>(
-                GetExamSessionDetailsQuery,
+                sql: GetExamSessionDetailsQuery,
                 param: new { request.SubjectName, request.Name });
 
             if (examSession is null)

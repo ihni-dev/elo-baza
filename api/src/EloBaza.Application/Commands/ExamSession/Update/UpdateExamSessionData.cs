@@ -5,10 +5,10 @@ namespace EloBaza.Application.Commands.ExamSession.Update
 {
     public class UpdateExamSessionData
     {
-        public int? Year { get; private set; }
+        public short? Year { get; private set; }
         public Semester? Semester { get; private set; }
 
-        public UpdateExamSessionData(int? year, Semester? semester)
+        public UpdateExamSessionData(short? year, Semester? semester)
         {
             using (var validationContext = new ValidationContext())
             {

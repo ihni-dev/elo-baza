@@ -17,7 +17,7 @@ namespace EloBaza.Infrastructure.Dapper.Queries.Subject.Get
 
         private const string GetAllSubjectsQuery = @"
 WITH SubjectResult AS (
-    SELECT *
+    SELECT Name
     FROM Subject
     WHERE Name LIKE '%' + @Name + '%'
 ), TotalCount AS (
@@ -50,9 +50,9 @@ ORDER BY SubjectResult.Id
             };
 
             var subjects = await _dbConnection.QueryAsync(
-                GetAllSubjectsQuery,
-                map,
-                new
+                sql: GetAllSubjectsQuery,
+                map: map,
+                param: new
                 {
                     request.SubjectFilteringParameters.Name,
                     request.PagingParameters.Page,

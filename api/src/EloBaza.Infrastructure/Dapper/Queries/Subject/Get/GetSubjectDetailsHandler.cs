@@ -34,7 +34,7 @@ WHERE s.Name = @Name
             var lookup = new Dictionary<string, SubjectDetailsReadModel>();
 
             await _dbConnection.QueryAsync<SubjectDetailsReadModel, ExamSessionReadModel, SubjectDetailsReadModel>(
-                GetSubjectQuery,
+                sql: GetSubjectQuery,
                 map: (sdrm, esrm) =>
                 {
                     SubjectDetailsReadModel subjectDetailsReadModel;

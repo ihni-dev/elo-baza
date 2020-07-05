@@ -5,10 +5,10 @@ namespace EloBaza.Application.Commands.ExamSession.Create
 {
     public class CreateExamSessionData
     {
-        public int Year { get; private set; }
+        public short Year { get; private set; }
         public Semester Semester { get; private set; }
 
-        public CreateExamSessionData(int year, Semester semester)
+        public CreateExamSessionData(short year, Semester semester)
         {
             using (var validationContext = new ValidationContext())
             {
