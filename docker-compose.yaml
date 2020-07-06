@@ -16,7 +16,7 @@ services:
     ports:
       - "8001:80"
     environment:
-      ConnectionStrings__DB: Server=db;Database=master;User=sa;Password=1Secure*Password1
+      ConnectionStrings__DB: Server=db;Database=elo-baza;User=sa;Password=1Secure*Password1;MultipleActiveResultSets=true
     depends_on:
       - migration
 
@@ -25,7 +25,7 @@ services:
       context: api
       dockerfile: src/EloBaza.MigrationTool/Dockerfile
     environment:
-      ConnectionStrings__DB: Server=db;Database=master;User=sa;Password=1Secure*Password1
+      ConnectionStrings__DB: Server=db;Database=elo-baza;User=sa;Password=1Secure*Password1;MultipleActiveResultSets=true
     depends_on:
       - db
 
