@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EloBaza.MigrationTool.Migrations
 {
     [DbContext(typeof(SubjectDbContext))]
-    [Migration("20200705195004_InitialMigration")]
+    [Migration("20200706171313_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,7 +36,7 @@ namespace EloBaza.MigrationTool.Migrations
                     b.Property<bool>("IsValid")
                         .HasColumnType("bit");
 
-                    b.Property<int>("QuestionId")
+                    b.Property<int?>("QuestionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -99,7 +99,7 @@ namespace EloBaza.MigrationTool.Migrations
                     b.Property<int?>("ParentCategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SubjectId")
+                    b.Property<int?>("SubjectId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -132,7 +132,7 @@ namespace EloBaza.MigrationTool.Migrations
                         .HasColumnType("nvarchar(6)")
                         .HasMaxLength(6);
 
-                    b.Property<int>("SubjectId")
+                    b.Property<int?>("SubjectId")
                         .HasColumnType("int");
 
                     b.Property<short>("Year")
@@ -158,13 +158,14 @@ namespace EloBaza.MigrationTool.Migrations
                         .HasColumnType("nvarchar(70)")
                         .HasMaxLength(70);
 
-                    b.Property<int>("QuestionId")
+                    b.Property<int?>("QuestionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("QuestionId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[QuestionId] IS NOT NULL");
 
                     b.ToTable("Explanation");
                 });
@@ -177,7 +178,7 @@ namespace EloBaza.MigrationTool.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
@@ -190,7 +191,7 @@ namespace EloBaza.MigrationTool.Migrations
                     b.Property<bool>("IsPublished")
                         .HasColumnType("bit");
 
-                    b.Property<int>("SubjectId")
+                    b.Property<int?>("SubjectId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -230,7 +231,7 @@ namespace EloBaza.MigrationTool.Migrations
                     b.HasOne("EloBaza.Domain.Question", "Question")
                         .WithMany("Answers")
                         .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("EloBaza.Domain.Attachment", b =>
@@ -238,12 +239,12 @@ namespace EloBaza.MigrationTool.Migrations
                     b.HasOne("EloBaza.Domain.Explanation", "Explanation")
                         .WithMany("Attachments")
                         .HasForeignKey("ExplanationId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("EloBaza.Domain.Question", "Question")
                         .WithOne("Attachment")
                         .HasForeignKey("EloBaza.Domain.Attachment", "QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("EloBaza.Domain.Category", b =>
@@ -251,12 +252,12 @@ namespace EloBaza.MigrationTool.Migrations
                     b.HasOne("EloBaza.Domain.Category", "ParentCategory")
                         .WithMany("SubCategories")
                         .HasForeignKey("ParentCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("EloBaza.Domain.Subject", "Subject")
                         .WithMany("Categories")
                         .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("EloBaza.Domain.ExamSession", b =>
@@ -264,7 +265,7 @@ namespace EloBaza.MigrationTool.Migrations
                     b.HasOne("EloBaza.Domain.Subject", "Subject")
                         .WithMany("ExamSessions")
                         .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("EloBaza.Domain.Explanation", b =>
@@ -272,7 +273,7 @@ namespace EloBaza.MigrationTool.Migrations
                     b.HasOne("EloBaza.Domain.Question", "Question")
                         .WithOne("Explanation")
                         .HasForeignKey("EloBaza.Domain.Explanation", "QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("EloBaza.Domain.Question", b =>
@@ -280,17 +281,17 @@ namespace EloBaza.MigrationTool.Migrations
                     b.HasOne("EloBaza.Domain.Category", "Category")
                         .WithMany("Questions")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("EloBaza.Domain.ExamSession", "ExamSession")
                         .WithMany("Questions")
                         .HasForeignKey("ExamSessionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("EloBaza.Domain.Subject", "Subject")
                         .WithMany("Questions")
                         .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 #pragma warning restore 612, 618
         }

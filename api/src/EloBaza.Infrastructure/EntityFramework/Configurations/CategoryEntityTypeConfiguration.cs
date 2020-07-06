@@ -22,12 +22,12 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
             builder.HasOne(c => c.ParentCategory)
                 .WithMany(pc => pc.SubCategories)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(c => c.Subject)
                 .WithMany(s => s.Categories)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

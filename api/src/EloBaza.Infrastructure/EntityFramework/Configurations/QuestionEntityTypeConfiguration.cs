@@ -25,17 +25,17 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
             builder.HasOne(q => q.Subject)
                 .WithMany(s => s.Questions)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasOne(q => q.Category)
                 .WithMany(c => c.Questions)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasOne(q => q.ExamSession)
                 .WithMany(es => es.Questions)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

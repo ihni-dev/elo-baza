@@ -8,7 +8,7 @@ namespace EloBaza.Domain
         public string Content { get; private set; }
         public bool IsValid { get; private set; }
 
-        public Question Question { get; private set; }
+        public Question? Question { get; private set; }
 
         protected Answer() { }
 

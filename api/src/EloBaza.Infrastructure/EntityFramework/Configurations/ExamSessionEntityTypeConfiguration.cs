@@ -36,7 +36,7 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
             builder.HasOne(es => es.Subject)
                 .WithMany(s => s.ExamSessions)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

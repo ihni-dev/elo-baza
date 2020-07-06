@@ -13,8 +13,8 @@ namespace EloBaza.Domain
         public bool HasExplanation => !(Explanation is null);
         public bool IsPublished { get; private set; }
 
-        public Subject Subject { get; private set; }
-        public Category Category { get; private set; }
+        public Subject? Subject { get; private set; }
+        public Category? Category { get; private set; }
         public ExamSession? ExamSession { get; private set; }
         public bool IsExamQuestion => !(ExamSession is null);
 

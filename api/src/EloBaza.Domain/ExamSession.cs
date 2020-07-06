@@ -15,7 +15,7 @@ namespace EloBaza.Domain
         public bool IsResit => ResitNumber.HasValue;
         public ICollection<Question> Questions { get; private set; } = new List<Question>();
 
-        public Subject Subject { get; private set; }
+        public Subject? Subject { get; private set; }
 
         protected ExamSession() { }
 

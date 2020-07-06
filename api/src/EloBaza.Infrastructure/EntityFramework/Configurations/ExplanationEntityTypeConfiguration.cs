@@ -23,7 +23,7 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
                 .WithOne(s => s.Explanation)
                 .HasForeignKey<Explanation>("QuestionId")
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
             builder.HasOne(a => a.Question)
                 .WithMany(q => q.Answers)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

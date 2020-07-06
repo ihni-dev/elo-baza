@@ -31,13 +31,13 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
             builder.HasOne(a => a.Explanation)
                 .WithMany(e => e.Attachments)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasOne(a => a.Question)
                 .WithOne(q => q.Attachment)
                 .HasForeignKey<Attachment>("QuestionId")
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

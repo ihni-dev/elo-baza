@@ -8,7 +8,7 @@ namespace EloBaza.Domain
         public string Content { get; private set; }
         public ICollection<Attachment> Attachments { get; private set; } = new List<Attachment>();
 
-        public Question Question { get; private set; }
+        public Question? Question { get; private set; }
 
         protected Explanation() { }
 

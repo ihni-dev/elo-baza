@@ -16,7 +16,7 @@ namespace EloBaza.Domain
 
         public ICollection<Question> Questions { get; private set; } = new List<Question>();
 
-        public Subject Subject { get; private set; }
+        public Subject? Subject { get; private set; }
 
         protected Category() { }
 
