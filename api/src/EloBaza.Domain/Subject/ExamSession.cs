@@ -1,26 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using EloBaza.Domain.SharedKernel;
+using System;
 
-namespace EloBaza.Domain
+namespace EloBaza.Domain.Subject
 {
-    public class ExamSession
+    public class ExamSession : Entity
     {
         public const int ExamSessionNameMaxLength = 70;
 
-        public int Id { get; private set; }
         public string Name { get; set; }
         public short Year { get; private set; }
         public Semester Semester { get; private set; }
         public byte? ResitNumber { get; private set; }
         public bool IsResit => ResitNumber.HasValue;
-        public ICollection<Question> Questions { get; private set; } = new List<Question>();
 
-        public Subject? Subject { get; private set; }
+        public SubjectAggregate? Subject { get; private set; }
 
         protected ExamSession() { }
 
-        internal ExamSession(Subject subject, short year, Semester semester)
+        internal ExamSession(SubjectAggregate subject, short year, Semester semester)
         {
+            Key = Guid.NewGuid();
+
             Subject = subject;
 
             Year = year;

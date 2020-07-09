@@ -1,22 +1,26 @@
-﻿using EloBaza.Domain;
+﻿using EloBaza.Domain.SharedKernel;
+using EloBaza.Domain.Subject;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using System;
-using System.Linq;
 
 namespace EloBaza.Infrastructure.EntityFramework.Configurations
 {
-    class ExamSessionEntityTypeConfiguration : IEntityTypeConfiguration<ExamSession>
+    public class ExamSessionEntityTypeConfiguration : IEntityTypeConfiguration<ExamSession>
     {
         public void Configure(EntityTypeBuilder<ExamSession> builder)
         {
-            builder.ToTable(nameof(ExamSession));
+            builder.ToTable("ExamSession");
 
-            builder.HasKey(es => es.Id);
+            builder.HasKey("_id")
+                .HasName("Id");
 
-            builder.Property(es => es.Id)
-                .HasColumnName($"{nameof(ExamSession)}{nameof(ExamSession.Id)}");
+            builder.Property("_id")
+                .HasColumnName($"ExamSessionId");
+
+            builder.Property(es => es.Key)
+                .IsRequired(true);
+
+            builder.HasAlternateKey(es => es.Key);
 
             builder.Property(es => es.Name)
                 .HasMaxLength(ExamSession.ExamSessionNameMaxLength)
@@ -26,9 +30,9 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
                 .IsRequired(true);
 
             builder.Property(es => es.Semester)
-                .HasMaxLength(Enum.GetNames(typeof(Semester)).Max(n => n.Length))
+                .HasMaxLength(Semester.NameMaxLength)
                 .IsRequired(true)
-                .HasConversion(new EnumToStringConverter<Semester>());
+                .HasConversion(v => v.ToString(), v => Enumeration.FromDisplayName<Semester>(v));
 
             builder.Property(es => es.ResitNumber)
                 .IsRequired(false);

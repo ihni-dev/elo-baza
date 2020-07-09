@@ -1,4 +1,4 @@
-﻿using EloBaza.Domain.SharedKernel;
+﻿using EloBaza.Domain.SharedKernel.Exceptions;
 
 namespace EloBaza.Application.Queries.Common
 {

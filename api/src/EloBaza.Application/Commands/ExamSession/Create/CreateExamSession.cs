@@ -1,22 +1,23 @@
 ﻿using EloBaza.Application.Queries.ExamSession;
-using EloBaza.Domain.SharedKernel;
+using EloBaza.Domain.SharedKernel.Exceptions;
 using MediatR;
+using System;
 
 namespace EloBaza.Application.Commands.ExamSession.Create
 {
     public class CreateExamSession : IRequest<ExamSessionReadModel>
     {
-        public string SubjectName { get; private set; }
+        public Guid SubjectKey { get; private set; }
         public CreateExamSessionData Data { get; private set; }
 
-        public CreateExamSession(string subjectName, CreateExamSessionData data)
+        public CreateExamSession(Guid subjectKey, CreateExamSessionData data)
         {
             using (var validationContext = new ValidationContext())
             {
-                validationContext.Validate(() => string.IsNullOrWhiteSpace(subjectName), nameof(subjectName), "Subject name must be provided");
+                validationContext.Validate(() => subjectKey == default, nameof(subjectKey), "Subject Key must be provided");
             }
 
-            SubjectName = subjectName;
+            SubjectKey = subjectKey;
             Data = data;
         }
     }

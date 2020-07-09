@@ -1,4 +1,4 @@
-﻿using EloBaza.MigrationTool.DesignTimeDbContextFactiories;
+﻿using EloBaza.MigrationTool.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
@@ -11,7 +11,7 @@ namespace EloBaza.MigrationTool
         {
             Console.WriteLine("Starting Database Migration Tool...");
 
-            var dbContextFactory = new SubjectDbContextDesignTimeFactory();
+            var dbContextFactory = new EloBazaDbContextDesignTimeFactory();
 
             var migrated = false;
             var maxRetries = 10;
@@ -22,8 +22,8 @@ namespace EloBaza.MigrationTool
             {
                 try
                 {
-                    using var sc = dbContextFactory.CreateDbContext(args);
-                    sc.Database.Migrate();
+                    using var eloBazaDbContext = dbContextFactory.CreateDbContext(args);
+                    eloBazaDbContext.Database.Migrate();
                     migrated = true;
                 }
                 catch (Exception ex)

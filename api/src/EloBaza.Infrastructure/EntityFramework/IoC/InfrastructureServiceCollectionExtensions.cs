@@ -1,4 +1,6 @@
-﻿using EloBaza.Application.Contracts;
+﻿using EloBaza.Domain.Question;
+using EloBaza.Domain.SharedKernel;
+using EloBaza.Domain.Subject;
 using EloBaza.Infrastructure.EntityFramework.DbContexts;
 using EloBaza.Infrastructure.EntityFramework.Repositories;
 using MediatR;
@@ -15,9 +17,12 @@ namespace EloBaza.Infrastructure.EntityFramework.IoC
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            return services.AddDbContext<SubjectDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DB")))
+            return services
                 .AddTransient<IDbConnection>(sp => new SqlConnection(configuration.GetConnectionString("DB")))
-                .AddScoped<ISubjectRepository, SubjectRepository>()
+                .AddDbContext<SubjectDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DB")))
+                .AddDbContext<QuestionDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DB")))
+                .AddScoped<IRepository<SubjectAggregate>, SubjectRepository>()
+                .AddScoped<IRepository<QuestionAggregate>, QuestionRepository>()
                 .AddMediatR(typeof(InfrastructureServiceCollectionExtensions).GetTypeInfo().Assembly);
         }
     }

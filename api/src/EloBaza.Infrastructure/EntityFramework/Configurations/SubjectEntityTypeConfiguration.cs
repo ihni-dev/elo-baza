@@ -1,26 +1,29 @@
-﻿using EloBaza.Domain;
+﻿using EloBaza.Domain.Subject;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EloBaza.Infrastructure.EntityFramework.Configurations
 {
-    class SubjectEntityTypeConfiguration : IEntityTypeConfiguration<Subject>
+    public class SubjectEntityTypeConfiguration : IEntityTypeConfiguration<SubjectAggregate>
     {
-        public void Configure(EntityTypeBuilder<Subject> builder)
+        public void Configure(EntityTypeBuilder<SubjectAggregate> builder)
         {
-            builder.ToTable(nameof(Subject));
+            builder.ToTable("Subject");
 
-            builder.HasKey(s => s.Id);
+            builder.HasKey("_id")
+                .HasName("Id");
 
-            builder.Property(s => s.Id)
-                .HasColumnName($"{nameof(Subject)}{nameof(Subject.Id)}");
+            builder.Property("_id")
+                .HasColumnName("SubjectId");
 
-            builder.Property(s => s.Name)
-                .HasMaxLength(Subject.NameMaxLength)
+            builder.Property(s => s.Key)
                 .IsRequired(true);
 
-            builder.HasIndex(nameof(Subject.Name))
-                .IsUnique();
+            builder.HasAlternateKey(s => s.Key);
+
+            builder.Property(s => s.Name)
+                .HasMaxLength(SubjectAggregate.NameMaxLength)
+                .IsRequired(true);
         }
     }
 }

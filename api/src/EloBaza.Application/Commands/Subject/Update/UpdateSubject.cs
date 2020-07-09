@@ -1,21 +1,22 @@
-﻿using EloBaza.Domain.SharedKernel;
+﻿using EloBaza.Domain.SharedKernel.Exceptions;
 using MediatR;
+using System;
 
 namespace EloBaza.Application.Commands.Subject.Update
 {
     public class UpdateSubject : IRequest
     {
-        public string Name { get; private set; }
+        public Guid SubjectKey { get; private set; }
         public UpdateSubjectData Data { get; private set; }
 
-        public UpdateSubject(string name, UpdateSubjectData data)
+        public UpdateSubject(Guid subjectKey, UpdateSubjectData data)
         {
             using (var validationContext = new ValidationContext())
             {
-                validationContext.Validate(() => string.IsNullOrWhiteSpace(name), nameof(name), "Subject name must be provided");
+                validationContext.Validate(() => subjectKey == default, nameof(subjectKey), "Subject Key must be provided");
             }
 
-            Name = name;
+            SubjectKey = subjectKey;
             Data = data;
         }
     }

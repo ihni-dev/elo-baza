@@ -1,6 +1,6 @@
-﻿using EloBaza.Application.Contracts;
-using EloBaza.Application.Queries.Subject.GetAll;
+﻿using EloBaza.Application.Queries.Subject.GetAll;
 using EloBaza.Domain.SharedKernel;
+using EloBaza.Domain.Subject;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,22 +9,18 @@ namespace EloBaza.Application.Commands.Subject.Create
 {
     class CreateSubjectHandler : IRequestHandler<CreateSubject, SubjectReadModel>
     {
-        private readonly ISubjectRepository _subjectRepository;
+        private readonly IRepository<SubjectAggregate> _subjectRepository;
 
-        public CreateSubjectHandler(ISubjectRepository subjectRepository)
+        public CreateSubjectHandler(IRepository<SubjectAggregate> subjectRepository)
         {
             _subjectRepository = subjectRepository;
         }
 
         public async Task<SubjectReadModel> Handle(CreateSubject request, CancellationToken cancellationToken)
         {
-            if (await _subjectRepository.Exists(request.Data.Name, cancellationToken))
-                throw new AlreadyExistsException($"Subject with name: {request.Data.Name} already exists");
+            var subject = new SubjectAggregate(request.Data.Name);
 
-            var subject = new Domain.Subject(request.Data.Name);
-
-            _subjectRepository.Add(subject);
-            await _subjectRepository.SaveChanges(cancellationToken);
+            await _subjectRepository.Save(subject, cancellationToken);
 
             return new SubjectReadModel()
             {

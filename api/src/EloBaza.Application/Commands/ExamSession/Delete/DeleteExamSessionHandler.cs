@@ -1,5 +1,6 @@
-﻿using EloBaza.Application.Contracts;
-using EloBaza.Domain.SharedKernel;
+﻿using EloBaza.Domain.SharedKernel;
+using EloBaza.Domain.SharedKernel.Exceptions;
+using EloBaza.Domain.Subject;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,22 +9,22 @@ namespace EloBaza.Application.Commands.ExamSession.Delete
 {
     class DeleteExamSessionHandler : AsyncRequestHandler<DeleteExamSession>
     {
-        private readonly ISubjectRepository _subjectRepository;
+        private readonly IRepository<SubjectAggregate> _subjectRepository;
 
-        public DeleteExamSessionHandler(ISubjectRepository subjectRepository)
+        public DeleteExamSessionHandler(IRepository<SubjectAggregate> subjectRepository)
         {
             _subjectRepository = subjectRepository;
         }
 
         protected override async Task Handle(DeleteExamSession request, CancellationToken cancellationToken)
         {
-            var subject = await _subjectRepository.Find(request.SubjectName, cancellationToken);
+            var subject = await _subjectRepository.Find(request.SubjectKey, cancellationToken);
             if (subject is null)
-                throw new NotFoundException($"Subject with Name: {request.SubjectName} does not exists");
+                throw new NotFoundException($"Subject with Key: {request.SubjectKey} does not exists");
 
-            subject.DeleteExamSession(request.Name);
+            subject.DeleteExamSession(request.ExamSessionKey);
 
-            await _subjectRepository.SaveChanges(cancellationToken);
+            await _subjectRepository.Save(subject, cancellationToken);
         }
     }
 }

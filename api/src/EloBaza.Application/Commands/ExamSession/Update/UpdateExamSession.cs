@@ -1,24 +1,25 @@
-﻿using EloBaza.Domain.SharedKernel;
+﻿using EloBaza.Domain.SharedKernel.Exceptions;
 using MediatR;
+using System;
 
 namespace EloBaza.Application.Commands.ExamSession.Update
 {
     public class UpdateExamSession : IRequest
     {
-        public string SubjectName { get; private set; }
-        public string Name { get; private set; }
+        public Guid SubjectKey { get; private set; }
+        public Guid ExamSessionKey { get; private set; }
         public UpdateExamSessionData Data { get; private set; }
 
-        public UpdateExamSession(string subjectName, string name, UpdateExamSessionData data)
+        public UpdateExamSession(Guid subjectKey, Guid examSessionKey, UpdateExamSessionData data)
         {
             using (var validationContext = new ValidationContext())
             {
-                validationContext.Validate(() => string.IsNullOrWhiteSpace(subjectName), nameof(subjectName), "Subject name must be provided");
-                validationContext.Validate(() => string.IsNullOrWhiteSpace(name), nameof(name), "Exam session name must be provided");
+                validationContext.Validate(() => subjectKey == default, nameof(subjectKey), "Subject Key must be provided");
+                validationContext.Validate(() => examSessionKey == default, nameof(examSessionKey), "Exam session Key must be provided");
             }
 
-            SubjectName = subjectName;
-            Name = name;
+            SubjectKey = subjectKey;
+            ExamSessionKey = examSessionKey;
             Data = data;
         }
     }

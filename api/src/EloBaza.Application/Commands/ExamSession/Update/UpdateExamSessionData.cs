@@ -1,5 +1,5 @@
-﻿using EloBaza.Domain;
-using EloBaza.Domain.SharedKernel;
+﻿using EloBaza.Domain.SharedKernel.Exceptions;
+using EloBaza.Domain.Subject;
 
 namespace EloBaza.Application.Commands.ExamSession.Update
 {

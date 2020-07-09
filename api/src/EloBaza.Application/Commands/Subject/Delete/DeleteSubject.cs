@@ -1,20 +1,21 @@
-﻿using EloBaza.Domain.SharedKernel;
+﻿using EloBaza.Domain.SharedKernel.Exceptions;
 using MediatR;
+using System;
 
 namespace EloBaza.Application.Commands.Subject.Delete
 {
     public class DeleteSubject : IRequest
     {
-        public string Name { get; private set; }
+        public Guid SubjectKey { get; private set; }
 
-        public DeleteSubject(string name)
+        public DeleteSubject(Guid subjectKey)
         {
             using (var validationContext = new ValidationContext())
             {
-                validationContext.Validate(() => string.IsNullOrWhiteSpace(name), nameof(name), "Subject name must be provided");
+                validationContext.Validate(() => subjectKey == default, nameof(subjectKey), "Subject Key must be provided");
             }
 
-            Name = name;
+            SubjectKey = subjectKey;
         }
     }
 }

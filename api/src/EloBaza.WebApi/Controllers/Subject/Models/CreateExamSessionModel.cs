@@ -1,4 +1,4 @@
-﻿using EloBaza.Domain;
+﻿using EloBaza.Domain.Subject;
 using System.ComponentModel.DataAnnotations;
 
 namespace EloBaza.WebApi.Controllers.Subject.Models
@@ -17,6 +17,6 @@ namespace EloBaza.WebApi.Controllers.Subject.Models
         /// <summary>
         /// Exam session semester
         /// </summary>
-        public Semester Semester { get; set; }
+        public Semester? Semester { get; set; }
     }
 }

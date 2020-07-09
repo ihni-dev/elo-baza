@@ -1,4 +1,4 @@
-﻿using EloBaza.Domain;
+﻿using EloBaza.Domain.Subject;
 
 namespace EloBaza.Application.Queries.ExamSession
 {
@@ -18,6 +18,6 @@ namespace EloBaza.Application.Queries.ExamSession
         /// <summary>
         /// Exam session semester
         /// </summary>
-        public Semester Semester { get; set; }
+        public Semester? Semester { get; set; }
     }
 }

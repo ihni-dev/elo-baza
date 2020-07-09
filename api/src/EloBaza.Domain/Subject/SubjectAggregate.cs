@@ -1,34 +1,31 @@
 ﻿using EloBaza.Domain.SharedKernel;
+using EloBaza.Domain.SharedKernel.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EloBaza.Domain
+namespace EloBaza.Domain.Subject
 {
-    public class Subject
+    public class SubjectAggregate : AggregateRoot
     {
         public const int NameMaxLength = 50;
 
-        public int Id { get; private set; }
         public string Name { get; private set; }
         public ICollection<ExamSession> ExamSessions { get; private set; } = new List<ExamSession>();
         public ICollection<Category> Categories { get; private set; } = new List<Category>();
-        public ICollection<Question> Questions { get; private set; } = new List<Question>();
 
-        public Subject(string name)
+        public SubjectAggregate(string name)
         {
-            using (var validationContext = new ValidationContext())
-            {
-                validationContext.Validate(() => string.IsNullOrEmpty(name), nameof(Name), "Subject name must be provided");
-            }
+            Validate(name);
 
+            Key = Guid.NewGuid();
             Name = name;
         }
 
         public ExamSession CreateExamSession(short year, Semester semester)
         {
             var examSession = new ExamSession(this, year, semester);
-            if (!(FindExamSession(examSession.Name) is null))
+            if (!(ExamSessions.FirstOrDefault(es => es.Name.Equals(examSession.Name, StringComparison.OrdinalIgnoreCase)) is null))
                 throw new AlreadyExistsException($"Exam session {examSession.Name} already exists");
 
             ExamSessions.Add(examSession);
@@ -37,19 +34,16 @@ namespace EloBaza.Domain
 
         public void UpdateName(string name)
         {
-            using (var validationContext = new ValidationContext())
-            {
-                validationContext.Validate(() => string.IsNullOrEmpty(name), nameof(Name), "Subject name must be provided");
-            }
+            Validate(name);
 
             Name = name;
         }
 
-        public void UpdateExamSession(string name, short? year, Semester? semester)
+        public void UpdateExamSession(Guid examSessionKey, short? year, Semester? semester)
         {
-            var examSession = FindExamSession(name);
+            var examSession = FindExamSession(examSessionKey);
             if (examSession is null)
-                throw new NotFoundException($"Exam session with Name: {name} does not exists");
+                throw new NotFoundException($"Exam session with Key: {examSessionKey} does not exists");
 
             var newYear = year ?? examSession.Year;
             var newSemester = semester ?? examSession.Semester;
@@ -64,18 +58,24 @@ namespace EloBaza.Domain
             }
         }
 
-        public void DeleteExamSession(string name)
+        public void DeleteExamSession(Guid examSessionKey)
         {
-            var examSession = FindExamSession(name);
+            var examSession = FindExamSession(examSessionKey);
             if (examSession is null)
-                throw new NotFoundException($"Exam session with Name: {name} does not exists");
+                throw new NotFoundException($"Exam session with Key: {examSessionKey} does not exists for subject: {Key}");
 
             ExamSessions.Remove(examSession);
         }
 
-        private ExamSession FindExamSession(string name)
+        private void Validate(string name)
         {
-            var examSession = ExamSessions.SingleOrDefault(es => es.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            using var validationContext = new ValidationContext();
+            validationContext.Validate(() => string.IsNullOrEmpty(name), nameof(Name), "Subject name must be provided");
+        }
+
+        private ExamSession FindExamSession(Guid examSessionKey)
+        {
+            var examSession = ExamSessions.SingleOrDefault(es => es.Key == examSessionKey);
 
             return examSession;
         }

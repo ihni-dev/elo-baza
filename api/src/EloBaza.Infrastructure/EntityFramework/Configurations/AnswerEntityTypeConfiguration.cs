@@ -1,20 +1,25 @@
-﻿using EloBaza.Domain;
+﻿using EloBaza.Domain.Question;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 
 namespace EloBaza.Infrastructure.EntityFramework.Configurations
 {
-    class AnswerEntityTypeConfiguration : IEntityTypeConfiguration<Answer>
+    public class AnswerEntityTypeConfiguration : IEntityTypeConfiguration<Answer>
     {
         public void Configure(EntityTypeBuilder<Answer> builder)
         {
-            builder.ToTable(nameof(Answer));
+            builder.ToTable("Answer");
 
-            builder.HasKey(a => a.Id);
+            builder.HasKey("_id")
+                .HasName("Id");
 
-            builder.Property(a => a.Id)
-                .HasColumnName($"{nameof(Answer)}{nameof(Answer.Id)}");
+            builder.Property("_id")
+                .HasColumnName($"AnswerId");
+
+            builder.Property(a => a.Key)
+                .IsRequired(true);
+
+            builder.HasAlternateKey(a => a.Key);
 
             builder.Property(a => a.Content)
                 .IsRequired(true);

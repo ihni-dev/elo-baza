@@ -1,4 +1,4 @@
-﻿using EloBaza.Domain.SharedKernel;
+﻿using EloBaza.Domain.SharedKernel.Exceptions;
 using MediatR;
 
 namespace EloBaza.Application.Queries.Subject.Get

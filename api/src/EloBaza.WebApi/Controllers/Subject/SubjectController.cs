@@ -15,6 +15,7 @@ using EloBaza.WebApi.Controllers.Subject.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace EloBaza.WebApi.Controllers.Subject
@@ -89,7 +90,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// <summary>
         /// Delete a subject
         /// </summary>
-        /// <param name="name">Name of subject to delete</param>
+        /// <param name="subjectKey">Key of subject to delete</param>
         /// <response code="204">If deletion succeeded</response>
         /// <response code="400">If validation failed</response> 
         /// <response code="404">If subject does not exists</response>
@@ -97,9 +98,9 @@ namespace EloBaza.WebApi.Controllers.Subject
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(string name)
+        public async Task<IActionResult> Delete(Guid subjectKey)
         {
-            await _mediator.Send(new DeleteSubject(name));
+            await _mediator.Send(new DeleteSubject(subjectKey));
 
             return NoContent();
         }
@@ -107,7 +108,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// <summary>
         /// Update a subject
         /// </summary>
-        /// <param name="name">Name of subject to update</param>
+        /// <param name="subjectKey">Key of subject to update</param>
         /// <param name="updateSubjectModel">Data to update</param>
         /// <response code="204">If update succeeded</response>
         /// <response code="400">If validation failed</response> 
@@ -118,10 +119,10 @@ namespace EloBaza.WebApi.Controllers.Subject
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<IActionResult> Update(string name, UpdateSubjectModel updateSubjectModel)
+        public async Task<IActionResult> Update(Guid subjectKey, UpdateSubjectModel updateSubjectModel)
         {
             var updateSubjectData = _mapper.Map<UpdateSubjectData>(updateSubjectModel);
-            await _mediator.Send(new UpdateSubject(name, updateSubjectData));
+            await _mediator.Send(new UpdateSubject(subjectKey, updateSubjectData));
 
             return NoContent();
         }
@@ -151,40 +152,40 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// <summary>
         /// Create an exam session for a subject
         /// </summary>
-        /// <param name="subjectName">Name of subject to create exam session for</param>
+        /// <param name="subjectKey">Key of subject to create exam session for</param>
         /// <param name="createExamSessionModel">Data required to create exam session</param>
         /// <response code="201">Exam session read model if succeeded</response>
         /// <response code="400">If validation failed</response> 
         /// <response code="404">If subject does not exists</response>
         /// <response code="409">If exam session in given subject already exists</response>
-        [HttpPost("{subjectName}/ExamSession")]
+        [HttpPost("{subjectKey}/ExamSession")]
         [ProducesResponseType(typeof(ExamSessionReadModel), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<IActionResult> CreateExamSession(string subjectName, CreateExamSessionModel createExamSessionModel)
+        public async Task<IActionResult> CreateExamSession(Guid subjectKey, CreateExamSessionModel createExamSessionModel)
         {
             var createExamSessionData = _mapper.Map<CreateExamSessionData>(createExamSessionModel);
-            var examSession = await _mediator.Send(new CreateExamSession(subjectName, createExamSessionData));
+            var examSession = await _mediator.Send(new CreateExamSession(subjectKey, createExamSessionData));
 
-            return CreatedAtAction(nameof(GetExamSessionByName), new { subjectName, name = examSession.Name }, examSession);
+            return CreatedAtAction(nameof(GetExamSessionByName), new { subjectKey, name = examSession.Name }, examSession);
         }
 
         /// <summary>
         /// Delete an exam session
         /// </summary>
-        /// <param name="subjectName">Name of exam session subject</param>
-        /// <param name="name">Name of exam session to delete</param>
+        /// <param name="subjectKey">Key of exam session's subject</param>
+        /// <param name="examSessionKey">Key of exam session to delete</param>
         /// <response code="204">If deletion succeeded</response>
         /// <response code="400">If validation failed</response> 
         /// <response code="404">If subject or exam session does not exists</response>
-        [HttpDelete("{subjectName}/ExamSession/{name}")]
+        [HttpDelete("{subjectKey}/ExamSession/{examSessionKey}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteExamSession(string subjectName, string name)
+        public async Task<IActionResult> DeleteExamSession(Guid subjectKey, Guid examSessionKey)
         {
-            await _mediator.Send(new DeleteExamSession(subjectName, name));
+            await _mediator.Send(new DeleteExamSession(subjectKey, examSessionKey));
 
             return NoContent();
         }
@@ -192,22 +193,22 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// <summary>
         /// Update an exam session
         /// </summary>
-        /// <param name="subjectName">Name of exam session subject</param>
-        /// <param name="name">Name of exam session to update</param>
+        /// <param name="subjectKey">Key of exam session subject</param>
+        /// <param name="examSessionKey">Key of exam session to update</param>
         /// <param name="updateExamSessionModel">Data to update</param>
         /// <response code="204">If update succeeded</response>
         /// <response code="400">If validation failed</response> 
         /// <response code="404">If subject or exam session does not exists</response>
         /// <response code="409">If exam session with provided data already exists</response>
-        [HttpPatch("{subjectName}/ExamSession/{name}")]
+        [HttpPatch("{subjectKey}/ExamSession/{examSessionKey}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<IActionResult> Update(string subjectName, string name, UpdateExamSessionModel updateExamSessionModel)
+        public async Task<IActionResult> Update(Guid subjectKey, Guid examSessionKey, UpdateExamSessionModel updateExamSessionModel)
         {
             var updateExamSessionData = _mapper.Map<UpdateExamSessionData>(updateExamSessionModel);
-            await _mediator.Send(new UpdateExamSession(subjectName, name, updateExamSessionData));
+            await _mediator.Send(new UpdateExamSession(subjectKey, examSessionKey, updateExamSessionData));
 
             return NoContent();
         }

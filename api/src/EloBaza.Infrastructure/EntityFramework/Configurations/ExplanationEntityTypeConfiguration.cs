@@ -1,19 +1,26 @@
-﻿using EloBaza.Domain;
+﻿using EloBaza.Domain.Question;
+using EloBaza.Domain.Subject;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EloBaza.Infrastructure.EntityFramework.Configurations
 {
-    class ExplanationEntityTypeConfiguration : IEntityTypeConfiguration<Explanation>
+    public class ExplanationEntityTypeConfiguration : IEntityTypeConfiguration<Explanation>
     {
         public void Configure(EntityTypeBuilder<Explanation> builder)
         {
-            builder.ToTable(nameof(Explanation));
+            builder.ToTable("Explanation");
 
-            builder.HasKey(e => e.Id);
+            builder.HasKey("_id")
+                .HasName("Id");
 
-            builder.Property(e => e.Id)
-                .HasColumnName($"{nameof(Explanation)}{nameof(Explanation.Id)}");
+            builder.Property("_id")
+                .HasColumnName($"ExplanationId");
+
+            builder.Property(e => e.Key)
+                .IsRequired(true);
+
+            builder.HasAlternateKey(e => e.Key);
 
             builder.Property(e => e.Content)
                 .HasMaxLength(ExamSession.ExamSessionNameMaxLength)

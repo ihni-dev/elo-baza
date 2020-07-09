@@ -1,23 +1,24 @@
-﻿using EloBaza.Domain.SharedKernel;
+﻿using EloBaza.Domain.SharedKernel.Exceptions;
 using MediatR;
+using System;
 
 namespace EloBaza.Application.Commands.ExamSession.Delete
 {
     public class DeleteExamSession : IRequest
     {
-        public string SubjectName { get; private set; }
-        public string Name { get; private set; }
+        public Guid SubjectKey { get; private set; }
+        public Guid ExamSessionKey { get; private set; }
 
-        public DeleteExamSession(string subjectName, string name)
+        public DeleteExamSession(Guid subjectKey, Guid examSessionKey)
         {
             using (var validationContext = new ValidationContext())
             {
-                validationContext.Validate(() => string.IsNullOrWhiteSpace(subjectName), nameof(subjectName), "Subject name must be provided");
-                validationContext.Validate(() => string.IsNullOrWhiteSpace(name), nameof(name), "Exam session name must be provided");
+                validationContext.Validate(() => subjectKey == default, nameof(subjectKey), "Subject Key must be provided");
+                validationContext.Validate(() => examSessionKey == default, nameof(examSessionKey), "Exam session Key must be provided");
             }
 
-            SubjectName = subjectName;
-            Name = name;
+            SubjectKey = subjectKey;
+            ExamSessionKey = examSessionKey;
         }
     }
 }

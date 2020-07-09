@@ -1,5 +1,6 @@
-﻿using EloBaza.Application.Contracts;
-using EloBaza.Domain.SharedKernel;
+﻿using EloBaza.Domain.SharedKernel;
+using EloBaza.Domain.SharedKernel.Exceptions;
+using EloBaza.Domain.Subject;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,23 +9,23 @@ namespace EloBaza.Application.Commands.ExamSession.Update
 {
     class UpdateExamSessionHandler : AsyncRequestHandler<UpdateExamSession>
     {
-        private readonly ISubjectRepository _subjectRepository;
+        private readonly IRepository<SubjectAggregate> _subjectRepository;
 
-        public UpdateExamSessionHandler(ISubjectRepository subjectRepository)
+        public UpdateExamSessionHandler(IRepository<SubjectAggregate> subjectRepository)
         {
             _subjectRepository = subjectRepository;
         }
 
         protected override async Task Handle(UpdateExamSession request, CancellationToken cancellationToken)
         {
-            var subject = await _subjectRepository.Find(request.SubjectName, cancellationToken);
+            var subject = await _subjectRepository.Find(request.SubjectKey, cancellationToken);
             if (subject is null)
-                throw new NotFoundException($"Subject with name: {request.SubjectName} does not exists");
+                throw new NotFoundException($"Subject with Key: {request.SubjectKey} does not exists");
 
-            if (request.Data.Year.HasValue || request.Data.Semester.HasValue)
-                subject.UpdateExamSession(request.Name, request.Data.Year, request.Data.Semester);
+            if (request.Data.Year.HasValue || !(request.Data.Semester is null))
+                subject.UpdateExamSession(request.ExamSessionKey, request.Data.Year, request.Data.Semester);
 
-            await _subjectRepository.SaveChanges(cancellationToken);
+            await _subjectRepository.Save(subject, cancellationToken);
         }
     }
 }

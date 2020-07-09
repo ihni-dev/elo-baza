@@ -1,4 +1,4 @@
-﻿using EloBaza.Domain;
+﻿using EloBaza.Domain.Subject;
 using System.ComponentModel.DataAnnotations;
 
 namespace EloBaza.WebApi.Controllers.Subject.Models

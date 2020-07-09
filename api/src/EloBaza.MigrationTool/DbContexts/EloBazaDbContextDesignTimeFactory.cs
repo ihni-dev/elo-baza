@@ -1,14 +1,13 @@
-﻿using EloBaza.Infrastructure.EntityFramework.DbContexts;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using System;
 
-namespace EloBaza.MigrationTool.DesignTimeDbContextFactiories
+namespace EloBaza.MigrationTool.DbContexts
 {
-    class SubjectDbContextDesignTimeFactory : IDesignTimeDbContextFactory<SubjectDbContext>
+    class EloBazaDbContextDesignTimeFactory : IDesignTimeDbContextFactory<EloBazaDbContext>
     {
-        public SubjectDbContext CreateDbContext(string[] args)
+        public EloBazaDbContext CreateDbContext(string[] args)
         {
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: true)
@@ -18,17 +17,17 @@ namespace EloBaza.MigrationTool.DesignTimeDbContextFactiories
             var connectionString = configuration.GetConnectionString("DB");
             Console.WriteLine($"Using connection string: {connectionString}");
 
-            var builder = new DbContextOptionsBuilder<SubjectDbContext>()
+            var builder = new DbContextOptionsBuilder<EloBazaDbContext>()
                 .UseSqlServer(connectionString, sqlServerOptionsAction: o =>
                 {
-                    o.MigrationsAssembly(typeof(SubjectDbContextDesignTimeFactory).Assembly.FullName);
+                    o.MigrationsAssembly(typeof(EloBazaDbContextDesignTimeFactory).Assembly.FullName);
                     o.EnableRetryOnFailure(
                         maxRetryCount: 10,
                         maxRetryDelay: TimeSpan.FromSeconds(30),
                         errorNumbersToAdd: null);
                 });
 
-            return new SubjectDbContext(builder.Options);
+            return new EloBazaDbContext(builder.Options);
         }
     }
 }

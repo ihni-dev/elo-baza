@@ -1,19 +1,22 @@
 ﻿using EloBaza.Domain.SharedKernel;
+using EloBaza.Domain.SharedKernel.Exceptions;
+using System;
 
-namespace EloBaza.Domain
+namespace EloBaza.Domain.Question
 {
-    public class Answer
+    public class Answer : Entity
     {
-        public int Id { get; private set; }
         public string Content { get; private set; }
         public bool IsValid { get; private set; }
 
-        public Question? Question { get; private set; }
+        public QuestionAggregate? Question { get; private set; }
 
         protected Answer() { }
 
-        internal Answer(Question question, string content, bool isValid)
+        internal Answer(QuestionAggregate question, string content, bool isValid)
         {
+            Key = Guid.NewGuid();
+
             using (var validationContext = new ValidationContext())
             {
                 validationContext.Validate(() => string.IsNullOrEmpty(content), nameof(content), "Answer content must have a value");

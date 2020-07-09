@@ -1,20 +1,26 @@
-﻿using EloBaza.Domain;
+﻿using EloBaza.Domain.Question;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 
 namespace EloBaza.Infrastructure.EntityFramework.Configurations
 {
-    class AttachmentEntityTypeConfiguration : IEntityTypeConfiguration<Attachment>
+    public class AttachmentEntityTypeConfiguration : IEntityTypeConfiguration<Attachment>
     {
         public void Configure(EntityTypeBuilder<Attachment> builder)
         {
-            builder.ToTable(nameof(Attachment));
+            builder.ToTable("Attachment");
 
-            builder.HasKey(a => a.Id);
+            builder.HasKey("_id")
+                .HasName("Id");
 
-            builder.Property(a => a.Id)
-                .HasColumnName($"{nameof(Attachment)}{nameof(Attachment.Id)}");
+            builder.Property("_id")
+                .HasColumnName($"AttachmentId");
+
+            builder.Property(a => a.Key)
+                .IsRequired(true);
+
+            builder.HasAlternateKey(a => a.Key);
 
             builder.Property(a => a.FileName)
                 .HasMaxLength(Attachment.FileSystemMaximumFileName)

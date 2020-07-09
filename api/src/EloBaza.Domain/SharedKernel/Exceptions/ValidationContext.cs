@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EloBaza.Domain.SharedKernel
+namespace EloBaza.Domain.SharedKernel.Exceptions
 {
     public sealed class ValidationContext : IDisposable
     {

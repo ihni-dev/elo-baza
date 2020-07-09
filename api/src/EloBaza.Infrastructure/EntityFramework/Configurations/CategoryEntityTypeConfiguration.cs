@@ -1,19 +1,25 @@
-﻿using EloBaza.Domain;
+﻿using EloBaza.Domain.Subject;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EloBaza.Infrastructure.EntityFramework.Configurations
 {
-    class CategoryEntityTypeConfiguration : IEntityTypeConfiguration<Category>
+    public class CategoryEntityTypeConfiguration : IEntityTypeConfiguration<Category>
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.ToTable(nameof(Category));
+            builder.ToTable("Category");
 
-            builder.HasKey(c => c.Id);
+            builder.HasKey("_id")
+                .HasName("CategoryId");
 
-            builder.Property(c => c.Id)
-                .HasColumnName($"{nameof(Category)}{nameof(Category.Id)}");
+            builder.Property("_id")
+                .HasColumnName($"CategoryId");
+
+            builder.Property(c => c.Key)
+                .IsRequired(true);
+
+            builder.HasAlternateKey(c => c.Key);
 
             builder.Property(c => c.Name)
                 .HasMaxLength(Category.CategoryNameMaxLength)

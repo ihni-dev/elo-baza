@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EloBaza.Domain.SharedKernel
+namespace EloBaza.Domain.SharedKernel.Exceptions
 {
     public class NotFoundException : Exception
     {

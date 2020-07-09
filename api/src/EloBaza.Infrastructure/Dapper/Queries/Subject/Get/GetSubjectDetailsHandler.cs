@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using EloBaza.Application.Queries.ExamSession;
 using EloBaza.Application.Queries.Subject.Get;
-using EloBaza.Domain.SharedKernel;
+using EloBaza.Domain.SharedKernel.Exceptions;
 using MediatR;
 using System.Collections.Generic;
 using System.Data;
