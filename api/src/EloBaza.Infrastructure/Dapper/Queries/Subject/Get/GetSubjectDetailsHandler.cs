@@ -46,12 +46,12 @@ WHERE s.Name = @Name
 
                     return subjectDetailsReadModel;
                 },
-                param: new { request.Name },
+                param: new { request.SubjectKey },
                 splitOn: "Name");
 
-            var subject = lookup.GetValueOrDefault(request.Name);
+            var subject = lookup.GetValueOrDefault(request.SubjectKey);
             if (subject is null)
-                throw new NotFoundException($"Subject {request.Name} not found");
+                throw new NotFoundException($"Subject {request.SubjectKey} not found");
 
             return subject;
         }

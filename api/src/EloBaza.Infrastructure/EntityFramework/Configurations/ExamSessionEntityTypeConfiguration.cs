@@ -1,5 +1,5 @@
 ﻿using EloBaza.Domain.SharedKernel;
-using EloBaza.Domain.Subject;
+using EloBaza.Domain.SubjectAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,16 +9,11 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
     {
         public void Configure(EntityTypeBuilder<ExamSession> builder)
         {
-            builder.ToTable("ExamSession");
+            builder.ToTable(nameof(ExamSession));
 
-            builder.HasKey("_id")
-                .HasName("Id");
-
-            builder.Property("_id")
-                .HasColumnName($"ExamSessionId");
-
-            builder.Property(es => es.Key)
-                .IsRequired(true);
+            builder.HasKey("Id");
+            builder.Property("Id")
+                .HasColumnName($"{nameof(ExamSession)}Id");
 
             builder.HasAlternateKey(es => es.Key);
 
@@ -26,20 +21,15 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
                 .HasMaxLength(ExamSession.ExamSessionNameMaxLength)
                 .IsRequired(true);
 
-            builder.Property(es => es.Year)
-                .IsRequired(true);
-
             builder.Property(es => es.Semester)
                 .HasMaxLength(Semester.NameMaxLength)
                 .IsRequired(true)
                 .HasConversion(v => v.ToString(), v => Enumeration.FromDisplayName<Semester>(v));
 
-            builder.Property(es => es.ResitNumber)
-                .IsRequired(false);
-
-            builder.HasOne(es => es.Subject)
+            builder.HasOne<Subject>(es => es.Subject)
                 .WithMany(s => s.ExamSessions)
                 .IsRequired(false)
+                .HasForeignKey($"{nameof(Subject)}Id")
                 .OnDelete(DeleteBehavior.SetNull);
         }
     }

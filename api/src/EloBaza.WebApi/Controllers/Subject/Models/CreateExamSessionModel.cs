@@ -1,5 +1,4 @@
-﻿using EloBaza.Domain.Subject;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EloBaza.WebApi.Controllers.Subject.Models
 {
@@ -9,14 +8,17 @@ namespace EloBaza.WebApi.Controllers.Subject.Models
     public class CreateExamSessionModel
     {
         /// <summary>
-        /// Exam session year
+        /// Exam session year - range 1950 to 2150
         /// </summary>
         [Required]
         [Range(1950, 2150)]
-        public int Year { get; set; }
+        public short Year { get; set; }
+
         /// <summary>
-        /// Exam session semester
+        /// Exam session semester - Winter, Summer
         /// </summary>
-        public Semester? Semester { get; set; }
+        [Required]
+        [RegularExpression("(^winter$)|(^summer$)/i", ErrorMessage = "Available values - Winter, Summer")]
+        public string Semester { get; set; } = default!;
     }
 }

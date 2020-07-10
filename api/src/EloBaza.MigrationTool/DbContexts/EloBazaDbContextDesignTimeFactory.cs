@@ -21,10 +21,6 @@ namespace EloBaza.MigrationTool.DbContexts
                 .UseSqlServer(connectionString, sqlServerOptionsAction: o =>
                 {
                     o.MigrationsAssembly(typeof(EloBazaDbContextDesignTimeFactory).Assembly.FullName);
-                    o.EnableRetryOnFailure(
-                        maxRetryCount: 10,
-                        maxRetryDelay: TimeSpan.FromSeconds(30),
-                        errorNumbersToAdd: null);
                 });
 
             return new EloBazaDbContext(builder.Options);

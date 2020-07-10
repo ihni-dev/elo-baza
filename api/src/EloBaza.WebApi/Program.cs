@@ -39,7 +39,7 @@ namespace EloBaza.WebApi
         private static void InitLogger()
         {
             var config = new ConfigurationBuilder()
-               .AddJsonFile("appsettings.json", false, true)
+               .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                .Build();
 
             Log.Logger = new LoggerConfiguration()

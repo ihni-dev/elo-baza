@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EloBaza.Domain.Subject
+namespace EloBaza.Domain.SubjectAggregate
 {
     public class Category : Entity
     {
@@ -15,7 +15,7 @@ namespace EloBaza.Domain.Subject
         public bool IsLeafCategory => !SubCategories.Any();
         public bool IsRootCategory => ParentCategory is null;
 
-        public SubjectAggregate? Subject { get; private set; }
+        public Subject? Subject { get; private set; }
 
         protected Category() { }
 

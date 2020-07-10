@@ -1,7 +1,7 @@
 ﻿using EloBaza.Domain.SharedKernel;
 using System;
 
-namespace EloBaza.Domain.Question
+namespace EloBaza.Domain.QuestionAggregate
 {
     public class Attachment : Entity
     {
@@ -12,7 +12,7 @@ namespace EloBaza.Domain.Question
         public long FileSize { get; private set; }
 
         public Explanation? Explanation { get; private set; }
-        public QuestionAggregate? Question { get; private set; }
+        public Question? Question { get; private set; }
 
         protected Attachment() { }
 

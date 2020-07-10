@@ -1,7 +1,7 @@
 ﻿using EloBaza.Application.Queries.ExamSession;
+using EloBaza.Application.Queries.ExamSession.Get;
 using EloBaza.Domain.SharedKernel;
 using EloBaza.Domain.SharedKernel.Exceptions;
-using EloBaza.Domain.Subject;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,11 +10,13 @@ namespace EloBaza.Application.Commands.ExamSession.Create
 {
     class CreateExamSessionHandler : IRequestHandler<CreateExamSession, ExamSessionReadModel>
     {
-        private readonly IRepository<SubjectAggregate> _subjectRepository;
+        private readonly IRepository<Domain.SubjectAggregate.Subject> _subjectRepository;
+        private readonly IMediator _mediator;
 
-        public CreateExamSessionHandler(IRepository<SubjectAggregate> subjectRepository)
+        public CreateExamSessionHandler(IRepository<Domain.SubjectAggregate.Subject> subjectRepository, IMediator mediator)
         {
             _subjectRepository = subjectRepository;
+            _mediator = mediator;
         }
 
         public async Task<ExamSessionReadModel> Handle(CreateExamSession request, CancellationToken cancellationToken)
@@ -23,16 +25,11 @@ namespace EloBaza.Application.Commands.ExamSession.Create
             if (subject is null)
                 throw new NotFoundException($"Subject with Key: {request.SubjectKey} does not exists");
 
-            var examSessionName = subject.CreateExamSession(request.Data.Year, request.Data.Semester);
+            var examSession = subject.CreateExamSession(request.Data.Year, request.Data.Semester, request.RequestorId);
 
             await _subjectRepository.Save(subject, cancellationToken);
 
-            return new ExamSessionReadModel()
-            {
-                Name = examSessionName.Name,
-                Year = examSessionName.Year,
-                Semester = examSessionName.Semester
-            };
+            return await _mediator.Send(new GetExamSessionDetails(subject.Key, examSession.Key));
         }
     }
 }

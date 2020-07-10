@@ -1,6 +1,5 @@
 ﻿using EloBaza.Domain.SharedKernel;
 using EloBaza.Domain.SharedKernel.Exceptions;
-using EloBaza.Domain.Subject;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,9 +8,9 @@ namespace EloBaza.Application.Commands.Subject.Delete
 {
     class DeleteSubjectHandler : AsyncRequestHandler<DeleteSubject>
     {
-        private readonly IRepository<SubjectAggregate> _subjectRepository;
+        private readonly IRepository<Domain.SubjectAggregate.Subject> _subjectRepository;
 
-        public DeleteSubjectHandler(IRepository<SubjectAggregate> subjectRepository)
+        public DeleteSubjectHandler(IRepository<Domain.SubjectAggregate.Subject> subjectRepository)
         {
             _subjectRepository = subjectRepository;
         }
@@ -20,9 +19,9 @@ namespace EloBaza.Application.Commands.Subject.Delete
         {
             var subject = await _subjectRepository.Find(request.SubjectKey, cancellationToken);
             if (subject is null)
-                throw new NotFoundException($"Subject with Key: {request.SubjectKey} does not exists");
+                throw new NotFoundException($"Subject with key: {request.SubjectKey} does not exists");
 
-            subject.Delete(userId: 1);
+            subject.Delete(request.RequestorId);
 
             await _subjectRepository.Save(subject, cancellationToken);
         }

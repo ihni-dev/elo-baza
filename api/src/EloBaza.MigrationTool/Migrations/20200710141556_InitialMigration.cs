@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace EloBaza.MigrationTool.Migrations
 {
@@ -19,13 +19,13 @@ namespace EloBaza.MigrationTool.Migrations
                     LastModifiedAt = table.Column<DateTime>(nullable: false),
                     LastModifiedBy = table.Column<int>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedAt = table.Column<DateTime>(nullable: false),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
                     DeletedBy = table.Column<int>(nullable: true),
                     Name = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Id", x => x.SubjectId);
+                    table.PrimaryKey("PK_Subject", x => x.SubjectId);
                     table.UniqueConstraint("AK_Subject_Key", x => x.Key);
                 });
 
@@ -41,25 +41,25 @@ namespace EloBaza.MigrationTool.Migrations
                     LastModifiedAt = table.Column<DateTime>(nullable: false),
                     LastModifiedBy = table.Column<int>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedAt = table.Column<DateTime>(nullable: false),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
                     DeletedBy = table.Column<int>(nullable: true),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
-                    ParentCategory_id = table.Column<int>(nullable: true),
-                    Subject_id = table.Column<int>(nullable: true)
+                    ParentCategoryId = table.Column<int>(nullable: true),
+                    SubjectId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Id", x => x.CategoryId);
+                    table.PrimaryKey("PK_Category", x => x.CategoryId);
                     table.UniqueConstraint("AK_Category_Key", x => x.Key);
                     table.ForeignKey(
-                        name: "FK_Category_Category_ParentCategory_id",
-                        column: x => x.ParentCategory_id,
+                        name: "FK_Category_Category_ParentCategoryId",
+                        column: x => x.ParentCategoryId,
                         principalTable: "Category",
                         principalColumn: "CategoryId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Category_Subject_Subject_id",
-                        column: x => x.Subject_id,
+                        name: "FK_Category_Subject_SubjectId",
+                        column: x => x.SubjectId,
                         principalTable: "Subject",
                         principalColumn: "SubjectId",
                         onDelete: ReferentialAction.SetNull);
@@ -77,21 +77,21 @@ namespace EloBaza.MigrationTool.Migrations
                     LastModifiedAt = table.Column<DateTime>(nullable: false),
                     LastModifiedBy = table.Column<int>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedAt = table.Column<DateTime>(nullable: false),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
                     DeletedBy = table.Column<int>(nullable: true),
                     Name = table.Column<string>(maxLength: 70, nullable: false),
                     Year = table.Column<short>(nullable: false),
                     Semester = table.Column<string>(maxLength: 6, nullable: false),
                     ResitNumber = table.Column<byte>(nullable: true),
-                    Subject_id = table.Column<int>(nullable: true)
+                    SubjectId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Id", x => x.ExamSessionId);
+                    table.PrimaryKey("PK_ExamSession", x => x.ExamSessionId);
                     table.UniqueConstraint("AK_ExamSession_Key", x => x.Key);
                     table.ForeignKey(
-                        name: "FK_ExamSession_Subject_Subject_id",
-                        column: x => x.Subject_id,
+                        name: "FK_ExamSession_Subject_SubjectId",
+                        column: x => x.SubjectId,
                         principalTable: "Subject",
                         principalColumn: "SubjectId",
                         onDelete: ReferentialAction.SetNull);
@@ -109,33 +109,33 @@ namespace EloBaza.MigrationTool.Migrations
                     LastModifiedAt = table.Column<DateTime>(nullable: false),
                     LastModifiedBy = table.Column<int>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedAt = table.Column<DateTime>(nullable: false),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
                     DeletedBy = table.Column<int>(nullable: true),
+                    SubjectId = table.Column<int>(nullable: true),
+                    CategoryId = table.Column<int>(nullable: true),
+                    ExamSessionId = table.Column<int>(nullable: true),
                     Content = table.Column<string>(nullable: false),
-                    IsPublished = table.Column<bool>(nullable: false),
-                    _categoryId = table.Column<int>(nullable: true),
-                    _examSessionId = table.Column<int>(nullable: true),
-                    _subjectId = table.Column<int>(nullable: true)
+                    IsPublished = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Id", x => x.QuestionId);
+                    table.PrimaryKey("PK_Question", x => x.QuestionId);
                     table.UniqueConstraint("AK_Question_Key", x => x.Key);
                     table.ForeignKey(
-                        name: "FK_Question_Category__categoryId",
-                        column: x => x._categoryId,
+                        name: "FK_Question_Category_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Category",
                         principalColumn: "CategoryId",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Question_ExamSession__examSessionId",
-                        column: x => x._examSessionId,
+                        name: "FK_Question_ExamSession_ExamSessionId",
+                        column: x => x.ExamSessionId,
                         principalTable: "ExamSession",
                         principalColumn: "ExamSessionId",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Question_Subject__subjectId",
-                        column: x => x._subjectId,
+                        name: "FK_Question_Subject_SubjectId",
+                        column: x => x.SubjectId,
                         principalTable: "Subject",
                         principalColumn: "SubjectId",
                         onDelete: ReferentialAction.SetNull);
@@ -153,19 +153,19 @@ namespace EloBaza.MigrationTool.Migrations
                     LastModifiedAt = table.Column<DateTime>(nullable: false),
                     LastModifiedBy = table.Column<int>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedAt = table.Column<DateTime>(nullable: false),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
                     DeletedBy = table.Column<int>(nullable: true),
                     Content = table.Column<string>(nullable: false),
                     IsValid = table.Column<bool>(nullable: false),
-                    Question_id = table.Column<int>(nullable: true)
+                    QuestionId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Id", x => x.AnswerId);
+                    table.PrimaryKey("PK_Answer", x => x.AnswerId);
                     table.UniqueConstraint("AK_Answer_Key", x => x.Key);
                     table.ForeignKey(
-                        name: "FK_Answer_Question_Question_id",
-                        column: x => x.Question_id,
+                        name: "FK_Answer_Question_QuestionId",
+                        column: x => x.QuestionId,
                         principalTable: "Question",
                         principalColumn: "QuestionId",
                         onDelete: ReferentialAction.SetNull);
@@ -183,14 +183,14 @@ namespace EloBaza.MigrationTool.Migrations
                     LastModifiedAt = table.Column<DateTime>(nullable: false),
                     LastModifiedBy = table.Column<int>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedAt = table.Column<DateTime>(nullable: false),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
                     DeletedBy = table.Column<int>(nullable: true),
                     Content = table.Column<string>(maxLength: 70, nullable: false),
                     QuestionId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Id", x => x.ExplanationId);
+                    table.PrimaryKey("PK_Explanation", x => x.ExplanationId);
                     table.UniqueConstraint("AK_Explanation_Key", x => x.Key);
                     table.ForeignKey(
                         name: "FK_Explanation_Question_QuestionId",
@@ -212,21 +212,21 @@ namespace EloBaza.MigrationTool.Migrations
                     LastModifiedAt = table.Column<DateTime>(nullable: false),
                     LastModifiedBy = table.Column<int>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedAt = table.Column<DateTime>(nullable: false),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
                     DeletedBy = table.Column<int>(nullable: true),
                     FileName = table.Column<string>(maxLength: 256, nullable: false),
                     FileUri = table.Column<string>(type: "varchar(2048)", nullable: false),
                     FileSize = table.Column<long>(nullable: false),
-                    Explanation_id = table.Column<int>(nullable: true),
+                    ExplanationId = table.Column<int>(nullable: true),
                     QuestionId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Id", x => x.AttachmentId);
+                    table.PrimaryKey("PK_Attachment", x => x.AttachmentId);
                     table.UniqueConstraint("AK_Attachment_Key", x => x.Key);
                     table.ForeignKey(
-                        name: "FK_Attachment_Explanation_Explanation_id",
-                        column: x => x.Explanation_id,
+                        name: "FK_Attachment_Explanation_ExplanationId",
+                        column: x => x.ExplanationId,
                         principalTable: "Explanation",
                         principalColumn: "ExplanationId",
                         onDelete: ReferentialAction.SetNull);
@@ -239,58 +239,54 @@ namespace EloBaza.MigrationTool.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Answer_Question_id",
+                name: "IX_Answer_QuestionId",
                 table: "Answer",
-                column: "Question_id");
+                column: "QuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Attachment_Explanation_id",
+                name: "IX_Attachment_ExplanationId",
                 table: "Attachment",
-                column: "Explanation_id");
+                column: "ExplanationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Attachment_QuestionId",
                 table: "Attachment",
-                column: "QuestionId",
-                unique: true,
-                filter: "[QuestionId] IS NOT NULL");
+                column: "QuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Category_ParentCategory_id",
+                name: "IX_Category_ParentCategoryId",
                 table: "Category",
-                column: "ParentCategory_id");
+                column: "ParentCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Category_Subject_id",
+                name: "IX_Category_SubjectId",
                 table: "Category",
-                column: "Subject_id");
+                column: "SubjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExamSession_Subject_id",
+                name: "IX_ExamSession_SubjectId",
                 table: "ExamSession",
-                column: "Subject_id");
+                column: "SubjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Explanation_QuestionId",
                 table: "Explanation",
-                column: "QuestionId",
-                unique: true,
-                filter: "[QuestionId] IS NOT NULL");
+                column: "QuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Question__categoryId",
+                name: "IX_Question_CategoryId",
                 table: "Question",
-                column: "_categoryId");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Question__examSessionId",
+                name: "IX_Question_ExamSessionId",
                 table: "Question",
-                column: "_examSessionId");
+                column: "ExamSessionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Question__subjectId",
+                name: "IX_Question_SubjectId",
                 table: "Question",
-                column: "_subjectId");
+                column: "SubjectId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

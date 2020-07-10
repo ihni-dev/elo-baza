@@ -1,6 +1,4 @@
-﻿using EloBaza.Domain.Subject;
-
-namespace EloBaza.Application.Queries.ExamSession
+﻿namespace EloBaza.Application.Queries.ExamSession
 {
     /// <summary>
     /// Exam session representation model
@@ -8,16 +6,18 @@ namespace EloBaza.Application.Queries.ExamSession
     public class ExamSessionReadModel
     {
         /// <summary>
-        /// Exam session name
+        /// Exam session's name
         /// </summary>
         public string? Name { get; set; }
+
         /// <summary>
-        /// Exam session year
+        /// Exam session's year
         /// </summary>
         public int Year { get; set; }
+
         /// <summary>
-        /// Exam session semester
+        /// Exam session's semester
         /// </summary>
-        public Semester? Semester { get; set; }
+        public string? Semester { get; set; }
     }
 }

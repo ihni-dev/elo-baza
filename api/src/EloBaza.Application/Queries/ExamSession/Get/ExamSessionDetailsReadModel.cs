@@ -1,4 +1,5 @@
-﻿using EloBaza.Domain.Subject;
+﻿using EloBaza.Domain.SubjectAggregate;
+using System;
 
 namespace EloBaza.Application.Queries.ExamSession.Get
 {
@@ -8,16 +9,23 @@ namespace EloBaza.Application.Queries.ExamSession.Get
     public class ExamSessionDetailsReadModel
     {
         /// <summary>
-        /// Exam session name
+        /// Exam session's key
+        /// </summary>
+        public Guid Key { get; set; }
+
+        /// <summary>
+        /// Exam session's name
         /// </summary>
         public string? Name { get; set; }
+
         /// <summary>
-        /// Exam session year
+        /// Exam session's year
         /// </summary>
         public int Year { get; set; }
+
         /// <summary>
-        /// Exam session semester
+        /// Exam session's semester
         /// </summary>
-        public Semester? Semester { get; set; }
+        public string? Semester { get; set; }
     }
 }

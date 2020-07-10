@@ -1,5 +1,6 @@
-﻿using EloBaza.Domain.SharedKernel.Exceptions;
-using EloBaza.Domain.Subject;
+﻿using EloBaza.Domain.SharedKernel;
+using EloBaza.Domain.SharedKernel.Exceptions;
+using EloBaza.Domain.SubjectAggregate;
 
 namespace EloBaza.Application.Commands.ExamSession.Create
 {
@@ -8,17 +9,23 @@ namespace EloBaza.Application.Commands.ExamSession.Create
         public short Year { get; private set; }
         public Semester Semester { get; private set; }
 
-        public CreateExamSessionData(short year, Semester semester)
+        public CreateExamSessionData(short year, string semester)
         {
             using (var validationContext = new ValidationContext())
             {
-                validationContext.Validate(() => year < 1950 || year > 2150,
+                validationContext.Validate(
+                    () => year < Domain.SubjectAggregate.ExamSession.ExamSessionMinYear || Domain.SubjectAggregate.ExamSession.ExamSessionMaxYear > 2150,
                     nameof(year),
                     $"Year {year} is invalid. Please provide year between 1950 and 2150.");
+
+                validationContext.Validate(
+                    () => !Enumeration.HasDisplayName<Semester>(semester),
+                    nameof(semester),
+                    $"Semester {semester} is invalid.");
             }
 
             Year = year;
-            Semester = semester;
+            Semester = Enumeration.FromDisplayName<Semester>(semester);
         }
     }
 }

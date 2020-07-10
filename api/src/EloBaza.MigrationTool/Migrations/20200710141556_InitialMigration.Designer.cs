@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EloBaza.MigrationTool.Migrations
 {
     [DbContext(typeof(EloBazaDbContext))]
-    [Migration("20200709175252_InitialMigration")]
+    [Migration("20200710141556_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,9 +21,9 @@ namespace EloBaza.MigrationTool.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("EloBaza.Domain.Question.Answer", b =>
+            modelBuilder.Entity("EloBaza.Domain.QuestionAggregate.Answer", b =>
                 {
-                    b.Property<int>("_id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AnswerId")
                         .HasColumnType("int")
@@ -39,7 +39,7 @@ namespace EloBaza.MigrationTool.Migrations
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DeletedBy")
@@ -60,22 +60,21 @@ namespace EloBaza.MigrationTool.Migrations
                     b.Property<int>("LastModifiedBy")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Question_id")
+                    b.Property<int?>("QuestionId")
                         .HasColumnType("int");
 
-                    b.HasKey("_id")
-                        .HasName("Id");
+                    b.HasKey("Id");
 
                     b.HasAlternateKey("Key");
 
-                    b.HasIndex("Question_id");
+                    b.HasIndex("QuestionId");
 
                     b.ToTable("Answer");
                 });
 
-            modelBuilder.Entity("EloBaza.Domain.Question.Attachment", b =>
+            modelBuilder.Entity("EloBaza.Domain.QuestionAggregate.Attachment", b =>
                 {
-                    b.Property<int>("_id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AttachmentId")
                         .HasColumnType("int")
@@ -87,13 +86,13 @@ namespace EloBaza.MigrationTool.Migrations
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DeletedBy")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Explanation_id")
+                    b.Property<int?>("ExplanationId")
                         .HasColumnType("int");
 
                     b.Property<string>("FileName")
@@ -123,23 +122,20 @@ namespace EloBaza.MigrationTool.Migrations
                     b.Property<int?>("QuestionId")
                         .HasColumnType("int");
 
-                    b.HasKey("_id")
-                        .HasName("Id");
+                    b.HasKey("Id");
 
                     b.HasAlternateKey("Key");
 
-                    b.HasIndex("Explanation_id");
+                    b.HasIndex("ExplanationId");
 
-                    b.HasIndex("QuestionId")
-                        .IsUnique()
-                        .HasFilter("[QuestionId] IS NOT NULL");
+                    b.HasIndex("QuestionId");
 
                     b.ToTable("Attachment");
                 });
 
-            modelBuilder.Entity("EloBaza.Domain.Question.Explanation", b =>
+            modelBuilder.Entity("EloBaza.Domain.QuestionAggregate.Explanation", b =>
                 {
-                    b.Property<int>("_id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ExplanationId")
                         .HasColumnType("int")
@@ -156,7 +152,7 @@ namespace EloBaza.MigrationTool.Migrations
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DeletedBy")
@@ -177,25 +173,26 @@ namespace EloBaza.MigrationTool.Migrations
                     b.Property<int?>("QuestionId")
                         .HasColumnType("int");
 
-                    b.HasKey("_id")
-                        .HasName("Id");
+                    b.HasKey("Id");
 
                     b.HasAlternateKey("Key");
 
-                    b.HasIndex("QuestionId")
-                        .IsUnique()
-                        .HasFilter("[QuestionId] IS NOT NULL");
+                    b.HasIndex("QuestionId");
 
                     b.ToTable("Explanation");
                 });
 
-            modelBuilder.Entity("EloBaza.Domain.Question.QuestionAggregate", b =>
+            modelBuilder.Entity("EloBaza.Domain.QuestionAggregate.Question", b =>
                 {
-                    b.Property<int>("_id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("QuestionId")
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnName("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -207,10 +204,14 @@ namespace EloBaza.MigrationTool.Migrations
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ExamSessionId")
+                        .HasColumnName("ExamSessionId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
@@ -228,32 +229,26 @@ namespace EloBaza.MigrationTool.Migrations
                     b.Property<int>("LastModifiedBy")
                         .HasColumnType("int");
 
-                    b.Property<int?>("_categoryId")
+                    b.Property<int?>("SubjectId")
+                        .HasColumnName("SubjectId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("_examSessionId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("_subjectId")
-                        .HasColumnType("int");
-
-                    b.HasKey("_id")
-                        .HasName("Id");
+                    b.HasKey("Id");
 
                     b.HasAlternateKey("Key");
 
-                    b.HasIndex("_categoryId");
+                    b.HasIndex("CategoryId");
 
-                    b.HasIndex("_examSessionId");
+                    b.HasIndex("ExamSessionId");
 
-                    b.HasIndex("_subjectId");
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("Question");
                 });
 
-            modelBuilder.Entity("EloBaza.Domain.Subject.Category", b =>
+            modelBuilder.Entity("EloBaza.Domain.SubjectAggregate.Category", b =>
                 {
-                    b.Property<int>("_id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("CategoryId")
                         .HasColumnType("int")
@@ -265,7 +260,7 @@ namespace EloBaza.MigrationTool.Migrations
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DeletedBy")
@@ -288,27 +283,26 @@ namespace EloBaza.MigrationTool.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<int?>("ParentCategory_id")
+                    b.Property<int?>("ParentCategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Subject_id")
+                    b.Property<int?>("SubjectId")
                         .HasColumnType("int");
 
-                    b.HasKey("_id")
-                        .HasName("Id");
+                    b.HasKey("Id");
 
                     b.HasAlternateKey("Key");
 
-                    b.HasIndex("ParentCategory_id");
+                    b.HasIndex("ParentCategoryId");
 
-                    b.HasIndex("Subject_id");
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("EloBaza.Domain.Subject.ExamSession", b =>
+            modelBuilder.Entity("EloBaza.Domain.SubjectAggregate.ExamSession", b =>
                 {
-                    b.Property<int>("_id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ExamSessionId")
                         .HasColumnType("int")
@@ -320,7 +314,7 @@ namespace EloBaza.MigrationTool.Migrations
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DeletedBy")
@@ -351,25 +345,24 @@ namespace EloBaza.MigrationTool.Migrations
                         .HasColumnType("nvarchar(6)")
                         .HasMaxLength(6);
 
-                    b.Property<int?>("Subject_id")
+                    b.Property<int?>("SubjectId")
                         .HasColumnType("int");
 
                     b.Property<short>("Year")
                         .HasColumnType("smallint");
 
-                    b.HasKey("_id")
-                        .HasName("Id");
+                    b.HasKey("Id");
 
                     b.HasAlternateKey("Key");
 
-                    b.HasIndex("Subject_id");
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("ExamSession");
                 });
 
-            modelBuilder.Entity("EloBaza.Domain.Subject.SubjectAggregate", b =>
+            modelBuilder.Entity("EloBaza.Domain.SubjectAggregate.Subject", b =>
                 {
-                    b.Property<int>("_id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("SubjectId")
                         .HasColumnType("int")
@@ -381,7 +374,7 @@ namespace EloBaza.MigrationTool.Migrations
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DeletedBy")
@@ -404,79 +397,78 @@ namespace EloBaza.MigrationTool.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.HasKey("_id")
-                        .HasName("Id");
+                    b.HasKey("Id");
 
                     b.HasAlternateKey("Key");
 
                     b.ToTable("Subject");
                 });
 
-            modelBuilder.Entity("EloBaza.Domain.Question.Answer", b =>
+            modelBuilder.Entity("EloBaza.Domain.QuestionAggregate.Answer", b =>
                 {
-                    b.HasOne("EloBaza.Domain.Question.QuestionAggregate", "Question")
+                    b.HasOne("EloBaza.Domain.QuestionAggregate.Question", "Question")
                         .WithMany("Answers")
-                        .HasForeignKey("Question_id")
+                        .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.SetNull);
                 });
 
-            modelBuilder.Entity("EloBaza.Domain.Question.Attachment", b =>
+            modelBuilder.Entity("EloBaza.Domain.QuestionAggregate.Attachment", b =>
                 {
-                    b.HasOne("EloBaza.Domain.Question.Explanation", "Explanation")
+                    b.HasOne("EloBaza.Domain.QuestionAggregate.Explanation", "Explanation")
                         .WithMany("Attachments")
-                        .HasForeignKey("Explanation_id")
+                        .HasForeignKey("ExplanationId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("EloBaza.Domain.Question.QuestionAggregate", "Question")
-                        .WithOne("Attachment")
-                        .HasForeignKey("EloBaza.Domain.Question.Attachment", "QuestionId")
-                        .OnDelete(DeleteBehavior.SetNull);
-                });
-
-            modelBuilder.Entity("EloBaza.Domain.Question.Explanation", b =>
-                {
-                    b.HasOne("EloBaza.Domain.Question.QuestionAggregate", "Question")
-                        .WithOne("Explanation")
-                        .HasForeignKey("EloBaza.Domain.Question.Explanation", "QuestionId")
+                    b.HasOne("EloBaza.Domain.QuestionAggregate.Question", "Question")
+                        .WithMany("Attachments")
+                        .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.SetNull);
                 });
 
-            modelBuilder.Entity("EloBaza.Domain.Question.QuestionAggregate", b =>
+            modelBuilder.Entity("EloBaza.Domain.QuestionAggregate.Explanation", b =>
                 {
-                    b.HasOne("EloBaza.Domain.Subject.Category", null)
-                        .WithMany()
-                        .HasForeignKey("_categoryId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("EloBaza.Domain.Subject.ExamSession", null)
-                        .WithMany()
-                        .HasForeignKey("_examSessionId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("EloBaza.Domain.Subject.SubjectAggregate", null)
-                        .WithMany()
-                        .HasForeignKey("_subjectId")
+                    b.HasOne("EloBaza.Domain.QuestionAggregate.Question", "Question")
+                        .WithMany("Explanations")
+                        .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.SetNull);
                 });
 
-            modelBuilder.Entity("EloBaza.Domain.Subject.Category", b =>
+            modelBuilder.Entity("EloBaza.Domain.QuestionAggregate.Question", b =>
                 {
-                    b.HasOne("EloBaza.Domain.Subject.Category", "ParentCategory")
+                    b.HasOne("EloBaza.Domain.SubjectAggregate.Category", null)
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("EloBaza.Domain.SubjectAggregate.ExamSession", null)
+                        .WithMany()
+                        .HasForeignKey("ExamSessionId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("EloBaza.Domain.SubjectAggregate.Subject", null)
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.SetNull);
+                });
+
+            modelBuilder.Entity("EloBaza.Domain.SubjectAggregate.Category", b =>
+                {
+                    b.HasOne("EloBaza.Domain.SubjectAggregate.Category", "ParentCategory")
                         .WithMany("SubCategories")
-                        .HasForeignKey("ParentCategory_id")
+                        .HasForeignKey("ParentCategoryId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("EloBaza.Domain.Subject.SubjectAggregate", "Subject")
+                    b.HasOne("EloBaza.Domain.SubjectAggregate.Subject", "Subject")
                         .WithMany("Categories")
-                        .HasForeignKey("Subject_id")
+                        .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.SetNull);
                 });
 
-            modelBuilder.Entity("EloBaza.Domain.Subject.ExamSession", b =>
+            modelBuilder.Entity("EloBaza.Domain.SubjectAggregate.ExamSession", b =>
                 {
-                    b.HasOne("EloBaza.Domain.Subject.SubjectAggregate", "Subject")
+                    b.HasOne("EloBaza.Domain.SubjectAggregate.Subject", "Subject")
                         .WithMany("ExamSessions")
-                        .HasForeignKey("Subject_id")
+                        .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.SetNull);
                 });
 #pragma warning restore 612, 618

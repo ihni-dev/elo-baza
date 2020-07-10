@@ -9,11 +9,12 @@ namespace EloBaza.Application.Queries.Subject.Get
     public class SubjectDetailsReadModel
     {
         /// <summary>
-        /// Subject name
+        /// Subject's name
         /// </summary>
         public string? Name { get; set; }
+
         /// <summary>
-        /// List of subject exam sessions
+        /// List of subject's exam sessions
         /// </summary>
         public ICollection<ExamSessionReadModel> ExamSessions { get; private set; } = new List<ExamSessionReadModel>();
     }

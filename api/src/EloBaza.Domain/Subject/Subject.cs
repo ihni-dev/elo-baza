@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EloBaza.Domain.Subject
+namespace EloBaza.Domain.SubjectAggregate
 {
-    public class SubjectAggregate : AggregateRoot
+    public class Subject : AggregateRoot
     {
         public const int NameMaxLength = 50;
 
@@ -14,7 +14,7 @@ namespace EloBaza.Domain.Subject
         public ICollection<ExamSession> ExamSessions { get; private set; } = new List<ExamSession>();
         public ICollection<Category> Categories { get; private set; } = new List<Category>();
 
-        public SubjectAggregate(string name)
+        public Subject(string name)
         {
             Validate(name);
 

@@ -1,4 +1,4 @@
-﻿using EloBaza.Domain.Question;
+﻿using EloBaza.Domain.QuestionAggregate;
 using EloBaza.Infrastructure.EntityFramework.Configurations;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +6,7 @@ namespace EloBaza.Infrastructure.EntityFramework.DbContexts
 {
     public class QuestionDbContext : DbContext
     {
-        public DbSet<QuestionAggregate> Questions { get; private set; } = null!;
+        public DbSet<Question> Questions { get; private set; } = null!;
 
         public QuestionDbContext(DbContextOptions<QuestionDbContext> options) : base(options) { }
 

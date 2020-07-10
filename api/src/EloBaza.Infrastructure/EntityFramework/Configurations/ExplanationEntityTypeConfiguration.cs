@@ -1,5 +1,5 @@
-﻿using EloBaza.Domain.Question;
-using EloBaza.Domain.Subject;
+﻿using EloBaza.Domain.QuestionAggregate;
+using EloBaza.Domain.SubjectAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,16 +9,11 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
     {
         public void Configure(EntityTypeBuilder<Explanation> builder)
         {
-            builder.ToTable("Explanation");
+            builder.ToTable(nameof(Explanation));
 
-            builder.HasKey("_id")
-                .HasName("Id");
-
-            builder.Property("_id")
-                .HasColumnName($"ExplanationId");
-
-            builder.Property(e => e.Key)
-                .IsRequired(true);
+            builder.HasKey("Id");
+            builder.Property("Id")
+                .HasColumnName($"{nameof(Explanation)}Id");
 
             builder.HasAlternateKey(e => e.Key);
 
@@ -26,10 +21,10 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
                 .HasMaxLength(ExamSession.ExamSessionNameMaxLength)
                 .IsRequired(true);
 
-            builder.HasOne(e => e.Question)
-                .WithOne(s => s.Explanation)
-                .HasForeignKey<Explanation>("QuestionId")
+            builder.HasOne<Question>(e => e.Question)
+                .WithMany(q => q.Explanations)
                 .IsRequired(false)
+                .HasForeignKey($"{nameof(Question)}Id")
                 .OnDelete(DeleteBehavior.SetNull);
         }
     }

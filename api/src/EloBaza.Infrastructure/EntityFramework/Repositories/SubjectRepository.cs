@@ -1,5 +1,5 @@
 ﻿using EloBaza.Domain.SharedKernel;
-using EloBaza.Domain.Subject;
+using EloBaza.Domain.SubjectAggregate;
 using EloBaza.Infrastructure.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EloBaza.Infrastructure.EntityFramework.Repositories
 {
-    public class SubjectRepository : IRepository<SubjectAggregate>
+    public class SubjectRepository : IRepository<Subject>
     {
         private readonly SubjectDbContext _subjectDbContext;
 
@@ -17,14 +17,14 @@ namespace EloBaza.Infrastructure.EntityFramework.Repositories
             _subjectDbContext = subjectDbContext;
         }
 
-        public async Task<SubjectAggregate> Find(Guid key, CancellationToken cancellationToken)
+        public async Task<Subject> Find(Guid key, CancellationToken cancellationToken)
         {
             return await _subjectDbContext
                 .Subjects
                 .FirstOrDefaultAsync(s => s.Key == key, cancellationToken: cancellationToken);
         }
 
-        public async Task Save(SubjectAggregate subjectAggregate, CancellationToken cancellationToken)
+        public async Task Save(Subject subjectAggregate, CancellationToken cancellationToken)
         {
             if (subjectAggregate.IsTransient())
                 _subjectDbContext.Add(subjectAggregate);

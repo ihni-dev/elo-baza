@@ -1,11 +1,13 @@
 ﻿using EloBaza.Domain.SharedKernel;
 using System;
 
-namespace EloBaza.Domain.Subject
+namespace EloBaza.Domain.SubjectAggregate
 {
     public class ExamSession : Entity
     {
         public const int ExamSessionNameMaxLength = 70;
+        public const short ExamSessionMinYear = 1950;
+        public const short ExamSessionMaxYear = 2150;
 
         public string Name { get; set; }
         public short Year { get; private set; }
@@ -13,11 +15,11 @@ namespace EloBaza.Domain.Subject
         public byte? ResitNumber { get; private set; }
         public bool IsResit => ResitNumber.HasValue;
 
-        public SubjectAggregate? Subject { get; private set; }
+        public Subject? Subject { get; private set; }
 
         protected ExamSession() { }
 
-        internal ExamSession(SubjectAggregate subject, short year, Semester semester)
+        internal ExamSession(Subject subject, short year, Semester semester)
         {
             Key = Guid.NewGuid();
 

@@ -30,10 +30,10 @@ WHERE s.Name = @SubjectName AND es.Name = @Name
         {
             var examSession = await _dbConnection.QuerySingleOrDefaultAsync<ExamSessionDetailsReadModel>(
                 sql: GetExamSessionDetailsQuery,
-                param: new { request.SubjectName, request.Name });
+                param: new { request.SubjectKey, request.ExamSessionKey });
 
             if (examSession is null)
-                throw new NotFoundException($"Exam session {request.Name} not found for subject {request.SubjectName}");
+                throw new NotFoundException($"Exam session {request.ExamSessionKey} not found for subject {request.SubjectKey}");
 
             return examSession;
         }

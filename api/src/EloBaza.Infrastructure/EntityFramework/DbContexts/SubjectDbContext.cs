@@ -1,4 +1,4 @@
-﻿using EloBaza.Domain.Subject;
+﻿using EloBaza.Domain.SubjectAggregate;
 using EloBaza.Infrastructure.EntityFramework.Configurations;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +6,7 @@ namespace EloBaza.Infrastructure.EntityFramework.DbContexts
 {
     public class SubjectDbContext : DbContext
     {
-        public DbSet<SubjectAggregate> Subjects { get; private set; } = null!;
+        public DbSet<Subject> Subjects { get; private set; } = null!;
 
         public SubjectDbContext(DbContextOptions<SubjectDbContext> options) : base(options) { }
 

@@ -1,4 +1,4 @@
-﻿using EloBaza.Domain.Question;
+﻿using EloBaza.Domain.QuestionAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -9,40 +9,31 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
     {
         public void Configure(EntityTypeBuilder<Attachment> builder)
         {
-            builder.ToTable("Attachment");
+            builder.ToTable(nameof(Attachment));
 
-            builder.HasKey("_id")
-                .HasName("Id");
-
-            builder.Property("_id")
-                .HasColumnName($"AttachmentId");
-
-            builder.Property(a => a.Key)
-                .IsRequired(true);
+            builder.HasKey("Id");
+            builder.Property("Id")
+                .HasColumnName($"{nameof(Attachment)}Id");
 
             builder.HasAlternateKey(a => a.Key);
 
             builder.Property(a => a.FileName)
-                .HasMaxLength(Attachment.FileSystemMaximumFileName)
-                .IsRequired(true);
+                .HasMaxLength(Attachment.FileSystemMaximumFileName);
 
             builder.Property(a => a.FileUri)
                 .HasConversion(v => v.ToString(), v => new Uri(v))
-                .HasColumnType("varchar(2048)")
-                .IsRequired(true);
+                .HasColumnType("varchar(2048)");
 
-            builder.Property(a => a.FileSize)
-                .IsRequired(true);
-
-            builder.HasOne(a => a.Explanation)
+            builder.HasOne<Explanation>(a => a.Explanation)
                 .WithMany(e => e.Attachments)
                 .IsRequired(false)
+                .HasForeignKey($"{nameof(Explanation)}Id")
                 .OnDelete(DeleteBehavior.SetNull);
 
-            builder.HasOne(a => a.Question)
-                .WithOne(q => q.Attachment)
-                .HasForeignKey<Attachment>("QuestionId")
+            builder.HasOne<Question>(a => a.Question)
+                .WithMany(q => q.Attachments)
                 .IsRequired(false)
+                .HasForeignKey($"{nameof(Question)}Id")
                 .OnDelete(DeleteBehavior.SetNull);
         }
     }

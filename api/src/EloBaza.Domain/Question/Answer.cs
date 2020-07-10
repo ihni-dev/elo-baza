@@ -2,18 +2,18 @@
 using EloBaza.Domain.SharedKernel.Exceptions;
 using System;
 
-namespace EloBaza.Domain.Question
+namespace EloBaza.Domain.QuestionAggregate
 {
     public class Answer : Entity
     {
         public string Content { get; private set; }
         public bool IsValid { get; private set; }
 
-        public QuestionAggregate? Question { get; private set; }
+        public Question? Question { get; private set; }
 
         protected Answer() { }
 
-        internal Answer(QuestionAggregate question, string content, bool isValid)
+        internal Answer(Question question, string content, bool isValid)
         {
             Key = Guid.NewGuid();
 

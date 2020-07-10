@@ -1,5 +1,5 @@
-﻿using EloBaza.Domain.Question;
-using EloBaza.Domain.Subject;
+﻿using EloBaza.Domain.QuestionAggregate;
+using EloBaza.Domain.SubjectAggregate;
 using EloBaza.Infrastructure.EntityFramework.Configurations;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,8 +7,8 @@ namespace EloBaza.MigrationTool.DbContexts
 {
     public class EloBazaDbContext : DbContext
     {
-        public DbSet<SubjectAggregate> Subjects { get; private set; } = null!;
-        public DbSet<QuestionAggregate> Questions { get; private set; } = null!;
+        public DbSet<Subject> Subjects { get; private set; } = null!;
+        public DbSet<Question> Questions { get; private set; } = null!;
 
         public EloBazaDbContext(DbContextOptions<EloBazaDbContext> options) : base(options) { }
 

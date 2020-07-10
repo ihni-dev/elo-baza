@@ -1,4 +1,4 @@
-﻿using EloBaza.Domain.Question;
+﻿using EloBaza.Domain.QuestionAggregate;
 using EloBaza.Domain.SharedKernel;
 using EloBaza.Infrastructure.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EloBaza.Infrastructure.EntityFramework.Repositories
 {
-    public class QuestionRepository : IRepository<QuestionAggregate>
+    public class QuestionRepository : IRepository<Question>
     {
         private readonly QuestionDbContext _questionDbContext;
 
@@ -17,14 +17,14 @@ namespace EloBaza.Infrastructure.EntityFramework.Repositories
             _questionDbContext = questionDbContext;
         }
 
-        public async Task<QuestionAggregate> Find(Guid key, CancellationToken cancellationToken)
+        public async Task<Question> Find(Guid key, CancellationToken cancellationToken)
         {
             return await _questionDbContext
                 .Questions
                 .FirstOrDefaultAsync(q => q.Key == key, cancellationToken: cancellationToken);
         }
 
-        public async Task Save(QuestionAggregate questionAggregate, CancellationToken cancellationToken)
+        public async Task Save(Question questionAggregate, CancellationToken cancellationToken)
         {
             if (questionAggregate.IsTransient())
                 _questionDbContext.Add(questionAggregate);

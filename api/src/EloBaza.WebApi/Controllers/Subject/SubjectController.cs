@@ -41,29 +41,32 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// <response code="200">A list of subjects</response>
         [HttpGet]
         [ProducesResponseType(typeof(GetAllSubjectsResult), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAll([FromQuery] SubjectFilteringParametersModel subjectFilteringParametersModel, [FromQuery] PagingParametersModel pagingParametersModel)
+        public async Task<IActionResult> GetAll(
+            [FromQuery] SubjectFilteringParametersModel subjectFilteringParametersModel,
+            [FromQuery] PagingParametersModel pagingParametersModel)
         {
             var subjectFilteringParameters = _mapper.Map<SubjectFilteringParameters>(subjectFilteringParametersModel);
             var pagingParameters = _mapper.Map<PagingParameters>(pagingParametersModel);
+
             var subjects = await _mediator.Send(new GetAllSubjects(subjectFilteringParameters, pagingParameters));
 
             return Ok(subjects);
         }
 
         /// <summary>
-        /// Get a subject by name
+        /// Get a subject by key
         /// </summary>
-        /// <param name="name">Name of a subject</param>
+        /// <param name="subjectKey">Key of a subject</param>
         /// <response code="200">Subject read model if found</response>
         /// <response code="400">If validation failed</response> 
         /// <response code="404">If not found</response>
-        [HttpGet("{name}")]
+        [HttpGet("{subjectKey}")]
         [ProducesResponseType(typeof(SubjectReadModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetByName(string name)
+        public async Task<IActionResult> GetByKey(Guid subjectKey)
         {
-            var subject = await _mediator.Send(new GetSubjectDetails(name));
+            var subject = await _mediator.Send(new GetSubjectDetails(subjectKey));
 
             return Ok(subject);
         }
@@ -84,17 +87,17 @@ namespace EloBaza.WebApi.Controllers.Subject
             var createSubjectData = _mapper.Map<CreateSubjectData>(createSubjectModel);
             var subject = await _mediator.Send(new CreateSubject(createSubjectData));
 
-            return CreatedAtAction(nameof(GetByName), new { subject.Name }, subject);
+            return CreatedAtAction(nameof(GetByKey), new { subject.Key }, subject);
         }
 
         /// <summary>
         /// Delete a subject
         /// </summary>
-        /// <param name="subjectKey">Key of subject to delete</param>
+        /// <param name="subjectKey">Key of a subject to delete</param>
         /// <response code="204">If deletion succeeded</response>
         /// <response code="400">If validation failed</response> 
         /// <response code="404">If subject does not exists</response>
-        [HttpDelete("{name}")]
+        [HttpDelete("{subjectKey}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -108,13 +111,12 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// <summary>
         /// Update a subject
         /// </summary>
-        /// <param name="subjectKey">Key of subject to update</param>
+        /// <param name="subjectKey">Key of a subject to update</param>
         /// <param name="updateSubjectModel">Data to update</param>
         /// <response code="204">If update succeeded</response>
         /// <response code="400">If validation failed</response> 
         /// <response code="404">If subject does not exists</response>
-        /// <response code="409">If subject with given name already exists</response>
-        [HttpPatch("{name}")]
+        [HttpPatch("{subjectKey}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -132,19 +134,19 @@ namespace EloBaza.WebApi.Controllers.Subject
         #region Exam session
 
         /// <summary>
-        /// Get an exam session by name
+        /// Get an exam session by key
         /// </summary>
-        /// <param name="subjectName">Name of a subject</param>
-        /// <param name="name">Name of an exam session</param>
+        /// <param name="subjectKey">Key of an exam session's subject</param>
+        /// <param name="examSessionKey">Key of an exam session</param>
         /// <response code="200">Exam session read model if found</response>
         /// <response code="400">If validation failed</response> 
         /// <response code="404">If not found</response>
-        [HttpGet("{subjectName}/ExamSession/{name}")]
+        [HttpGet("{subjectKey}/ExamSession/{examSessionKey}")]
         [ProducesResponseType(typeof(ExamSessionDetailsReadModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetExamSessionByName(string subjectName, string name)
+        public async Task<IActionResult> GetExamSessionByName(Guid subjectKey, Guid examSessionKey)
         {
-            var examSession = await _mediator.Send(new GetExamSessionDetails(subjectName, name));
+            var examSession = await _mediator.Send(new GetExamSessionDetails(subjectKey, examSessionKey));
 
             return Ok(examSession);
         }
@@ -152,8 +154,8 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// <summary>
         /// Create an exam session for a subject
         /// </summary>
-        /// <param name="subjectKey">Key of subject to create exam session for</param>
-        /// <param name="createExamSessionModel">Data required to create exam session</param>
+        /// <param name="subjectKey">Key of a subject to create exam session for</param>
+        /// <param name="createExamSessionModel">Data required to create an exam session</param>
         /// <response code="201">Exam session read model if succeeded</response>
         /// <response code="400">If validation failed</response> 
         /// <response code="404">If subject does not exists</response>
@@ -174,8 +176,8 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// <summary>
         /// Delete an exam session
         /// </summary>
-        /// <param name="subjectKey">Key of exam session's subject</param>
-        /// <param name="examSessionKey">Key of exam session to delete</param>
+        /// <param name="subjectKey">Key of an exam session's subject</param>
+        /// <param name="examSessionKey">Key of an exam session to delete</param>
         /// <response code="204">If deletion succeeded</response>
         /// <response code="400">If validation failed</response> 
         /// <response code="404">If subject or exam session does not exists</response>
@@ -193,8 +195,8 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// <summary>
         /// Update an exam session
         /// </summary>
-        /// <param name="subjectKey">Key of exam session subject</param>
-        /// <param name="examSessionKey">Key of exam session to update</param>
+        /// <param name="subjectKey">Key of an exam session's subject</param>
+        /// <param name="examSessionKey">Key of an exam session to update</param>
         /// <param name="updateExamSessionModel">Data to update</param>
         /// <response code="204">If update succeeded</response>
         /// <response code="400">If validation failed</response> 

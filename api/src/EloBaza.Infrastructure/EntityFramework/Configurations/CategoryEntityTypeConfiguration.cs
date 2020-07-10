@@ -1,4 +1,4 @@
-﻿using EloBaza.Domain.Subject;
+﻿using EloBaza.Domain.SubjectAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,16 +8,11 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.ToTable("Category");
+            builder.ToTable(nameof(Category));
 
-            builder.HasKey("_id")
-                .HasName("CategoryId");
-
-            builder.Property("_id")
-                .HasColumnName($"CategoryId");
-
-            builder.Property(c => c.Key)
-                .IsRequired(true);
+            builder.HasKey("Id");
+            builder.Property("Id")
+                .HasColumnName($"{nameof(Category)}Id");
 
             builder.HasAlternateKey(c => c.Key);
 
@@ -25,14 +20,16 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
                 .HasMaxLength(Category.CategoryNameMaxLength)
                 .IsRequired(true);
 
-            builder.HasOne(c => c.ParentCategory)
+            builder.HasOne<Category>(c => c.ParentCategory)
                 .WithMany(pc => pc.SubCategories)
                 .IsRequired(false)
+                .HasForeignKey($"Parent{nameof(Category)}Id")
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(c => c.Subject)
+            builder.HasOne<Subject>(c => c.Subject)
                 .WithMany(s => s.Categories)
                 .IsRequired(false)
+                .HasForeignKey($"{nameof(Subject)}Id")
                 .OnDelete(DeleteBehavior.SetNull);
         }
     }

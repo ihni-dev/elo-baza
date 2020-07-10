@@ -4,9 +4,9 @@ namespace EloBaza.Domain.SharedKernel
 {
     public abstract class Entity
     {
-        private int _id;
-        
-        public Guid Key { get; set; }
+        private int Id { get; set; }
+
+        public Guid Key { get; protected set; }
 
         public DateTime CreatedAt { get; private set; }
         public int CreatedBy { get; private set; }
@@ -15,7 +15,7 @@ namespace EloBaza.Domain.SharedKernel
         public int LastModifiedBy { get; private set; }
 
         public bool IsDeleted { get; private set; }
-        public DateTime DeletedAt { get; private set; }
+        public DateTime? DeletedAt { get; private set; }
         public int? DeletedBy { get; private set; }
 
         public void SetCreationData(int userId)
@@ -39,7 +39,7 @@ namespace EloBaza.Domain.SharedKernel
 
         public bool IsTransient()
         {
-            return _id == 0;
+            return Id == 0;
         }
 
         public override bool Equals(object obj)
@@ -56,12 +56,12 @@ namespace EloBaza.Domain.SharedKernel
             if (IsTransient() || other.IsTransient())
                 return false;
 
-            return _id == other._id;
+            return Id == other.Id;
         }
 
         public override int GetHashCode()
         {
-            return (GetType().ToString() + _id).GetHashCode(StringComparison.InvariantCulture);
+            return (GetType().ToString() + Id).GetHashCode(StringComparison.InvariantCulture);
         }
 
         public static bool operator ==(Entity left, Entity right)

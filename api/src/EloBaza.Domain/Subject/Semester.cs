@@ -1,6 +1,6 @@
 ﻿using EloBaza.Domain.SharedKernel;
 
-namespace EloBaza.Domain.Subject
+namespace EloBaza.Domain.SubjectAggregate
 {
     public class Semester : Enumeration
     {

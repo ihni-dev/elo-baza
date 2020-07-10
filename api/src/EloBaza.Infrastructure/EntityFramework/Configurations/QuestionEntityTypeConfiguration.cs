@@ -1,55 +1,47 @@
-﻿using EloBaza.Domain.Question;
-using EloBaza.Domain.Subject;
+﻿using EloBaza.Domain.QuestionAggregate;
+using EloBaza.Domain.SubjectAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EloBaza.Infrastructure.EntityFramework.Configurations
 {
-    public class QuestionEntityTypeConfiguration : IEntityTypeConfiguration<QuestionAggregate>
+    public class QuestionEntityTypeConfiguration : IEntityTypeConfiguration<Question>
     {
-        public void Configure(EntityTypeBuilder<QuestionAggregate> builder)
+        public void Configure(EntityTypeBuilder<Question> builder)
         {
-            builder.ToTable("Question");
+            builder.ToTable(nameof(Question));
 
-            builder.HasKey("_id")
-                .HasName("Id");
-
-            builder.Property("_id")
-                .HasColumnName($"QuestionId");
-
-            builder.Property(q => q.Key)
-                .IsRequired(true);
+            builder.HasKey("Id");
+            builder.Property("Id")
+                .HasColumnName($"{nameof(Question)}Id");
 
             builder.HasAlternateKey(q => q.Key);
 
-            builder.Property(q => q.Content)
-                .IsRequired(true);
-
-            builder.Property(q => q.IsPublished)
-                .IsRequired(true);
-
-            builder.Property("_subjectId")
+            builder.Property($"{nameof(Subject)}Id")
+                .HasColumnName($"{nameof(Subject)}Id")
                 .IsRequired(false);
-            builder.HasOne<SubjectAggregate>()
+            builder.HasOne<Subject>()
                 .WithMany()
                 .IsRequired(false)
-                .HasForeignKey("_subjectId")
+                .HasForeignKey($"{nameof(Subject)}Id")
                 .OnDelete(DeleteBehavior.SetNull);
 
-            builder.Property("_categoryId")
+            builder.Property($"{nameof(Category)}Id")
+                .HasColumnName($"{nameof(Category)}Id")
                 .IsRequired(false);
             builder.HasOne<Category>()
                 .WithMany()
                 .IsRequired(false)
-                .HasForeignKey("_categoryId")
+                .HasForeignKey($"{nameof(Category)}Id")
                 .OnDelete(DeleteBehavior.SetNull);
 
-            builder.Property("_examSessionId")
+            builder.Property($"{nameof(ExamSession)}Id")
+                .HasColumnName($"{nameof(ExamSession)}Id")
                 .IsRequired(false);
             builder.HasOne<ExamSession>()
                 .WithMany()
                 .IsRequired(false)
-                .HasForeignKey("_examSessionId")
+                .HasForeignKey($"{nameof(ExamSession)}Id")
                 .OnDelete(DeleteBehavior.SetNull);
         }
     }
