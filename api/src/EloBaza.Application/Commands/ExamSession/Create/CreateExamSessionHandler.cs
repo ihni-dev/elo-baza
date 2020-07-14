@@ -1,5 +1,4 @@
-﻿using EloBaza.Application.Queries.ExamSession;
-using EloBaza.Application.Queries.ExamSession.Get;
+﻿using EloBaza.Application.Queries.ExamSession.Get;
 using EloBaza.Domain.SharedKernel;
 using EloBaza.Domain.SharedKernel.Exceptions;
 using MediatR;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EloBaza.Application.Commands.ExamSession.Create
 {
-    class CreateExamSessionHandler : IRequestHandler<CreateExamSession, ExamSessionReadModel>
+    class CreateExamSessionHandler : IRequestHandler<CreateExamSession, ExamSessionDetailsReadModel>
     {
         private readonly IRepository<Domain.SubjectAggregate.Subject> _subjectRepository;
         private readonly IMediator _mediator;
@@ -19,7 +18,7 @@ namespace EloBaza.Application.Commands.ExamSession.Create
             _mediator = mediator;
         }
 
-        public async Task<ExamSessionReadModel> Handle(CreateExamSession request, CancellationToken cancellationToken)
+        public async Task<ExamSessionDetailsReadModel> Handle(CreateExamSession request, CancellationToken cancellationToken)
         {
             var subject = await _subjectRepository.Find(request.SubjectKey, cancellationToken);
             if (subject is null)

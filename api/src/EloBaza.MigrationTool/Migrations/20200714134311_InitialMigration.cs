@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EloBaza.MigrationTool.Migrations
 {
@@ -13,7 +13,7 @@ namespace EloBaza.MigrationTool.Migrations
                 {
                     SubjectId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Key = table.Column<Guid>(nullable: false),
+                    SubjectKey = table.Column<Guid>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     CreatedBy = table.Column<int>(nullable: false),
                     LastModifiedAt = table.Column<DateTime>(nullable: false),
@@ -26,7 +26,7 @@ namespace EloBaza.MigrationTool.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Subject", x => x.SubjectId);
-                    table.UniqueConstraint("AK_Subject_Key", x => x.Key);
+                    table.UniqueConstraint("AK_Subject_SubjectKey", x => x.SubjectKey);
                 });
 
             migrationBuilder.CreateTable(
@@ -35,7 +35,7 @@ namespace EloBaza.MigrationTool.Migrations
                 {
                     CategoryId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Key = table.Column<Guid>(nullable: false),
+                    CategoryKey = table.Column<Guid>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     CreatedBy = table.Column<int>(nullable: false),
                     LastModifiedAt = table.Column<DateTime>(nullable: false),
@@ -50,7 +50,7 @@ namespace EloBaza.MigrationTool.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Category", x => x.CategoryId);
-                    table.UniqueConstraint("AK_Category_Key", x => x.Key);
+                    table.UniqueConstraint("AK_Category_CategoryKey", x => x.CategoryKey);
                     table.ForeignKey(
                         name: "FK_Category_Category_ParentCategoryId",
                         column: x => x.ParentCategoryId,
@@ -71,7 +71,7 @@ namespace EloBaza.MigrationTool.Migrations
                 {
                     ExamSessionId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Key = table.Column<Guid>(nullable: false),
+                    ExamSessionKey = table.Column<Guid>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     CreatedBy = table.Column<int>(nullable: false),
                     LastModifiedAt = table.Column<DateTime>(nullable: false),
@@ -88,7 +88,7 @@ namespace EloBaza.MigrationTool.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ExamSession", x => x.ExamSessionId);
-                    table.UniqueConstraint("AK_ExamSession_Key", x => x.Key);
+                    table.UniqueConstraint("AK_ExamSession_ExamSessionKey", x => x.ExamSessionKey);
                     table.ForeignKey(
                         name: "FK_ExamSession_Subject_SubjectId",
                         column: x => x.SubjectId,
@@ -103,7 +103,7 @@ namespace EloBaza.MigrationTool.Migrations
                 {
                     QuestionId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Key = table.Column<Guid>(nullable: false),
+                    QuestionKey = table.Column<Guid>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     CreatedBy = table.Column<int>(nullable: false),
                     LastModifiedAt = table.Column<DateTime>(nullable: false),
@@ -120,7 +120,7 @@ namespace EloBaza.MigrationTool.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Question", x => x.QuestionId);
-                    table.UniqueConstraint("AK_Question_Key", x => x.Key);
+                    table.UniqueConstraint("AK_Question_QuestionKey", x => x.QuestionKey);
                     table.ForeignKey(
                         name: "FK_Question_Category_CategoryId",
                         column: x => x.CategoryId,
@@ -147,7 +147,7 @@ namespace EloBaza.MigrationTool.Migrations
                 {
                     AnswerId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Key = table.Column<Guid>(nullable: false),
+                    AnswerKey = table.Column<Guid>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     CreatedBy = table.Column<int>(nullable: false),
                     LastModifiedAt = table.Column<DateTime>(nullable: false),
@@ -162,7 +162,7 @@ namespace EloBaza.MigrationTool.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Answer", x => x.AnswerId);
-                    table.UniqueConstraint("AK_Answer_Key", x => x.Key);
+                    table.UniqueConstraint("AK_Answer_AnswerKey", x => x.AnswerKey);
                     table.ForeignKey(
                         name: "FK_Answer_Question_QuestionId",
                         column: x => x.QuestionId,
@@ -177,7 +177,7 @@ namespace EloBaza.MigrationTool.Migrations
                 {
                     ExplanationId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Key = table.Column<Guid>(nullable: false),
+                    ExplanationKey = table.Column<Guid>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     CreatedBy = table.Column<int>(nullable: false),
                     LastModifiedAt = table.Column<DateTime>(nullable: false),
@@ -191,7 +191,7 @@ namespace EloBaza.MigrationTool.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Explanation", x => x.ExplanationId);
-                    table.UniqueConstraint("AK_Explanation_Key", x => x.Key);
+                    table.UniqueConstraint("AK_Explanation_ExplanationKey", x => x.ExplanationKey);
                     table.ForeignKey(
                         name: "FK_Explanation_Question_QuestionId",
                         column: x => x.QuestionId,
@@ -206,7 +206,7 @@ namespace EloBaza.MigrationTool.Migrations
                 {
                     AttachmentId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Key = table.Column<Guid>(nullable: false),
+                    AttachmentKey = table.Column<Guid>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     CreatedBy = table.Column<int>(nullable: false),
                     LastModifiedAt = table.Column<DateTime>(nullable: false),
@@ -223,7 +223,7 @@ namespace EloBaza.MigrationTool.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Attachment", x => x.AttachmentId);
-                    table.UniqueConstraint("AK_Attachment_Key", x => x.Key);
+                    table.UniqueConstraint("AK_Attachment_AttachmentKey", x => x.AttachmentKey);
                     table.ForeignKey(
                         name: "FK_Attachment_Explanation_ExplanationId",
                         column: x => x.ExplanationId,

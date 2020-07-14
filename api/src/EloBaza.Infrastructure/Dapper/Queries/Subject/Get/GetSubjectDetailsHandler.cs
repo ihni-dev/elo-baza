@@ -3,6 +3,7 @@ using EloBaza.Application.Queries.ExamSession;
 using EloBaza.Application.Queries.Subject.Get;
 using EloBaza.Domain.SharedKernel.Exceptions;
 using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading;
@@ -15,13 +16,16 @@ namespace EloBaza.Infrastructure.Dapper.Queries.Subject.Get
         private readonly IDbConnection _dbConnection;
 
         private const string GetSubjectQuery = @"
-SELECT s.Name,
+SELECT 
+    s.SubjectKey AS 'Key',
+    s.Name,
+    es.ExamSessionKey AS 'Key',
     es.Name,
     es.Year,
     es.Semester
 FROM Subject s
-    INNER JOIN ExamSession es ON s.Id = es.SubjectId 
-WHERE s.Name = @Name
+    LEFT JOIN ExamSession es ON s.SubjectId = es.SubjectId 
+WHERE s.SubjectKey = @SubjectKey
 ";
 
         public GetSubjectDetailsHandler(IDbConnection dbConnection)
@@ -31,7 +35,7 @@ WHERE s.Name = @Name
 
         public async Task<SubjectDetailsReadModel> Handle(GetSubjectDetails request, CancellationToken cancellationToken)
         {
-            var lookup = new Dictionary<string, SubjectDetailsReadModel>();
+            var lookup = new Dictionary<Guid, SubjectDetailsReadModel>();
 
             await _dbConnection.QueryAsync<SubjectDetailsReadModel, ExamSessionReadModel, SubjectDetailsReadModel>(
                 sql: GetSubjectQuery,
@@ -39,15 +43,16 @@ WHERE s.Name = @Name
                 {
                     SubjectDetailsReadModel subjectDetailsReadModel;
 
-                    if (!lookup.TryGetValue(sdrm.Name!, out subjectDetailsReadModel))
-                        lookup.Add(sdrm.Name!, subjectDetailsReadModel = sdrm);
+                    if (!lookup.TryGetValue(sdrm.Key, out subjectDetailsReadModel))
+                        lookup.Add(sdrm.Key, subjectDetailsReadModel = sdrm);
 
-                    subjectDetailsReadModel.ExamSessions.Add(esrm);
+                    if (!(esrm is null))
+                        subjectDetailsReadModel.ExamSessions.Add(esrm);
 
                     return subjectDetailsReadModel;
                 },
                 param: new { request.SubjectKey },
-                splitOn: "Name");
+                splitOn: "Key");
 
             var subject = lookup.GetValueOrDefault(request.SubjectKey);
             if (subject is null)

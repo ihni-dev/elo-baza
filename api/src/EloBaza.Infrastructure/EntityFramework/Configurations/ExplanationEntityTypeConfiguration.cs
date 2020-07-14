@@ -15,6 +15,8 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
             builder.Property("Id")
                 .HasColumnName($"{nameof(Explanation)}Id");
 
+            builder.Property(e => e.Key)
+                .HasColumnName($"{nameof(Explanation)}Key");
             builder.HasAlternateKey(e => e.Key);
 
             builder.Property(e => e.Content)

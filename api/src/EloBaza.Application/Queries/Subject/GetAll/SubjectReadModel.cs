@@ -1,4 +1,6 @@
-﻿namespace EloBaza.Application.Queries.Subject.GetAll
+﻿using System;
+
+namespace EloBaza.Application.Queries.Subject.GetAll
 {
     /// <summary>
     /// Subject representation model
@@ -6,7 +8,12 @@
     public class SubjectReadModel
     {
         /// <summary>
-        /// Subject name
+        /// Subject's key
+        /// </summary>
+        public Guid Key { get; set; }
+
+        /// <summary>
+        /// Subject's name
         /// </summary>
         public string? Name { get; set; }
     }

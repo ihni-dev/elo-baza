@@ -9,7 +9,7 @@ namespace EloBaza.Application.Queries.Subject.GetAll
     public class GetAllSubjectsResult : PagedResult
     {
         /// <summary>
-        /// List of subject model representation
+        /// List of subject model representations
         /// </summary>
         public IEnumerable<SubjectReadModel> Data { get; private set; }
 

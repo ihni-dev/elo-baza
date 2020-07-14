@@ -8,9 +8,8 @@ namespace EloBaza.Application.Commands.Subject.Delete
     public class DeleteSubject : AuditableCommand, IRequest
     {
         public Guid SubjectKey { get; private set; }
-        public int RequestorId { get; private set; }
 
-        public DeleteSubject(Guid subjectKey, int requestorId)
+        public DeleteSubject(Guid subjectKey, int requestorId) : base(requestorId)
         {
             using (var validationContext = new ValidationContext())
             {
@@ -18,7 +17,6 @@ namespace EloBaza.Application.Commands.Subject.Delete
             }
 
             SubjectKey = subjectKey;
-            RequestorId = requestorId;
         }
     }
 }

@@ -50,6 +50,7 @@ namespace EloBaza.MigrationTool.Migrations
                         .HasColumnType("bit");
 
                     b.Property<Guid>("Key")
+                        .HasColumnName("AnswerKey")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("LastModifiedAt")
@@ -109,6 +110,7 @@ namespace EloBaza.MigrationTool.Migrations
                         .HasColumnType("bit");
 
                     b.Property<Guid>("Key")
+                        .HasColumnName("AttachmentKey")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("LastModifiedAt")
@@ -160,6 +162,7 @@ namespace EloBaza.MigrationTool.Migrations
                         .HasColumnType("bit");
 
                     b.Property<Guid>("Key")
+                        .HasColumnName("ExplanationKey")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("LastModifiedAt")
@@ -219,6 +222,7 @@ namespace EloBaza.MigrationTool.Migrations
                         .HasColumnType("bit");
 
                     b.Property<Guid>("Key")
+                        .HasColumnName("QuestionKey")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("LastModifiedAt")
@@ -268,6 +272,7 @@ namespace EloBaza.MigrationTool.Migrations
                         .HasColumnType("bit");
 
                     b.Property<Guid>("Key")
+                        .HasColumnName("CategoryKey")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("LastModifiedAt")
@@ -322,6 +327,7 @@ namespace EloBaza.MigrationTool.Migrations
                         .HasColumnType("bit");
 
                     b.Property<Guid>("Key")
+                        .HasColumnName("ExamSessionKey")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("LastModifiedAt")
@@ -382,6 +388,7 @@ namespace EloBaza.MigrationTool.Migrations
                         .HasColumnType("bit");
 
                     b.Property<Guid>("Key")
+                        .HasColumnName("SubjectKey")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("LastModifiedAt")

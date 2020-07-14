@@ -14,7 +14,9 @@ namespace EloBaza.Domain.SubjectAggregate
         public ICollection<ExamSession> ExamSessions { get; private set; } = new List<ExamSession>();
         public ICollection<Category> Categories { get; private set; } = new List<Category>();
 
-        public Subject(string name)
+        protected Subject() { }
+
+        public Subject(string name, int userId)
         {
             Validate(name);
 
@@ -22,7 +24,7 @@ namespace EloBaza.Domain.SubjectAggregate
             Name = name;
         }
 
-        public ExamSession CreateExamSession(short year, Semester semester)
+        public ExamSession CreateExamSession(short year, Semester semester, int userId)
         {
             var examSession = new ExamSession(this, year, semester);
             if (!(ExamSessions.FirstOrDefault(es => es.Name.Equals(examSession.Name, StringComparison.OrdinalIgnoreCase)) is null))
@@ -39,7 +41,7 @@ namespace EloBaza.Domain.SubjectAggregate
             Name = name;
         }
 
-        public void UpdateExamSession(Guid examSessionKey, short? year, Semester? semester)
+        public void UpdateExamSession(Guid examSessionKey, short? year, Semester? semester, int userId)
         {
             var examSession = FindExamSession(examSessionKey);
             if (examSession is null)
@@ -58,7 +60,7 @@ namespace EloBaza.Domain.SubjectAggregate
             }
         }
 
-        public void DeleteExamSession(Guid examSessionKey)
+        public void DeleteExamSession(Guid examSessionKey, int userId)
         {
             var examSession = FindExamSession(examSessionKey);
             if (examSession is null)

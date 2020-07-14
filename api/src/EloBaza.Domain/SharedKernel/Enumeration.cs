@@ -76,7 +76,7 @@ namespace EloBaza.Domain.SharedKernel
 
         public static T FromDisplayName<T>(string displayName) where T : Enumeration
         {
-            var matchingItem = Parse<T, string>(displayName, "display name", item => item.Name.Equals(displayName, StringComparison.OrdinalIgnoreCase);
+            var matchingItem = Parse<T, string>(displayName, "display name", item => item.Name.Equals(displayName, StringComparison.OrdinalIgnoreCase));
             return matchingItem;
         }
 

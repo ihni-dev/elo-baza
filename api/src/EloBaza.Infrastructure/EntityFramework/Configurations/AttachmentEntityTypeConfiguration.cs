@@ -15,6 +15,8 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
             builder.Property("Id")
                 .HasColumnName($"{nameof(Attachment)}Id");
 
+            builder.Property(a => a.Key)
+                .HasColumnName($"{nameof(Attachment)}Key");
             builder.HasAlternateKey(a => a.Key);
 
             builder.Property(a => a.FileName)

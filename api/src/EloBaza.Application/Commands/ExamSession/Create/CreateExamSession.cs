@@ -1,12 +1,12 @@
 ﻿using EloBaza.Application.Commands.Common;
-using EloBaza.Application.Queries.ExamSession;
+using EloBaza.Application.Queries.ExamSession.Get;
 using EloBaza.Domain.SharedKernel.Exceptions;
 using MediatR;
 using System;
 
 namespace EloBaza.Application.Commands.ExamSession.Create
 {
-    public class CreateExamSession : AuditableCommand, IRequest<ExamSessionReadModel>
+    public class CreateExamSession : AuditableCommand, IRequest<ExamSessionDetailsReadModel>
     {
         public Guid SubjectKey { get; private set; }
         public CreateExamSessionData Data { get; private set; }

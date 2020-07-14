@@ -1,10 +1,17 @@
-﻿namespace EloBaza.Application.Queries.ExamSession
+﻿using System;
+
+namespace EloBaza.Application.Queries.ExamSession
 {
     /// <summary>
     /// Exam session representation model
     /// </summary>
     public class ExamSessionReadModel
     {
+        /// <summary>
+        /// Exam session's key
+        /// </summary>
+        public Guid Key { get; set; }
+
         /// <summary>
         /// Exam session's name
         /// </summary>

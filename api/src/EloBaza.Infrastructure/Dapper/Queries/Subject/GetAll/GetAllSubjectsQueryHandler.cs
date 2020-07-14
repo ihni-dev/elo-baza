@@ -17,20 +17,24 @@ namespace EloBaza.Infrastructure.Dapper.Queries.Subject.Get
 
         private const string GetAllSubjectsQuery = @"
 WITH SubjectResult AS (
-    SELECT Name
+    SELECT
+        SubjectId,
+        SubjectKey,
+        Name
     FROM Subject
     WHERE Name LIKE '%' + @Name + '%'
 ), TotalCount AS (
     SELECT COUNT(*) AS TotalCount 
     FROM SubjectResult
 )
-SELECT 
-    Name, 
+SELECT
+    SubjectKey AS 'Key',
+    Name,
     TotalCount
 FROM 
     SubjectResult, 
     TotalCount
-ORDER BY SubjectResult.Id
+ORDER BY SubjectResult.SubjectId
     OFFSET (@Page - 1) * @PageSize ROWS
     FETCH NEXT @PageSize ROWS ONLY
 ";
@@ -60,7 +64,7 @@ ORDER BY SubjectResult.Id
                 },
                 splitOn: "TotalCount");
 
-            var pagingInfo = new PagingInfo(totalCountSet.Single(), request.PagingParameters.Page, request.PagingParameters.PageSize);
+            var pagingInfo = new PagingInfo(totalCountSet.SingleOrDefault(), request.PagingParameters.Page, request.PagingParameters.PageSize);
             return new GetAllSubjectsResult(subjects, pagingInfo);
         }
     }

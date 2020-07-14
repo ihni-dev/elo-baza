@@ -13,11 +13,13 @@ namespace EloBaza.Infrastructure.Dapper.Queries.ExamSession.Get
         private readonly IDbConnection _dbConnection;
 
         private const string GetExamSessionDetailsQuery = @"
-SELECT es.Name,
+SELECT 
+    es.ExamSessionKey AS 'Key',
+    es.Name,
     es.Year,
     es.Semester
 FROM Subject s
-    INNER JOIN ExamSession es ON s.Id = es.SubjectId 
+    INNER JOIN ExamSession es ON s.SubjectId = es.SubjectId 
 WHERE s.Name = @SubjectName AND es.Name = @Name
 ";
 
