@@ -11,7 +11,7 @@ namespace EloBaza.Application.Commands.ExamSession.Create
         public Guid SubjectKey { get; private set; }
         public CreateExamSessionData Data { get; private set; }
 
-        public CreateExamSession(Guid subjectKey, CreateExamSessionData data, int requestorId) : base(requestorId)
+        public CreateExamSession(int requestorId, Guid subjectKey, CreateExamSessionData data) : base(requestorId)
         {
             using (var validationContext = new ValidationContext())
             {

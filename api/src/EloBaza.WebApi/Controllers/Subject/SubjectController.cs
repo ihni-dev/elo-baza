@@ -6,7 +6,6 @@ using EloBaza.Application.Commands.Subject.Create;
 using EloBaza.Application.Commands.Subject.Delete;
 using EloBaza.Application.Commands.Subject.Update;
 using EloBaza.Application.Queries.Common;
-using EloBaza.Application.Queries.ExamSession;
 using EloBaza.Application.Queries.ExamSession.Get;
 using EloBaza.Application.Queries.Subject.Get;
 using EloBaza.Application.Queries.Subject.GetAll;
@@ -85,7 +84,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         public async Task<IActionResult> Create(CreateSubjectModel createSubjectModel)
         {
             var createSubjectData = _mapper.Map<CreateSubjectData>(createSubjectModel);
-            var subject = await _mediator.Send(new CreateSubject(createSubjectData, requestorId: 1));
+            var subject = await _mediator.Send(new CreateSubject(requestorId: 1, createSubjectData));
 
             return CreatedAtAction(nameof(GetByKey), new { subjectKey = subject.Key }, subject);
         }
@@ -103,7 +102,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(Guid subjectKey)
         {
-            await _mediator.Send(new DeleteSubject(subjectKey, requestorId: 1));
+            await _mediator.Send(new DeleteSubject(requestorId: 1, subjectKey));
 
             return NoContent();
         }
@@ -124,7 +123,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         public async Task<IActionResult> Update(Guid subjectKey, UpdateSubjectModel updateSubjectModel)
         {
             var updateSubjectData = _mapper.Map<UpdateSubjectData>(updateSubjectModel);
-            await _mediator.Send(new UpdateSubject(subjectKey, updateSubjectData));
+            await _mediator.Send(new UpdateSubject(requestorId: 1, subjectKey, updateSubjectData));
 
             return NoContent();
         }
@@ -168,7 +167,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         public async Task<IActionResult> CreateExamSession(Guid subjectKey, CreateExamSessionModel createExamSessionModel)
         {
             var createExamSessionData = _mapper.Map<CreateExamSessionData>(createExamSessionModel);
-            var examSession = await _mediator.Send(new CreateExamSession(subjectKey, createExamSessionData, requestorId: 1));
+            var examSession = await _mediator.Send(new CreateExamSession(requestorId: 1, subjectKey, createExamSessionData));
 
             return CreatedAtAction(nameof(GetExamSessionByName), new { subjectKey, examSessionKey = examSession.Key }, examSession);
         }
@@ -187,7 +186,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteExamSession(Guid subjectKey, Guid examSessionKey)
         {
-            await _mediator.Send(new DeleteExamSession(subjectKey, examSessionKey, requestorId: 1));
+            await _mediator.Send(new DeleteExamSession(requestorId: 1, subjectKey, examSessionKey));
 
             return NoContent();
         }
@@ -210,7 +209,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         public async Task<IActionResult> Update(Guid subjectKey, Guid examSessionKey, UpdateExamSessionModel updateExamSessionModel)
         {
             var updateExamSessionData = _mapper.Map<UpdateExamSessionData>(updateExamSessionModel);
-            await _mediator.Send(new UpdateExamSession(subjectKey, examSessionKey, updateExamSessionData, requestorId: 1));
+            await _mediator.Send(new UpdateExamSession(requestorId: 1, subjectKey, examSessionKey, updateExamSessionData));
 
             return NoContent();
         }

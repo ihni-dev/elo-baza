@@ -8,7 +8,7 @@ namespace EloBaza.Application.Commands.Subject.Create
     {
         public CreateSubjectData Data { get; private set; }
 
-        public CreateSubject(CreateSubjectData data, int requestorId) : base(requestorId)
+        public CreateSubject(int requestorId, CreateSubjectData data) : base(requestorId)
         {
             Data = data;
         }

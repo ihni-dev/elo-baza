@@ -11,7 +11,7 @@ namespace EloBaza.Application.Commands.ExamSession.Update
         public Guid ExamSessionKey { get; private set; }
         public UpdateExamSessionData Data { get; private set; }
 
-        public UpdateExamSession(Guid subjectKey, Guid examSessionKey, UpdateExamSessionData data, int requestorId) : base(requestorId)
+        public UpdateExamSession(int requestorId, Guid subjectKey, Guid examSessionKey, UpdateExamSessionData data) : base(requestorId)
         {
             using (var validationContext = new ValidationContext())
             {

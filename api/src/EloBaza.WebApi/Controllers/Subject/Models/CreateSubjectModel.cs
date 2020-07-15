@@ -12,6 +12,7 @@ namespace EloBaza.WebApi.Controllers.Subject.Models
         /// </summary>
         [Required]
         [MinLength(1)]
+        [MaxLength(Domain.SubjectAggregate.Subject.NameMaxLength)]
         public string Name { get; set; } = default!;
     }
 }

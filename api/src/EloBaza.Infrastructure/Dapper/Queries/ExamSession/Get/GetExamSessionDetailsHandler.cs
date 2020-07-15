@@ -20,7 +20,7 @@ SELECT
     es.Semester
 FROM Subject s
     INNER JOIN ExamSession es ON s.SubjectId = es.SubjectId 
-WHERE s.Name = @SubjectName AND es.Name = @Name
+WHERE s.SubjectKey = @SubjectKey AND es.ExamSessionKey = @ExamSessionKey
 ";
 
         public GetExamSessionDetailsHandler(IDbConnection dbConnection)

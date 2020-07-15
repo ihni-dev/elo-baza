@@ -8,9 +8,11 @@ namespace EloBaza.WebApi.Controllers.Subject.Models
     public class UpdateSubjectModel
     {
         /// <summary>
-        /// Name of the subject to update
+        /// Name of the subject
         /// </summary>
+        [Required]
         [MinLength(1)]
+        [MaxLength(Domain.SubjectAggregate.Subject.NameMaxLength)]
         public string? Name { get; set; }
     }
 }

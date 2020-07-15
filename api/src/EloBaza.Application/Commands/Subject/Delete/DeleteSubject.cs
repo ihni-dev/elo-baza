@@ -9,7 +9,7 @@ namespace EloBaza.Application.Commands.Subject.Delete
     {
         public Guid SubjectKey { get; private set; }
 
-        public DeleteSubject(Guid subjectKey, int requestorId) : base(requestorId)
+        public DeleteSubject(int requestorId, Guid subjectKey) : base(requestorId)
         {
             using (var validationContext = new ValidationContext())
             {

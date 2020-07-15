@@ -24,7 +24,7 @@ namespace EloBaza.Application.Commands.Subject.Update
 
             var nameChanged = !string.Equals(request.Data.Name, subject.Name, StringComparison.Ordinal);
             if (!string.IsNullOrWhiteSpace(request.Data.Name) && nameChanged)
-                subject.UpdateName(request.Data.Name);
+                subject.UpdateName(request.RequestorId, request.Data.Name);
 
             await _subjectRepository.Save(subject, cancellationToken);
         }

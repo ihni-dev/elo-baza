@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EloBaza.MigrationTool.Migrations
 {
     [DbContext(typeof(EloBazaDbContext))]
-    [Migration("20200714134311_InitialMigration")]
+    [Migration("20200715153034_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -343,7 +343,7 @@ namespace EloBaza.MigrationTool.Migrations
                         .HasColumnType("nvarchar(70)")
                         .HasMaxLength(70);
 
-                    b.Property<byte?>("ResitNumber")
+                    b.Property<byte>("ResitNumber")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Semester")

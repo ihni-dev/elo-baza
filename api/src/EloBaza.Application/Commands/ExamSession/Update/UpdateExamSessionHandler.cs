@@ -22,7 +22,7 @@ namespace EloBaza.Application.Commands.ExamSession.Update
                 throw new NotFoundException($"Subject with key: {request.SubjectKey} does not exists");
 
             if (request.Data.Year.HasValue || !(request.Data.Semester is null))
-                subject.UpdateExamSession(request.ExamSessionKey, request.Data.Year, request.Data.Semester, request.RequestorId);
+                subject.UpdateExamSession(request.RequestorId, request.ExamSessionKey, request.Data.Year, request.Data.Semester, request.Data.ResitNumber);
 
             await _subjectRepository.Save(subject, cancellationToken);
         }

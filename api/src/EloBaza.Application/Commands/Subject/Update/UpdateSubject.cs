@@ -1,15 +1,16 @@
-﻿using EloBaza.Domain.SharedKernel.Exceptions;
+﻿using EloBaza.Application.Commands.Common;
+using EloBaza.Domain.SharedKernel.Exceptions;
 using MediatR;
 using System;
 
 namespace EloBaza.Application.Commands.Subject.Update
 {
-    public class UpdateSubject : IRequest
+    public class UpdateSubject : AuditableCommand, IRequest
     {
         public Guid SubjectKey { get; private set; }
         public UpdateSubjectData Data { get; private set; }
 
-        public UpdateSubject(Guid subjectKey, UpdateSubjectData data)
+        public UpdateSubject(int requestorId, Guid subjectKey, UpdateSubjectData data) : base(requestorId)
         {
             using (var validationContext = new ValidationContext())
             {

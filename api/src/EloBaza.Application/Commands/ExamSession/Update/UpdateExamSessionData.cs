@@ -8,8 +8,9 @@ namespace EloBaza.Application.Commands.ExamSession.Update
     {
         public short? Year { get; private set; }
         public Semester? Semester { get; private set; }
+        public byte? ResitNumber { get; private set; }
 
-        public UpdateExamSessionData(short? year, string? semester)
+        public UpdateExamSessionData(short? year, string? semester, byte? resitNumber)
         {
             using (var validationContext = new ValidationContext())
             {

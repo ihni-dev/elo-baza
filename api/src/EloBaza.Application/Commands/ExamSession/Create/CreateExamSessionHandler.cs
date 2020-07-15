@@ -24,7 +24,7 @@ namespace EloBaza.Application.Commands.ExamSession.Create
             if (subject is null)
                 throw new NotFoundException($"Subject with Key: {request.SubjectKey} does not exists");
 
-            var examSession = subject.CreateExamSession(request.Data.Year, request.Data.Semester, request.RequestorId);
+            var examSession = subject.CreateExamSession(request.RequestorId, request.Data.Year, request.Data.Semester, request.Data.ResitNumber);
 
             await _subjectRepository.Save(subject, cancellationToken);
 

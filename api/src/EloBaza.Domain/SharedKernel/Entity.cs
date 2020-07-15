@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace EloBaza.Domain.SharedKernel
 {
@@ -18,23 +21,48 @@ namespace EloBaza.Domain.SharedKernel
         public DateTime? DeletedAt { get; private set; }
         public int? DeletedBy { get; private set; }
 
-        public void SetCreationData(int userId)
+        internal void SetCreationData(int userId)
         {
             CreatedAt = LastModifiedAt = DateTime.UtcNow;
             CreatedBy = LastModifiedBy = userId;
         }
 
-        public void SetModificationData(int userId)
+        internal void SetModificationData(int userId)
         {
             LastModifiedAt = DateTime.UtcNow;
             LastModifiedBy = userId;
         }
 
-        public void Delete(int userId)
+        internal void MarkAsDeleted(int userId)
+        {
+            MarkAsDeleted(userId, DateTime.UtcNow);
+        }
+
+        private void MarkAsDeleted(int userId, DateTime now)
         {
             IsDeleted = true;
-            DeletedAt = DateTime.UtcNow;
+            DeletedAt = now;
             DeletedBy = userId;
+
+            foreach (var prop in GetType()
+                .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+            {
+                if (prop.GetValue(this) is Entity)
+                {
+                    var entity = prop.GetValue(this) as Entity;
+                    if (!(entity?.IsDeleted ?? true))
+                        entity.MarkAsDeleted(userId, now);
+                }
+                else if (prop.GetValue(this) is IEnumerable<Entity>)
+                {
+                    var entities = prop.GetValue(this) as IEnumerable<Entity> ?? Array.Empty<Entity>();
+                    foreach (var entity in entities)
+                    {
+                        if (!(entity.IsDeleted))
+                            entity.MarkAsDeleted(userId, now);
+                    }
+                }
+            }
         }
 
         public bool IsTransient()

@@ -21,7 +21,7 @@ namespace EloBaza.Application.Commands.ExamSession.Delete
             if (subject is null)
                 throw new NotFoundException($"Subject with key: {request.SubjectKey} does not exists");
 
-            subject.DeleteExamSession(request.ExamSessionKey, request.RequestorId);
+            subject.DeleteExamSession(request.RequestorId, request.ExamSessionKey);
 
             await _subjectRepository.Save(subject, cancellationToken);
         }

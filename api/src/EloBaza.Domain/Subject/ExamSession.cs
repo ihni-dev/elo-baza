@@ -9,31 +9,52 @@ namespace EloBaza.Domain.SubjectAggregate
         public const short ExamSessionMinYear = 1950;
         public const short ExamSessionMaxYear = 2150;
 
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public short Year { get; private set; }
-        public Semester Semester { get; private set; }
-        public byte? ResitNumber { get; private set; }
-        public bool IsResit => ResitNumber.HasValue;
+        public Semester Semester { get; private set; } = Semester.Winter;
+        public byte ResitNumber { get; private set; }
+        public bool IsResit => ResitNumber == default;
 
         public Subject? Subject { get; private set; }
 
         protected ExamSession() { }
 
-        internal ExamSession(Subject subject, short year, Semester semester)
+        protected ExamSession(Subject subject, string name, short year, Semester semester, byte resitNumber = default)
         {
             Key = Guid.NewGuid();
 
             Subject = subject;
 
+            Name = name;
             Year = year;
             Semester = semester;
-            Name = $"{Subject.Name}-{Year}-{Semester}";
+            ResitNumber = resitNumber;
         }
 
-        internal void Update(short year, Semester semester)
+        internal static ExamSession Create(int userId, Subject subject, short year, Semester semester, byte resitNumber = default)
+        {
+            var name = GenerateName(subject, year, semester, resitNumber);
+            var examSession = new ExamSession(subject, name, year, semester, resitNumber);
+
+            examSession.SetCreationData(userId);
+
+            return examSession;
+        }
+
+        internal void Update(int userId, short year, Semester semester, byte resitNumber)
         {
             Year = year;
             Semester = semester;
+            Name = GenerateName(Subject, year, semester, resitNumber);
+
+            SetModificationData(userId);
+        }
+
+        private static string GenerateName(Subject? subject, short year, Semester semester, byte resitNumber = default)
+        {
+            var subjectPrefix = subject is null ? string.Empty : $"{subject.Name}-";
+            var resitPostfix = resitNumber != default ? $"-Resit-{ resitNumber}" : string.Empty;
+            return $"{subjectPrefix}{year}-{semester}{resitPostfix}";
         }
     }
 }

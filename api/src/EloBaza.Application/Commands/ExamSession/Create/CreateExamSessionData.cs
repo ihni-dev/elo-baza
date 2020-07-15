@@ -8,8 +8,9 @@ namespace EloBaza.Application.Commands.ExamSession.Create
     {
         public short Year { get; private set; }
         public Semester Semester { get; private set; }
+        public byte ResitNumber { get; private set; }
 
-        public CreateExamSessionData(short year, string semester)
+        public CreateExamSessionData(short year, string semester, byte resitNumber)
         {
             using (var validationContext = new ValidationContext())
             {
@@ -26,6 +27,7 @@ namespace EloBaza.Application.Commands.ExamSession.Create
 
             Year = year;
             Semester = Enumeration.FromDisplayName<Semester>(semester);
+            ResitNumber = resitNumber;
         }
     }
 }

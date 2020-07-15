@@ -19,7 +19,7 @@ namespace EloBaza.Application.Commands.Subject.Create
 
         public async Task<SubjectDetailsReadModel> Handle(CreateSubject request, CancellationToken cancellationToken)
         {
-            var subject = new Domain.SubjectAggregate.Subject(request.Data.Name, request.RequestorId);
+            var subject = Domain.SubjectAggregate.Subject.Create(request.RequestorId, request.Data.Name);
 
             await _subjectRepository.Save(subject, cancellationToken);
 

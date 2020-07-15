@@ -341,7 +341,7 @@ namespace EloBaza.MigrationTool.Migrations
                         .HasColumnType("nvarchar(70)")
                         .HasMaxLength(70);
 
-                    b.Property<byte?>("ResitNumber")
+                    b.Property<byte>("ResitNumber")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Semester")

@@ -10,7 +10,7 @@ namespace EloBaza.Application.Commands.ExamSession.Delete
         public Guid SubjectKey { get; private set; }
         public Guid ExamSessionKey { get; private set; }
 
-        public DeleteExamSession(Guid subjectKey, Guid examSessionKey, int requestorId) : base(requestorId)
+        public DeleteExamSession(int requestorId, Guid subjectKey, Guid examSessionKey) : base(requestorId)
         {
             using (var validationContext = new ValidationContext())
             {

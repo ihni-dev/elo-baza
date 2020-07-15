@@ -21,6 +21,7 @@ namespace EloBaza.Infrastructure.EntityFramework.Repositories
         {
             return await _subjectDbContext
                 .Subjects
+                .Include(s => s.ExamSessions)
                 .FirstOrDefaultAsync(s => s.Key == key, cancellationToken: cancellationToken);
         }
 
