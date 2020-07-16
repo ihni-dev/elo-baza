@@ -9,6 +9,6 @@ namespace EloBaza.Domain.SubjectAggregate
         public static readonly Semester Winter = new Semester(1, "Winter");
         public static readonly Semester Summer = new Semester(2, "Summer");
 
-        public Semester(int id, string name) : base(id, name) { }
+        private Semester(int id, string name) : base(id, name) { }
     }
 }

@@ -13,6 +13,7 @@ namespace EloBaza.Domain.SubjectAggregate
         public string Name { get; private set; } = string.Empty;
         public ICollection<ExamSession> ExamSessions { get; private set; } = new List<ExamSession>();
         public ICollection<Category> Categories { get; private set; } = new List<Category>();
+        public ICollection<Test> Tests { get; private set; } = new List<Test>();
 
         protected Subject() { }
 

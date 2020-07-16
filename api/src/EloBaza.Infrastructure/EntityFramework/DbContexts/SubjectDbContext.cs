@@ -15,6 +15,7 @@ namespace EloBaza.Infrastructure.EntityFramework.DbContexts
             modelBuilder.ApplyConfiguration(new SubjectEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ExamSessionEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new TestEntityTypeConfiguration());
         }
     }
 }

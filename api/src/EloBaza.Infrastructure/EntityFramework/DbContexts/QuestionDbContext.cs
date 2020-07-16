@@ -13,6 +13,9 @@ namespace EloBaza.Infrastructure.EntityFramework.DbContexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new QuestionEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new QuestionCategoryEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new QuestionExamSessionEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new QuestionTestEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new AnswerEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ExplanationEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new AttachmentEntityTypeConfiguration());

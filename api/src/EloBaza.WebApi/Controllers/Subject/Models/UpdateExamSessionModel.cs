@@ -14,9 +14,9 @@ namespace EloBaza.WebApi.Controllers.Subject.Models
         public short? Year { get; set; }
 
         /// <summary>
-        /// Exam session semester - Winter, Summer
-        /// </summary>        
-        [RegularExpression("(^(w|W)(i|I)(n|N)(t|T)(e|E)(r|R)$)|(^(s|S)(u|U)(m|M)(m|M)(e|E)(r|R)$)", ErrorMessage = "Available values - Winter, Summer")]
+        /// Exam session semester (optional) - Winter, Summer
+        /// </summary>
+        [MinLength(1)]
         public string? Semester { get; set; }
 
         /// <summary>

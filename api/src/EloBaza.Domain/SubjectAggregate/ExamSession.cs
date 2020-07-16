@@ -9,9 +9,9 @@ namespace EloBaza.Domain.SubjectAggregate
         public const short ExamSessionMinYear = 1950;
         public const short ExamSessionMaxYear = 2150;
 
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; private set; }
         public short Year { get; private set; }
-        public Semester Semester { get; private set; } = Semester.Winter;
+        public Semester Semester { get; private set; }
         public byte ResitNumber { get; private set; }
         public bool IsResit => ResitNumber == default;
 

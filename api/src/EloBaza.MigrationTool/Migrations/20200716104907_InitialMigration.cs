@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EloBaza.MigrationTool.Migrations
 {
@@ -112,8 +112,6 @@ namespace EloBaza.MigrationTool.Migrations
                     DeletedAt = table.Column<DateTime>(nullable: true),
                     DeletedBy = table.Column<int>(nullable: true),
                     SubjectId = table.Column<int>(nullable: true),
-                    CategoryId = table.Column<int>(nullable: true),
-                    ExamSessionId = table.Column<int>(nullable: true),
                     Content = table.Column<string>(nullable: false),
                     IsPublished = table.Column<bool>(nullable: false)
                 },
@@ -122,19 +120,39 @@ namespace EloBaza.MigrationTool.Migrations
                     table.PrimaryKey("PK_Question", x => x.QuestionId);
                     table.UniqueConstraint("AK_Question_QuestionKey", x => x.QuestionKey);
                     table.ForeignKey(
-                        name: "FK_Question_Category_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Category",
-                        principalColumn: "CategoryId",
-                        onDelete: ReferentialAction.SetNull);
-                    table.ForeignKey(
-                        name: "FK_Question_ExamSession_ExamSessionId",
-                        column: x => x.ExamSessionId,
-                        principalTable: "ExamSession",
-                        principalColumn: "ExamSessionId",
-                        onDelete: ReferentialAction.SetNull);
-                    table.ForeignKey(
                         name: "FK_Question_Subject_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subject",
+                        principalColumn: "SubjectId",
+                        onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Test",
+                columns: table => new
+                {
+                    TestId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TestKey = table.Column<Guid>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    LastModifiedAt = table.Column<DateTime>(nullable: false),
+                    LastModifiedBy = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
+                    DeletedBy = table.Column<int>(nullable: true),
+                    Name = table.Column<string>(maxLength: 70, nullable: false),
+                    Year = table.Column<short>(nullable: false),
+                    Semester = table.Column<string>(maxLength: 6, nullable: false),
+                    Month = table.Column<string>(maxLength: 11, nullable: false),
+                    SubjectId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Test", x => x.TestId);
+                    table.UniqueConstraint("AK_Test_TestKey", x => x.TestKey);
+                    table.ForeignKey(
+                        name: "FK_Test_Subject_SubjectId",
                         column: x => x.SubjectId,
                         principalTable: "Subject",
                         principalColumn: "SubjectId",
@@ -198,6 +216,78 @@ namespace EloBaza.MigrationTool.Migrations
                         principalTable: "Question",
                         principalColumn: "QuestionId",
                         onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QuestionCategory",
+                columns: table => new
+                {
+                    QuestionId = table.Column<int>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionCategory", x => new { x.QuestionId, x.CategoryId });
+                    table.ForeignKey(
+                        name: "FK_QuestionCategory_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Category",
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_QuestionCategory_Question_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Question",
+                        principalColumn: "QuestionId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QuestionExamSession",
+                columns: table => new
+                {
+                    QuestionId = table.Column<int>(nullable: false),
+                    ExamSessionId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionExamSession", x => new { x.QuestionId, x.ExamSessionId });
+                    table.ForeignKey(
+                        name: "FK_QuestionExamSession_ExamSession_ExamSessionId",
+                        column: x => x.ExamSessionId,
+                        principalTable: "ExamSession",
+                        principalColumn: "ExamSessionId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_QuestionExamSession_Question_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Question",
+                        principalColumn: "QuestionId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QuestionTest",
+                columns: table => new
+                {
+                    QuestionId = table.Column<int>(nullable: false),
+                    TestId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionTest", x => new { x.QuestionId, x.TestId });
+                    table.ForeignKey(
+                        name: "FK_QuestionTest_Question_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Question",
+                        principalColumn: "QuestionId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_QuestionTest_Test_TestId",
+                        column: x => x.TestId,
+                        principalTable: "Test",
+                        principalColumn: "TestId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -274,18 +364,28 @@ namespace EloBaza.MigrationTool.Migrations
                 column: "QuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Question_CategoryId",
+                name: "IX_Question_SubjectId",
                 table: "Question",
+                column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionCategory_CategoryId",
+                table: "QuestionCategory",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Question_ExamSessionId",
-                table: "Question",
+                name: "IX_QuestionExamSession_ExamSessionId",
+                table: "QuestionExamSession",
                 column: "ExamSessionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Question_SubjectId",
-                table: "Question",
+                name: "IX_QuestionTest_TestId",
+                table: "QuestionTest",
+                column: "TestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Test_SubjectId",
+                table: "Test",
                 column: "SubjectId");
         }
 
@@ -298,16 +398,28 @@ namespace EloBaza.MigrationTool.Migrations
                 name: "Attachment");
 
             migrationBuilder.DropTable(
-                name: "Explanation");
+                name: "QuestionCategory");
 
             migrationBuilder.DropTable(
-                name: "Question");
+                name: "QuestionExamSession");
+
+            migrationBuilder.DropTable(
+                name: "QuestionTest");
+
+            migrationBuilder.DropTable(
+                name: "Explanation");
 
             migrationBuilder.DropTable(
                 name: "Category");
 
             migrationBuilder.DropTable(
                 name: "ExamSession");
+
+            migrationBuilder.DropTable(
+                name: "Test");
+
+            migrationBuilder.DropTable(
+                name: "Question");
 
             migrationBuilder.DropTable(
                 name: "Subject");

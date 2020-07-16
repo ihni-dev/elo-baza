@@ -27,24 +27,6 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
                 .IsRequired(false)
                 .HasForeignKey($"{nameof(Subject)}Id")
                 .OnDelete(DeleteBehavior.SetNull);
-
-            builder.Property($"{nameof(Category)}Id")
-                .HasColumnName($"{nameof(Category)}Id")
-                .IsRequired(false);
-            builder.HasOne<Category>()
-                .WithMany()
-                .IsRequired(false)
-                .HasForeignKey($"{nameof(Category)}Id")
-                .OnDelete(DeleteBehavior.SetNull);
-
-            builder.Property($"{nameof(ExamSession)}Id")
-                .HasColumnName($"{nameof(ExamSession)}Id")
-                .IsRequired(false);
-            builder.HasOne<ExamSession>()
-                .WithMany()
-                .IsRequired(false)
-                .HasForeignKey($"{nameof(ExamSession)}Id")
-                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

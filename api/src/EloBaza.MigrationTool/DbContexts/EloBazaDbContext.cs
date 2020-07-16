@@ -16,8 +16,12 @@ namespace EloBaza.MigrationTool.DbContexts
         {
             modelBuilder.ApplyConfiguration(new SubjectEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ExamSessionEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new TestEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new QuestionEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new QuestionCategoryEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new QuestionExamSessionEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new QuestionTestEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new AnswerEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ExplanationEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new AttachmentEntityTypeConfiguration());

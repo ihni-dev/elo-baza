@@ -8,9 +8,13 @@ namespace EloBaza.Domain.QuestionAggregate
     public class Question : AggregateRoot
     {
         private int? SubjectId { get; set; }
-        private int? CategoryId { get; set; }
-        private int? ExamSessionId { get; set; }
-        public bool IsExamQuestion => !ExamSessionId.HasValue;
+        private ICollection<QuestionCategory> QuestionCategories { get; set; } = new List<QuestionCategory>();
+        private ICollection<QuestionExamSession> QuestionExamSessions { get; set; } = new List<QuestionExamSession>();
+        private ICollection<QuestionTest> QuestionTests { get; set; } = new List<QuestionTest>();
+
+        public bool IsCategorized => QuestionCategories.Any();
+        public bool IsExamQuestion => QuestionExamSessions.Any();
+        public bool IsTestQuestion => QuestionTests.Any();
 
         public string Content { get; private set; }
         public ICollection<Attachment> Attachments { get; private set; }
@@ -19,22 +23,11 @@ namespace EloBaza.Domain.QuestionAggregate
         public bool HasExplanation => Explanations.Any();
         public bool IsPublished { get; private set; }
 
-        public Question(int? subjectId, int? categoryId, string content, bool isPublished)
+        public Question(int? subjectId, string content, bool isPublished)
         {
             Key = Guid.NewGuid();
 
             SubjectId = subjectId;
-            CategoryId = categoryId;
-
-            Content = content;
-            IsPublished = isPublished;
-        }
-
-        public Question(int? subjectId, int? categoryId, int? examSessionId, string content, bool isPublished)
-        {
-            SubjectId = subjectId;
-            CategoryId = categoryId;
-            ExamSessionId = examSessionId;
 
             Content = content;
             IsPublished = isPublished;
