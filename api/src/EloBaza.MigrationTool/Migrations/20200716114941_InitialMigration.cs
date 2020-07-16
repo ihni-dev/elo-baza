@@ -144,7 +144,7 @@ namespace EloBaza.MigrationTool.Migrations
                     Name = table.Column<string>(maxLength: 70, nullable: false),
                     Year = table.Column<short>(nullable: false),
                     Semester = table.Column<string>(maxLength: 6, nullable: false),
-                    Month = table.Column<string>(maxLength: 11, nullable: false),
+                    OrderNumber = table.Column<byte>(nullable: false),
                     SubjectId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

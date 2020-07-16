@@ -28,11 +28,6 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
                 .IsRequired(true)
                 .HasConversion(v => v.ToString(), v => Enumeration.FromDisplayName<Semester>(v));
 
-            builder.Property(es => es.Month)
-                .HasMaxLength(Month.NameMaxLength)
-                .IsRequired(true)
-                .HasConversion(v => v.ToString(), v => Enumeration.FromDisplayName<Month>(v));
-
             builder.HasOne<Subject>(es => es.Subject)
                 .WithMany(s => s.Tests)
                 .IsRequired(false)

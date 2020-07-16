@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EloBaza.MigrationTool.Migrations
 {
     [DbContext(typeof(EloBazaDbContext))]
-    [Migration("20200716104907_InitialMigration")]
+    [Migration("20200716114941_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -477,15 +477,13 @@ namespace EloBaza.MigrationTool.Migrations
                     b.Property<int>("LastModifiedBy")
                         .HasColumnType("int");
 
-                    b.Property<string>("Month")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(11)")
-                        .HasMaxLength(11);
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(70)")
                         .HasMaxLength(70);
+
+                    b.Property<byte>("OrderNumber")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Semester")
                         .IsRequired()
