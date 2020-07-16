@@ -16,11 +16,9 @@ namespace EloBaza.Domain.QuestionAggregate
 
         protected Attachment() { }
 
-        internal Attachment(Explanation explanation, string fileName, Uri fileUri, long fileSize)
+        internal Attachment(string fileName, Uri fileUri, long fileSize)
         {
             Key = Guid.NewGuid();
-
-            Explanation = explanation;
 
             FileName = fileName;
             FileUri = fileUri;

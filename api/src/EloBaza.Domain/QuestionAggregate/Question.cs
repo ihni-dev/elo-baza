@@ -1,4 +1,5 @@
-﻿using EloBaza.Domain.SharedKernel;
+﻿using EloBaza.Domain.QuestionAggregate.Links;
+using EloBaza.Domain.SharedKernel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace EloBaza.Domain.QuestionAggregate
         public bool IsTestQuestion => QuestionTests.Any();
 
         public string Content { get; private set; }
-        public ICollection<Attachment> Attachments { get; private set; }
+        public ICollection<Attachment> Attachments { get; private set; } = new List<Attachment>();
         public ICollection<Answer> Answers { get; private set; } = new List<Answer>();
         public ICollection<Explanation> Explanations { get; private set; }
         public bool HasExplanation => Explanations.Any();

@@ -1,4 +1,4 @@
-﻿namespace EloBaza.Domain.QuestionAggregate
+﻿namespace EloBaza.Domain.QuestionAggregate.Links
 {
     public class QuestionExamSession
     {
