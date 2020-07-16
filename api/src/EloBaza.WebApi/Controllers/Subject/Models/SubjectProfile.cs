@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using EloBaza.Application.Commands.ExamSession.Create;
-using EloBaza.Application.Commands.ExamSession.Update;
-using EloBaza.Application.Commands.Subject.Create;
-using EloBaza.Application.Commands.Subject.Update;
-using EloBaza.Application.Queries.Subject.GetAll;
+using EloBaza.Application.Commands.SubjectAggregate.Create;
+using EloBaza.Application.Commands.SubjectAggregate.ExamSession.Create;
+using EloBaza.Application.Commands.SubjectAggregate.ExamSession.Update;
+using EloBaza.Application.Commands.SubjectAggregate.Update;
+using EloBaza.Application.Queries.SubjectAggregate.GetAll;
 
 namespace EloBaza.WebApi.Controllers.Subject.Models
 {
