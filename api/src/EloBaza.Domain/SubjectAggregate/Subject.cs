@@ -19,16 +19,15 @@ namespace EloBaza.Domain.SubjectAggregate
 
         protected Subject(string name)
         {
-            Validate(name);
-
             Key = Guid.NewGuid();
             Name = name;
         }
 
         public static Subject Create(int userId, string name)
         {
-            var subject = new Subject(name);
+            Validate(name);
 
+            var subject = new Subject(name);
             subject.SetCreationData(userId);
 
             return subject;
@@ -48,12 +47,18 @@ namespace EloBaza.Domain.SubjectAggregate
             MarkAsDeleted(userId);
         }
 
+        private static void Validate(string name)
+        {
+            using var validationContext = new ValidationContext();
+            validationContext.Validate(() => string.IsNullOrEmpty(name), nameof(Name), "Subject's name must be provided");
+        }
+
         #region ExamSession
 
         public ExamSession CreateExamSession(int userId, short year, Semester semester, byte resitNumber)
         {
             var examSession = ExamSession.Create(userId, this, year, semester, resitNumber);
-            if (!(ExamSessions.FirstOrDefault(es => es.Name.Equals(examSession.Name, StringComparison.OrdinalIgnoreCase)) is null))
+            if (ExamSessionAlreadyExists(year, semester, resitNumber))
                 throw new AlreadyExistsException($"Exam session: {examSession.Name} already exists");
 
             ExamSessions.Add(examSession);
@@ -73,7 +78,7 @@ namespace EloBaza.Domain.SubjectAggregate
             var hasChanged = examSession.Year != newYear || examSession.Semester != newSemester || examSession.ResitNumber != newResitNumber;
             if (hasChanged)
             {
-                if (ExamSessions.Any(es => es.Year == newYear && es.Semester == newSemester && es.ResitNumber == newResitNumber))
+                if (ExamSessionAlreadyExists(newYear, newSemester, newResitNumber))
                     throw new AlreadyExistsException($"Exam session for year: {year}, semester: {semester} and resit: {resitNumber ?? 0} already exists");
                 else
                     examSession.Update(userId, newYear, newSemester, newResitNumber);
@@ -89,19 +94,89 @@ namespace EloBaza.Domain.SubjectAggregate
             examSession.MarkAsDeleted(userId);
         }
 
-        #endregion
-
-        private void Validate(string name)
-        {
-            using var validationContext = new ValidationContext();
-            validationContext.Validate(() => string.IsNullOrEmpty(name), nameof(Name), "Subject's name must be provided");
-        }
-
         private ExamSession FindExamSession(Guid examSessionKey)
         {
-            var examSession = ExamSessions.SingleOrDefault(es => es.Key == examSessionKey);
-
-            return examSession;
+            return ExamSessions.FirstOrDefault(es => es.Key == examSessionKey);
         }
+
+        private bool ExamSessionAlreadyExists(short year, Semester semester, byte resitNumber)
+        {
+            return ExamSessions.Any(es => es.Year == year && es.Semester == semester && es.ResitNumber == resitNumber);
+        }
+
+        #endregion
+
+
+        #region Category
+
+        public Category CreateRootCategory(int userId, string name)
+        {
+            var category = Category.Create(userId, this, name);
+            if (CategoryAlreadyExists(category.Name))
+                throw new AlreadyExistsException($"Category: {category.Name} already exists");
+
+            Categories.Add(category);
+            return category;
+        }
+
+        public Category CreateLeafCategory(int userId, string name, Guid parentCategoryKey)
+        {
+            var parentCategory = FindCategory(parentCategoryKey);
+            if (parentCategory is null)
+                throw new NotFoundException($"Parent category with Key: {parentCategoryKey} does not exists");
+
+            var category = Category.Create(userId, this, name, parentCategory);
+            parentCategory.AddSubCategory(category);
+
+            return category;
+        }
+
+        public void UpdateCategory(int userId, Guid categoryKey, string? name)
+        {
+            var category = FindCategory(categoryKey);
+            if (category is null)
+                throw new NotFoundException($"Category with Key: {categoryKey} does not exists");
+
+            var newName = name ?? category.Name;
+
+            var hasChanged = category.Name != newName;
+            if (hasChanged)
+            {
+                if (Categories.Any(c => c.Name.Equals(newName, StringComparison.OrdinalIgnoreCase))
+                    || )
+                    throw new AlreadyExistsException($"Exam session for year: {year}, semester: {semester} and resit: {resitNumber ?? 0} already exists");
+                else
+                    examSession.Update(userId, newYear, newSemester, newResitNumber);
+            }
+        }
+
+        public void DeleteExamSession(int userId, Guid examSessionKey)
+        {
+            var examSession = FindExamSession(examSessionKey);
+            if (examSession is null)
+                throw new NotFoundException($"Exam session with Key: {examSessionKey} does not exists for subject: {Key}");
+
+            examSession.MarkAsDeleted(userId);
+        }
+
+        private Category? FindCategory(Guid categoryKey)
+        {
+            foreach (var category in Categories)
+            {
+                var foundedCategory = category.Seek(categoryKey);
+
+                if (!(foundedCategory is null))
+                    return foundedCategory;
+            }
+
+            return null;
+        }
+
+        private bool CategoryAlreadyExists(string categoryName)
+        {
+            return Categories.Any(c => c.Name.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
+        }
+
+        #endregion
     }
 }
