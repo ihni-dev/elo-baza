@@ -141,22 +141,16 @@ namespace EloBaza.Domain.SubjectAggregate
 
             var hasChanged = category.Name != newName;
             if (hasChanged)
-            {
-                if (Categories.Any(c => c.Name.Equals(newName, StringComparison.OrdinalIgnoreCase))
-                    || )
-                    throw new AlreadyExistsException($"Exam session for year: {year}, semester: {semester} and resit: {resitNumber ?? 0} already exists");
-                else
-                    examSession.Update(userId, newYear, newSemester, newResitNumber);
-            }
+                category.Update(userId, newName);
         }
 
-        public void DeleteExamSession(int userId, Guid examSessionKey)
+        public void DeleteCategory(int userId, Guid categoryKey)
         {
-            var examSession = FindExamSession(examSessionKey);
-            if (examSession is null)
-                throw new NotFoundException($"Exam session with Key: {examSessionKey} does not exists for subject: {Key}");
+            var category = FindCategory(categoryKey);
+            if (category is null)
+                throw new NotFoundException($"Category with Key: {categoryKey} does not exists");
 
-            examSession.MarkAsDeleted(userId);
+            category.MarkAsDeleted(userId);
         }
 
         private Category? FindCategory(Guid categoryKey)

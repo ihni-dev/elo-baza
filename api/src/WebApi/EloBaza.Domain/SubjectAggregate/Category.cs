@@ -38,6 +38,17 @@ namespace EloBaza.Domain.SubjectAggregate
             return category;
         }
 
+        internal void Update(int userId, string newName)
+        {
+            using (var validationContext = new ValidationContext())
+            {
+                validationContext.Validate(() => string.IsNullOrWhiteSpace(newName), nameof(newName), "Category name must be provided");
+            }
+
+            Name = newName;
+            SetModificationData(userId);
+        }
+
         internal void AddSubCategory(Category subCategory)
         {
             if (SubCategoryAlreadyExists(subCategory))
