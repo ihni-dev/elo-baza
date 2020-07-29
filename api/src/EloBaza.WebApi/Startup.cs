@@ -3,6 +3,8 @@ using EloBaza.Application.IoC;
 using EloBaza.Infrastructure.EntityFramework.IoC;
 using EloBaza.WebApi.Extensions;
 using EloBaza.WebApi.Middleware;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -35,20 +37,23 @@ namespace EloBaza.WebApi
                 .AddAutoMapper(typeof(Program).GetTypeInfo().Assembly)
                 .AddSwagger()
                 .AddCorsPolicies();
+
+            services.AddAuthentication(AzureADB2CDefaults.BearerAuthenticationScheme)
+                .AddAzureADB2CBearer(options => Configuration.Bind("AzureAdB2C", options));
         }
 
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (!env.IsProduction())
+            if (env.IsProduction())
+            {
+                app.UseHsts()
+                    .UseProductionCors();
+            }
+            else
             {
                 app.UseDeveloperExceptionPage()
                     .UseDevelopmentCors()
                     .UseSwaggerDocumentation();
-            }
-            else
-            {
-                app.UseHsts();
-                app.UseProductionCors();
             }
 
             app.UseMiddleware<ErrorHandlingMiddleware>()
