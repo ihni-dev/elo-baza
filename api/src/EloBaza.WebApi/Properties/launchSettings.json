@@ -3,7 +3,7 @@
   "profiles": {
     "EloBaza.WebApi": {
       "commandName": "Project",
-      "applicationUrl": "http://localhost:5000",
+      "applicationUrl": "https://localhost:5000",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
       }

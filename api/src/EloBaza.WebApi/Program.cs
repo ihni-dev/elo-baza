@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
@@ -10,12 +11,13 @@ namespace EloBaza.WebApi
     {
         public static void Main(string[] args)
         {
-            InitLogger();
+            var configuration = GetAppConfiguration();
+            InitLogger(configuration);
 
             try
             {
                 Log.Information("Starting web host");
-                CreateHostBuilder(args).Build().Run();
+                CreateHostBuilder(args, configuration).Build().Run();
             }
             catch (Exception ex)
             {
@@ -28,22 +30,34 @@ namespace EloBaza.WebApi
             }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        public static IHostBuilder CreateHostBuilder(string[] args, IConfiguration configuration) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseConfiguration(configuration)
+                        .UseStartup<Startup>();
                 })
                 .UseSerilog();
 
-        private static void InitLogger()
+        private static IConfiguration GetAppConfiguration()
         {
-            var config = new ConfigurationBuilder()
-               .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-               .Build();
+            var userSecretsConfig = new ConfigurationBuilder()
+                .AddUserSecrets(typeof(Program).Assembly)
+                .Build();
 
+            return new ConfigurationBuilder()
+                .AddAzureAppConfiguration(options =>
+                    {
+                        options.Connect(userSecretsConfig["ConnectionStrings:AppConfig"])
+                            .Select(KeyFilter.Any, Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? "Development");
+                    })
+                .Build();
+        }
+
+        private static void InitLogger(IConfiguration configuration)
+        {
             Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(config)
+                .ReadFrom.Configuration(configuration)
                 .CreateLogger();
         }
     }

@@ -47,6 +47,7 @@ namespace EloBaza.WebApi
             }
             else
             {
+                app.UseHsts();
                 app.UseProductionCors();
             }
 
@@ -54,6 +55,7 @@ namespace EloBaza.WebApi
                 .UseHttpsRedirection()
                 .UseSerilogRequestLogging()
                 .UseRouting()
+                .UseAuthentication()
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {
