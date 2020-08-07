@@ -30,6 +30,31 @@ namespace EloBaza.MigrationTool.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserKey = table.Column<Guid>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    LastModifiedAt = table.Column<DateTime>(nullable: false),
+                    LastModifiedBy = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
+                    DeletedBy = table.Column<int>(nullable: true),
+                    Email = table.Column<string>(maxLength: 320, nullable: false),
+                    DisplayName = table.Column<string>(maxLength: 100, nullable: false),
+                    HasActiveSubscription = table.Column<bool>(nullable: false),
+                    SubscriptionEndsAt = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.UserId);
+                    table.UniqueConstraint("AK_User_UserKey", x => x.UserKey);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Category",
                 columns: table => new
                 {
@@ -43,9 +68,9 @@ namespace EloBaza.MigrationTool.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedAt = table.Column<DateTime>(nullable: true),
                     DeletedBy = table.Column<int>(nullable: true),
+                    SubjectId = table.Column<int>(nullable: true),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
-                    ParentCategoryId = table.Column<int>(nullable: true),
-                    SubjectId = table.Column<int>(nullable: true)
+                    ParentCategoryId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -405,6 +430,9 @@ namespace EloBaza.MigrationTool.Migrations
 
             migrationBuilder.DropTable(
                 name: "QuestionTest");
+
+            migrationBuilder.DropTable(
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Explanation");

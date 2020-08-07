@@ -1,5 +1,6 @@
 ﻿using EloBaza.Domain.QuestionAggregate;
 using EloBaza.Domain.SubjectAggregate;
+using EloBaza.Domain.UserAggregate;
 using EloBaza.Infrastructure.EntityFramework.Configurations;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,7 @@ namespace EloBaza.MigrationTool.DbContexts
     {
         public DbSet<Subject> Subjects { get; private set; } = null!;
         public DbSet<Question> Questions { get; private set; } = null!;
+        public DbSet<User> Users { get; private set; } = null!;
 
         public EloBazaDbContext(DbContextOptions<EloBazaDbContext> options) : base(options) { }
 
@@ -25,6 +27,7 @@ namespace EloBaza.MigrationTool.DbContexts
             modelBuilder.ApplyConfiguration(new AnswerEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ExplanationEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new AttachmentEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
         }
     }
 }

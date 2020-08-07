@@ -6,7 +6,7 @@ namespace EloBaza.Domain.SharedKernel
 {
     public abstract class Entity
     {
-        private int Id { get; set; }
+        protected int Id { get; private set; }
 
         public Guid Key { get; protected set; }
 

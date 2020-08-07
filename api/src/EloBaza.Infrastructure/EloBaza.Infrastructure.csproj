@@ -7,6 +7,9 @@
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.35" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.48.0" />
+    <PackageReference Include="Google.Apis.Gmail.v1" Version="1.48.0.2034" />
+    <PackageReference Include="MailKit" Version="2.8.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

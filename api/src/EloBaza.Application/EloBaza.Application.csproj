@@ -25,4 +25,8 @@
     <ProjectReference Include="..\EloBaza.Domain\EloBaza.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Behaviors\" />
+  </ItemGroup>
+
 </Project>
