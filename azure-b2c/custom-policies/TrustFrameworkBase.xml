@@ -252,6 +252,11 @@
         <UserHelpText>Special parameter passed for local account authentication to login.microsoftonline.com</UserHelpText>
       </ClaimType>
 
+      <ClaimType Id="bearerToken">
+        <DisplayName>Bearer token</DisplayName>
+        <DataType>string</DataType>
+      </ClaimType>
+
       <ClaimType Id="grant_type">
         <DisplayName>grant_type</DisplayName>
         <DataType>string</DataType>
@@ -1098,7 +1103,7 @@
       <TechnicalProfiles>
         <TechnicalProfile Id="JwtIssuer">
           <DisplayName>JWT Issuer</DisplayName>
-          <Protocol Name="None" />
+          <Protocol Name="OpenIdConnect" />
           <OutputTokenFormat>JWT</OutputTokenFormat>
           <Metadata>
             <Item Key="client_id">{service:te}</Item>
@@ -1114,6 +1119,57 @@
         </TechnicalProfile>
       </TechnicalProfiles>
     </ClaimsProvider>
+
+    <ClaimsProvider>
+      <DisplayName>Acquire JWT token to call azure function</DisplayName>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="Azure-Functions-Notify-New-User-Registered-AccessToken">
+          <DisplayName>Acquire JWT token to call azure function</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+          <Metadata>
+            <Item Key="ServiceUrl">https://login.microsoftonline.com/studybeepldev.onmicrosoft.com/oauth2/v2.0/token</Item>
+            <Item Key="AuthenticationType">Basic</Item>
+            <Item Key="SendClaimsIn">Form</Item>
+          </Metadata>
+          <CryptographicKeys>
+            <Key Id="BasicAuthenticationUsername" StorageReferenceId="B2C_1A_NotifyNewUserRegisteredClientId" />
+            <Key Id="BasicAuthenticationPassword" StorageReferenceId="B2C_1A_NotifyNewUserRegisteredSecret" />
+          </CryptographicKeys>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="grant_type" DefaultValue="client_credentials" AlwaysUseDefaultValue="true" />
+            <InputClaim ClaimTypeReferenceId="scope" DefaultValue="https://studybeepldev.onmicrosoft.com/9acbd91b-a265-4afc-ad9c-e27b90095685/.default" AlwaysUseDefaultValue="true" />
+          </InputClaims>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="bearerToken" PartnerClaimType="access_token" />
+          </OutputClaims>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+    <ClaimsProvider>
+      <DisplayName>Azure-Functions-Notify-New-User-Registered</DisplayName>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="Azure-Functions-Notify-New-User-Registered">
+          <DisplayName>Call Azure Function when new user registers</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+          <Metadata>
+            <Item Key="ServiceUrl">https://notify-new-user-registered.azurewebsites.net/api/notify-new-user-registered?code=AVr5C1JaCVCo84WMHBtdmsZoa51EVkD79qtgSU9pSWpyDdvJEJulRw==</Item>
+            <Item Key="AuthenticationType">Bearer</Item>
+            <Item Key="UseClaimAsBearerToken">bearerToken</Item>
+            <Item Key="AllowInsecureAuthInProduction">false</Item>
+            <Item Key="SendClaimsIn">Body</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="bearerToken" />
+            <InputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="userKey" />
+            <InputClaim ClaimTypeReferenceId="email" />
+            <InputClaim ClaimTypeReferenceId="displayName" />
+          </InputClaims>
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
   </ClaimsProviders>
 
   <UserJourneys>
@@ -1206,8 +1262,32 @@
             <ClaimsExchange Id="AADUserWrite" TechnicalProfileReferenceId="AAD-UserWriteUsingAlternativeSecurityId" />
           </ClaimsExchanges>
         </OrchestrationStep>
+
+        <OrchestrationStep Order="7" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
+              <Value>newUser</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="Azure-Functions-Notify-New-User-Registered-AccessToken" TechnicalProfileReferenceId="Azure-Functions-Notify-New-User-Registered-AccessToken" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <OrchestrationStep Order="8" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
+              <Value>newUser</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="Azure-Functions-Notify-New-User-Registered" TechnicalProfileReferenceId="Azure-Functions-Notify-New-User-Registered" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
  
-        <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+        <OrchestrationStep Order="9" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
  
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb" />
