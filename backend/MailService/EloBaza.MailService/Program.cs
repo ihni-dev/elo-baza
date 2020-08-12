@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
 
-namespace EloBaza.WebApi
+namespace EloBaza.MailService
 {
     public sealed class Program
     {
@@ -50,10 +50,10 @@ namespace EloBaza.WebApi
 
             return new ConfigurationBuilder()
                 .AddAzureAppConfiguration(options =>
-                    {
-                        options.Connect(userSecretsConfig["ConnectionStrings:AppConfig"])
-                            .Select(KeyFilter.Any, Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? "Development");
-                    })
+                {
+                    options.Connect(userSecretsConfig["ConnectionStrings:AppConfig"])
+                        .Select(KeyFilter.Any, Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? "Development");
+                })
                 .Build();
         }
 

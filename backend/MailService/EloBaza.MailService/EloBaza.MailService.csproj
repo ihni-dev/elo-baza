@@ -1,22 +1,26 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>833a4300-d807-47ad-a671-7b90b56e59f6</UserSecretsId>
+    <UserSecretsId>0ab6448b-7a5f-4532-aed3-90a2d86e28bb</UserSecretsId>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-  
+
   <PropertyGroup>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.48.0" />
+    <PackageReference Include="Google.Apis.Gmail.v1" Version="1.48.0.2034" />
+    <PackageReference Include="MailKit" Version="2.8.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureADB2C.UI" Version="3.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.6" />
     <PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="3.0.2" />
+    <PackageReference Include="Microsoft.Azure.ServiceBus" Version="4.1.4" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -29,12 +33,6 @@
     <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="5.5.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\EloBaza.Application\EloBaza.Application.csproj" />
-    <ProjectReference Include="..\EloBaza.Infrastructure\EloBaza.Infrastructure.csproj" />
-    <ProjectReference Include="..\EloBaza.ServiceBusListener\EloBaza.ServiceBusListener.csproj" />
   </ItemGroup>
 
 

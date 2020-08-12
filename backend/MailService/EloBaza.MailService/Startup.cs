@@ -1,9 +1,10 @@
 using AutoMapper;
-using EloBaza.Application.IoC;
-using EloBaza.Infrastructure.EntityFramework.IoC;
-using EloBaza.ServiceBusListener.IoC;
-using EloBaza.WebApi.Extensions;
-using EloBaza.WebApi.Middleware;
+using EloBaza.MailService.Extensions;
+using EloBaza.MailService.Mailing;
+using EloBaza.MailService.Mailing.Config;
+using EloBaza.MailService.Middleware;
+using EloBaza.MailService.ServiceBusListener.NewUserRegistered;
+using EloBaza.MailService.ServiceBusListener.NewUserRegistered.Config;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
 using Microsoft.AspNetCore.Builder;
@@ -15,7 +16,7 @@ using Newtonsoft.Json.Converters;
 using Serilog;
 using System.Reflection;
 
-namespace EloBaza.WebApi
+namespace EloBaza.MailService
 {
     class Startup
     {
@@ -33,9 +34,10 @@ namespace EloBaza.WebApi
                 .AddNewtonsoftJson(options =>
                     options.SerializerSettings.Converters.Add(new StringEnumConverter()));
 
-            services.AddInfrastructureServices(Configuration)
-                .AddApplicationServices()
-                .AddServiceBusListenerServices(Configuration)
+            services.Configure<NewUserRegisteredServiceBusConfig>(Configuration.GetSection("ServiceBus:NotifyNewUserRegistered:MailService"))
+                .AddHostedService<NewUserRegisteredServiceBusListener>()
+                .Configure<SmtpConfig>(Configuration.GetSection("SmtpConfig"))
+                .AddScoped<IMailService, Mailing.MailService>()
                 .AddAutoMapper(typeof(Program).GetTypeInfo().Assembly)
                 .AddSwagger()
                 .AddCorsPolicies();
