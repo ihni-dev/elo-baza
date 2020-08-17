@@ -1,8 +1,8 @@
 ﻿using EloBaza.MailService.Mailing.Config;
-using EloBaza.MailService.ServiceBusListener.NewUserRegistered;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
 using MimeKit;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,25 +17,40 @@ namespace EloBaza.MailService.Mailing
             _smtpConfig = smtpConfig.Value;
         }
 
-        public async Task SendWelcomeEmail(NewUserRegisteredMessage newUserRegisteredMessage, CancellationToken cancellationToken)
+        public async Task SendMail(Mail mail, CancellationToken cancellationToken)
+        {
+            var message = PrepareMessage(mail);
+            await Send(message, cancellationToken);
+        }
+
+        private MimeMessage PrepareMessage(Mail mail)
         {
             var message = new MimeMessage();
-            message.To.Add(MailboxAddress.Parse(newUserRegisteredMessage.Email));
-            message.From.Add(new MailboxAddress("Bee Keeper", _smtpConfig.Email));
-            message.Subject = "Witamy w StudyBee";
 
-            message.Body = new TextPart("plain")
+            message.To.AddRange(mail.RecipientsTo.Select(r => MailboxAddress.Parse(r)));
+            message.Cc.AddRange(mail.RecipientsCc.Select(r => MailboxAddress.Parse(r)));
+            message.Bcc.AddRange(mail.RecipientsBcc.Select(r => MailboxAddress.Parse(r)));
+            message.From.Add(new MailboxAddress(_smtpConfig.SenderName, _smtpConfig.SenderEmail));
+
+            message.Subject = mail.Subject;
+
+            message.Body = new TextPart(mail.IsHtml ? "html" : "plain")
             {
-                Text = $"Witaj {newUserRegisteredMessage.DisplayName}!"
+                Text = mail.Content
             };
 
+            return message;
+        }
+
+        private async Task Send(MimeMessage message, CancellationToken cancellationToken)
+        {
             using var client = new SmtpClient();
 
             await client.ConnectAsync(_smtpConfig.Server, _smtpConfig.Port);
 
             client.AuthenticationMechanisms.Remove("XOAUTH2");
 
-            await client.AuthenticateAsync(_smtpConfig.Email, _smtpConfig.Password);
+            await client.AuthenticateAsync(_smtpConfig.SenderEmail, _smtpConfig.SenderPassword);
             await client.SendAsync(message, cancellationToken);
             await client.DisconnectAsync(true, cancellationToken);
         }

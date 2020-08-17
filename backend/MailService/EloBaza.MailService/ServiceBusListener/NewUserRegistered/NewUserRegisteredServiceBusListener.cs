@@ -1,5 +1,6 @@
 ﻿using EloBaza.MailService.Mailing;
 using EloBaza.MailService.ServiceBusListener.NewUserRegistered.Config;
+using EloBaza.MailService.ServiceBusListener.NewUserRegistered.Template;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -72,11 +73,17 @@ namespace EloBaza.MailService.ServiceBusListener.NewUserRegistered
             using var scope = _serviceProvider.CreateScope();
             var mailService = scope.ServiceProvider.GetRequiredService<IMailService>();
 
+            var mailMessage = new Mail(
+                recipientsTo: new[] { newUserRegisteredMessage.Email },
+                recipientsCc: Array.Empty<string>(),
+                recipientsBcc: Array.Empty<string>(),
+                content: NewUserRegisteredTemplate.Generate(newUserRegisteredMessage), 
+                subject: "Witamy w StudyBee", 
+                isHtml: true);
+
             try
             {
-                await mailService.SendWelcomeEmail(
-                    newUserRegisteredMessage,
-                    cancellationToken);
+                await mailService.SendMail(mailMessage, cancellationToken);
             }
             catch (Exception ex)
             {

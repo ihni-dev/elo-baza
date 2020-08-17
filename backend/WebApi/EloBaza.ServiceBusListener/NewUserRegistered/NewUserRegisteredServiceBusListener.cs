@@ -1,5 +1,4 @@
 ﻿using EloBaza.Application.Commands.UserAggregate.Register;
-using EloBaza.ServiceBusListener.NewUserRegistered;
 using EloBaza.ServiceBusListener.NewUserRegistered.Configurations;
 using MediatR;
 using Microsoft.Azure.ServiceBus;

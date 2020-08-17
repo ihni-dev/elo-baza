@@ -44,6 +44,8 @@ namespace EloBaza.MailService
 
             services.AddAuthentication(AzureADB2CDefaults.BearerAuthenticationScheme)
                 .AddAzureADB2CBearer(options => Configuration.Bind("AzureAdB2C", options));
+
+            services.AddApplicationInsightsTelemetry();
         }
 
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)

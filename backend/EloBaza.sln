@@ -25,11 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EloBaza.WebApi", "WebApi\El
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotifyNewUserRegistered", "Functions\NotifyNewUserRegistered\NotifyNewUserRegistered.csproj", "{61FC258E-EBB6-4712-A017-9DD1DFC9FEF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EloBaza.ServiceBusListener", "WebApi\EloBaza.ServiceBusListener\EloBaza.ServiceBusListener.csproj", "{A83B2B62-89CE-4B89-94A8-B05B5F3FDB38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EloBaza.ServiceBusListener", "WebApi\EloBaza.ServiceBusListener\EloBaza.ServiceBusListener.csproj", "{A83B2B62-89CE-4B89-94A8-B05B5F3FDB38}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MailService", "MailService", "{04C6483C-4508-434D-85EE-6EF5C75959A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EloBaza.MailService", "MailService\EloBaza.MailService\EloBaza.MailService.csproj", "{85756B9D-CCE5-4A94-9E11-D0FC1E30A7B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EloBaza.MailService", "MailService\EloBaza.MailService\EloBaza.MailService.csproj", "{85756B9D-CCE5-4A94-9E11-D0FC1E30A7B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
