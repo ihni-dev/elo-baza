@@ -4,15 +4,15 @@ import { PageTitleStateModel } from './page-title-state.model';
 import { ChangePageTitle } from './page-title-actions';
 import { Title } from '@angular/platform-browser';
 
-const DEFAULT_TITLE: string = 'Elo-Baza';
+const DEFAULT_TITLE = 'Elo-Baza';
 
 @State<PageTitleStateModel>({
   name: 'pageTitle',
   defaults: {
     tabTitle: DEFAULT_TITLE,
     headerTitle: DEFAULT_TITLE,
-    headerSubtitle: '',
-  },
+    headerSubtitle: ''
+  }
 })
 @Injectable()
 export class PageTitleState {
@@ -36,7 +36,7 @@ export class PageTitleState {
   @Action(ChangePageTitle)
   changePageTitle(
     ctx: StateContext<PageTitleStateModel>,
-    action: ChangePageTitle,
+    action: ChangePageTitle
   ) {
     const state = ctx.getState();
 
@@ -50,7 +50,7 @@ export class PageTitleState {
       ...state,
       tabTitle: newTabTitle,
       headerTitle: action.headerTitle ?? DEFAULT_TITLE,
-      headerSubtitle: action.headerSubtitle,
+      headerSubtitle: action.headerSubtitle
     });
   }
 }

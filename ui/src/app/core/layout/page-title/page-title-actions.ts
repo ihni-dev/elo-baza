@@ -4,6 +4,6 @@ export class ChangePageTitle {
   constructor(
     public tabTitle: string,
     public headerTitle: string,
-    public headerSubtitle: string,
+    public headerSubtitle: string
   ) {}
 }

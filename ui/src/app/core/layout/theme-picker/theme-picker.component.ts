@@ -1,7 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { StyleManagerService } from './services/style-manager.service';
 import { ThemeStorageService } from './services/theme-storage.service';
@@ -15,7 +15,7 @@ import { THEMES } from './models/themes';
   templateUrl: 'theme-picker.component.html',
   styleUrls: ['theme-picker.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class ThemePickerComponent {
   themes = THEMES;
@@ -25,11 +25,11 @@ export class ThemePickerComponent {
     public styleManager: StyleManagerService,
     private themeStorage: ThemeStorageService,
     iconRegistry: MatIconRegistry,
-    sanitizer: DomSanitizer,
+    sanitizer: DomSanitizer
   ) {
     iconRegistry.addSvgIcon(
       'theme-example',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/img/theme-picker.svg'),
+      sanitizer.bypassSecurityTrustResourceUrl('assets/img/theme-picker.svg')
     );
 
     const defaultThemeName = this.themes.find((t) => t.isDefault).name;

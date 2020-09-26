@@ -3,7 +3,7 @@ import { Component, ElementRef, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-svg-viewer',
-  template: '<div class="svg-viewer" aria-hidden="true"></div>',
+  template: '<div class="svg-viewer" aria-hidden="true"></div>'
 })
 export class SvgViewerComponent implements OnInit {
   @Input() src: string;

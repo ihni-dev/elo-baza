@@ -14,9 +14,9 @@ import { NavbarComponent } from './navbar.component';
     MatButtonModule,
     MatMenuModule,
     RouterModule,
-    ThemePickerModule,
+    ThemePickerModule
   ],
   exports: [NavbarComponent],
-  declarations: [NavbarComponent],
+  declarations: [NavbarComponent]
 })
 export class NavbarModule {}

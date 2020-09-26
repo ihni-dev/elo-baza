@@ -7,6 +7,6 @@ import { CommonModule } from '@angular/common';
 @NgModule({
   imports: [CommonModule, MatButtonModule, MatIconModule],
   exports: [PageHeaderComponent],
-  declarations: [PageHeaderComponent],
+  declarations: [PageHeaderComponent]
 })
 export class PageHeaderModule {}

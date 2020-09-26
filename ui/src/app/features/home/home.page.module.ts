@@ -14,8 +14,8 @@ const routes: Routes = [{ path: '', component: HomePage }];
     SvgViewerModule,
     MatButtonModule,
     FooterModule,
-    RouterModule.forChild(routes),
+    RouterModule.forChild(routes)
   ],
-  declarations: [HomePage],
+  declarations: [HomePage]
 })
 export class HomeModule {}

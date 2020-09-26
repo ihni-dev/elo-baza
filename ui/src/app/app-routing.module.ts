@@ -6,15 +6,15 @@ const routes: Routes = [
     path: '',
     pathMatch: 'full',
     loadChildren: () =>
-      import('./features/home/home.page.module').then((m) => m.HomeModule),
+      import('./features/home/home.page.module').then((m) => m.HomeModule)
   },
   {
     path: 'admin',
     pathMatch: 'full',
     loadChildren: () =>
-      import('./features/admin/admin.page.module').then((m) => m.AdminModule),
+      import('./features/admin/admin.page.module').then((m) => m.AdminModule)
   },
-  { path: '**', redirectTo: '/' },
+  { path: '**', redirectTo: '/' }
 ];
 
 @NgModule({
@@ -22,9 +22,9 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {
       scrollPositionRestoration: 'enabled',
       anchorScrolling: 'enabled',
-      relativeLinkResolution: 'corrected',
-    }),
+      relativeLinkResolution: 'corrected'
+    })
   ],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}

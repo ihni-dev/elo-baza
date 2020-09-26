@@ -14,10 +14,10 @@ import { ThemeStorageService } from './services/theme-storage.service';
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
-    MatTooltipModule,
+    MatTooltipModule
   ],
   exports: [ThemePickerComponent],
   declarations: [ThemePickerComponent],
-  providers: [StyleManagerService, ThemeStorageService],
+  providers: [StyleManagerService, ThemeStorageService]
 })
 export class ThemePickerModule {}

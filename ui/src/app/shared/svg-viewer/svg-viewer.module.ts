@@ -3,6 +3,6 @@ import { SvgViewerComponent } from './svg-viewer';
 
 @NgModule({
   exports: [SvgViewerComponent],
-  declarations: [SvgViewerComponent],
+  declarations: [SvgViewerComponent]
 })
 export class SvgViewerModule {}

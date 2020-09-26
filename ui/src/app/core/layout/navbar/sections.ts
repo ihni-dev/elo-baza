@@ -7,6 +7,6 @@ const FIRST = 'admin';
 export const SECTIONS: { [key: string]: Section } = {
   [FIRST]: {
     name: 'Admin',
-    summary: 'Admin section summary',
-  },
+    summary: 'Admin section summary'
+  }
 };

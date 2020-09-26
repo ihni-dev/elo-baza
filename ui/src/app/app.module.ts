@@ -25,9 +25,9 @@ import { PageTitleModule } from './core/layout/page-title/page-title.module';
     NavbarModule,
     PageTitleModule,
 
-    AppRoutingModule,
+    AppRoutingModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

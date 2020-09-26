@@ -18,8 +18,8 @@ const routes: Routes = [{ path: '', component: AdminPage }];
     MatButtonModule,
     MatTabsModule,
     MatTableModule,
-    RouterModule.forChild(routes),
+    RouterModule.forChild(routes)
   ],
-  declarations: [AdminPage],
+  declarations: [AdminPage]
 })
 export class AdminModule {}
