@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SECTIONS } from './sections';
+import { SECTIONS, Section } from './sections';
 
 const SECTIONS_KEYS = Object.keys(SECTIONS);
 
@@ -9,11 +9,11 @@ const SECTIONS_KEYS = Object.keys(SECTIONS);
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-  get sections() {
+  get sections(): { [key: string]: Section } {
     return SECTIONS;
   }
 
-  get sectionKeys() {
+  get sectionKeys(): string[] {
     return SECTIONS_KEYS;
   }
 }

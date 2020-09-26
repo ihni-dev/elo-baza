@@ -5,7 +5,7 @@ import { ThemeModel } from '../models/theme.model';
 export class ThemeStorageService {
   static storageKey = 'theme-storage-current-name';
 
-  storeTheme(theme: ThemeModel) {
+  storeTheme(theme: ThemeModel): void {
     try {
       window.localStorage[ThemeStorageService.storageKey] = theme.name;
     } catch {}
@@ -19,7 +19,7 @@ export class ThemeStorageService {
     }
   }
 
-  clearStorage() {
+  clearStorage(): void {
     try {
       window.localStorage.removeItem(ThemeStorageService.storageKey);
     } catch {}

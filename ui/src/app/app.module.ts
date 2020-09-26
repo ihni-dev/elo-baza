@@ -7,17 +7,15 @@ import { NavbarModule } from './core/layout/navbar/navbar.module';
 
 import { NgxsModule } from '@ngxs/store';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
-import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { PageTitleModule } from './core/layout/page-title/page-title.module';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     NgxsModule.forRoot(),
     NgxsRouterPluginModule.forRoot(),
-    NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsLoggerPluginModule.forRoot(),
+    environment.plugins,
 
     BrowserModule,
     BrowserAnimationsModule,

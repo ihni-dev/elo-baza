@@ -19,17 +19,17 @@ export class PageTitleState {
   constructor(private bodyTitle: Title) {}
 
   @Selector()
-  static tabTitle(state: PageTitleStateModel) {
+  static tabTitle(state: PageTitleStateModel): string {
     return state.tabTitle;
   }
 
   @Selector()
-  static headerTitle(state: PageTitleStateModel) {
+  static headerTitle(state: PageTitleStateModel): string {
     return state.headerTitle;
   }
 
   @Selector()
-  static headerSubtitle(state: PageTitleStateModel) {
+  static headerSubtitle(state: PageTitleStateModel): string {
     return state.headerSubtitle;
   }
 
@@ -37,7 +37,7 @@ export class PageTitleState {
   changePageTitle(
     ctx: StateContext<PageTitleStateModel>,
     action: ChangePageTitle
-  ) {
+  ): void {
     const state = ctx.getState();
 
     const newTabTitle = action.tabTitle

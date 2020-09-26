@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class StyleManagerService {
-  setStyle(key: string, href: string) {
+  setStyle(key: string, href: string): void {
     getLinkElementForKey(key).setAttribute('href', href);
   }
 
-  removeStyle(key: string) {
+  removeStyle(key: string): void {
     const existingLinkElement = getExistingLinkElementByKey(key);
     if (existingLinkElement) {
       document.head.removeChild(existingLinkElement);
