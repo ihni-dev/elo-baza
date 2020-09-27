@@ -20,7 +20,7 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
             builder.HasAlternateKey(es => es.Key);
 
             builder.Property(es => es.Name)
-                .HasMaxLength(Test.TestNameMaxLength)
+                .HasMaxLength(Test.NameMaxLength)
                 .IsRequired(true);
 
             builder.Property(es => es.Semester)

@@ -5,9 +5,9 @@ namespace EloBaza.Domain.SubjectAggregate
 {
     public class ExamSession : Entity
     {
-        public const int ExamSessionNameMaxLength = 70;
-        public const short ExamSessionMinYear = 1950;
-        public const short ExamSessionMaxYear = 2150;
+        public const int NameMaxLength = 70;
+        public const short MinYear = 1950;
+        public const short sMaxYear = 2150;
 
         public string Name { get; private set; }
         public short Year { get; private set; }

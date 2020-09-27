@@ -8,7 +8,7 @@ namespace EloBaza.Domain.SubjectAggregate
 {
     public class Category : Entity
     {
-        public const int CategoryNameMaxLength = 50;
+        public const int NameMaxLength = 50;
 
         public Subject? Subject { get; private set; }
 
@@ -38,7 +38,7 @@ namespace EloBaza.Domain.SubjectAggregate
             return category;
         }
 
-        internal void Update(int userId, string newName)
+        internal void Update(int userId, Category? newParentCategoryKey, string newName)
         {
             using (var validationContext = new ValidationContext())
             {
@@ -46,6 +46,8 @@ namespace EloBaza.Domain.SubjectAggregate
             }
 
             Name = newName;
+            ParentCategory = newParentCategoryKey;
+            
             SetModificationData(userId);
         }
 
@@ -81,8 +83,8 @@ namespace EloBaza.Domain.SubjectAggregate
         private static void Validate(string name)
         {
             using var validationContext = new ValidationContext();
-
             validationContext.Validate(() => string.IsNullOrWhiteSpace(name), nameof(name), "Category name must be provided");
+            validationContext.Validate(() => name.Length <= NameMaxLength, nameof(name), "Category name maximum length (50) exceeded");
         }
     }
 }

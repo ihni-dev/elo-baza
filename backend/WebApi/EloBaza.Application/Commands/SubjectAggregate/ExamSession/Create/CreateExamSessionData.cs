@@ -15,7 +15,7 @@ namespace EloBaza.Application.Commands.SubjectAggregate.ExamSession.Create
             using (var validationContext = new ValidationContext())
             {
                 validationContext.Validate(
-                    () => year < Domain.SubjectAggregate.ExamSession.ExamSessionMinYear || Domain.SubjectAggregate.ExamSession.ExamSessionMaxYear > 2150,
+                    () => year < Domain.SubjectAggregate.ExamSession.MinYear || Domain.SubjectAggregate.ExamSession.MaxYear > 2150,
                     nameof(year),
                     $"Year {year} is invalid. Please provide year between 1950 and 2150.");
 

@@ -51,6 +51,7 @@ namespace EloBaza.Domain.SubjectAggregate
         {
             using var validationContext = new ValidationContext();
             validationContext.Validate(() => string.IsNullOrEmpty(name), nameof(Name), "Subject's name must be provided");
+            validationContext.Validate(() => name.Length <= NameMaxLength, nameof(name), "Category name maximum length (50) exceeded");
         }
 
         #region ExamSession
@@ -109,39 +110,30 @@ namespace EloBaza.Domain.SubjectAggregate
 
         #region Category
 
-        public Category CreateRootCategory(int userId, string name)
+        public Category CreateRootCategory(int userId, string name, Guid? parentCategoryKey)
         {
-            var category = Category.Create(userId, this, name);
-            if (CategoryAlreadyExists(category.Name))
+            var parentCategory = FindCategory(parentCategoryKey);
+
+            var category = Category.Create(userId, this, name, parentCategory);
+            if (CategoryAlreadyExists(category, parentCategory))
                 throw new AlreadyExistsException($"Category: {category.Name} already exists");
 
             Categories.Add(category);
             return category;
         }
 
-        public Category CreateLeafCategory(int userId, string name, Guid parentCategoryKey)
-        {
-            var parentCategory = FindCategory(parentCategoryKey);
-            if (parentCategory is null)
-                throw new NotFoundException($"Parent category with Key: {parentCategoryKey} does not exists");
-
-            var category = Category.Create(userId, this, name, parentCategory);
-            parentCategory.AddSubCategory(category);
-
-            return category;
-        }
-
-        public void UpdateCategory(int userId, Guid categoryKey, string? name)
+        public void UpdateCategory(int userId, Guid categoryKey, Guid? parentCategoryKey, string? name)
         {
             var category = FindCategory(categoryKey);
             if (category is null)
                 throw new NotFoundException($"Category with Key: {categoryKey} does not exists");
 
             var newName = name ?? category.Name;
+            var newParentCategory = FindCategory(parentCategoryKey);
 
-            var hasChanged = category.Name != newName;
+            var hasChanged = category.Name != newName || category.ParentCategory != newParentCategory;
             if (hasChanged)
-                category.Update(userId, newName);
+                category.Update(userId, newParentCategory, newName);
         }
 
         public void DeleteCategory(int userId, Guid categoryKey)
@@ -153,22 +145,28 @@ namespace EloBaza.Domain.SubjectAggregate
             category.MarkAsDeleted(userId);
         }
 
-        private Category? FindCategory(Guid categoryKey)
+        private Category? FindCategory(Guid? categoryKey)
         {
+            if (categoryKey is null)
+                return null;
+
             foreach (var category in Categories)
             {
-                var foundedCategory = category.Seek(categoryKey);
+                var foundCategory = category.Seek(categoryKey.Value);
 
-                if (!(foundedCategory is null))
-                    return foundedCategory;
+                if (!(foundCategory is null))
+                    return foundCategory;
             }
 
             return null;
         }
 
-        private bool CategoryAlreadyExists(string categoryName)
+        private bool CategoryAlreadyExists(Category category, Category? parentCategory)
         {
-            return Categories.Any(c => c.Name.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
+            if (parentCategory is null)
+                return Categories.Any(c => c.Name.Equals(category.Name, StringComparison.OrdinalIgnoreCase));
+            else
+                return parentCategory.SubCategoryAlreadyExists(category);
         }
 
         #endregion

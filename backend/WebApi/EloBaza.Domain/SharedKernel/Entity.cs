@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
 
 namespace EloBaza.Domain.SharedKernel
 {
@@ -34,34 +32,17 @@ namespace EloBaza.Domain.SharedKernel
 
         internal void MarkAsDeleted(int userId)
         {
-            MarkAsDeleted(userId, DateTime.UtcNow);
+            IsDeleted = true;
+            DeletedAt = DateTime.UtcNow;
+            DeletedBy = userId;
         }
 
-        private void MarkAsDeleted(int userId, DateTime now)
+        internal void MarkAsNotDeleted(int userId)
         {
-            IsDeleted = true;
-            DeletedAt = now;
-            DeletedBy = userId;
-
-            foreach (var prop in GetType()
-                .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
-            {
-                if (prop.GetValue(this) is Entity)
-                {
-                    var entity = prop.GetValue(this) as Entity;
-                    if (!(entity?.IsDeleted ?? true))
-                        entity.MarkAsDeleted(userId, now);
-                }
-                else if (prop.GetValue(this) is IEnumerable<Entity>)
-                {
-                    var entities = prop.GetValue(this) as IEnumerable<Entity> ?? Array.Empty<Entity>();
-                    foreach (var entity in entities)
-                    {
-                        if (!(entity.IsDeleted))
-                            entity.MarkAsDeleted(userId, now);
-                    }
-                }
-            }
+            IsDeleted = false;
+            DeletedAt = null;
+            DeletedBy = null;
+            SetModificationData(userId);
         }
 
         public bool IsTransient()

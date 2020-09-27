@@ -19,7 +19,7 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
             builder.HasAlternateKey(c => c.Key);
 
             builder.Property(c => c.Name)
-                .HasMaxLength(Category.CategoryNameMaxLength)
+                .HasMaxLength(Category.NameMaxLength)
                 .IsRequired(true);
 
             builder.HasOne<Category>(c => c.ParentCategory)
