@@ -76,7 +76,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// Create a subject
         /// </summary>
         /// <param name="createSubjectModel">Data required to create subject</param>
-        /// <response code="201">Subject's details read model if succeeded</response>
+        /// <response code="201">Subject details read model if succeeded</response>
         /// <response code="400">If validation failed</response> 
         /// <response code="409">If subject with that name already exists</response> 
         [HttpPost]
@@ -137,7 +137,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// <summary>
         /// Get an exam session by key
         /// </summary>
-        /// <param name="subjectKey">Key of an exam session's subject</param>
+        /// <param name="subjectKey">Key of an exam session subject</param>
         /// <param name="examSessionKey">Key of an exam session</param>
         /// <response code="200">Exam session read model if found</response>
         /// <response code="400">If validation failed</response> 
@@ -157,7 +157,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// </summary>
         /// <param name="subjectKey">Key of a subject to create exam session for</param>
         /// <param name="createExamSessionModel">Data required to create an exam session</param>
-        /// <response code="201">Exam session's details read model if succeeded</response>
+        /// <response code="201">Exam session details read model if succeeded</response>
         /// <response code="400">If validation failed</response> 
         /// <response code="404">If subject does not exists</response>
         /// <response code="409">If exam session in given subject already exists</response>
@@ -177,7 +177,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// <summary>
         /// Delete an exam session
         /// </summary>
-        /// <param name="subjectKey">Key of an exam session's subject</param>
+        /// <param name="subjectKey">Key of an exam session subject</param>
         /// <param name="examSessionKey">Key of an exam session to delete</param>
         /// <response code="204">If deletion succeeded</response>
         /// <response code="400">If validation failed</response> 
@@ -196,7 +196,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// <summary>
         /// Update an exam session
         /// </summary>
-        /// <param name="subjectKey">Key of an exam session's subject</param>
+        /// <param name="subjectKey">Key of an exam session subject</param>
         /// <param name="examSessionKey">Key of an exam session to update</param>
         /// <param name="updateExamSessionModel">Data to update</param>
         /// <response code="204">If update succeeded</response>

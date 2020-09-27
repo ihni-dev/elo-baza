@@ -12,7 +12,7 @@ namespace EloBaza.Application.Queries.SubjectAggregate.Get
         {
             using (var validationContext = new ValidationContext())
             {
-                validationContext.Validate(() => subjectKey == default, nameof(subjectKey), "Subject's key must be provided");
+                validationContext.Validate(() => subjectKey == default, nameof(subjectKey), "Subject key must be provided");
             }
 
             SubjectKey = subjectKey;

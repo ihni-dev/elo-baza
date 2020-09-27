@@ -8,12 +8,12 @@ namespace EloBaza.Application.Queries.SubjectAggregate.GetAll
     public class SubjectReadModel
     {
         /// <summary>
-        /// Subject's key
+        /// Subject key
         /// </summary>
         public Guid Key { get; set; }
 
         /// <summary>
-        /// Subject's name
+        /// Subject name
         /// </summary>
         public string? Name { get; set; }
     }

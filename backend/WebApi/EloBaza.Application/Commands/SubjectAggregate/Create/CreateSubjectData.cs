@@ -10,7 +10,7 @@ namespace EloBaza.Application.Commands.SubjectAggregate.Create
         {
             using (var validationContext = new ValidationContext())
             {
-                validationContext.Validate(() => string.IsNullOrWhiteSpace(name), nameof(name), "Subject's name must be provided");
+                validationContext.Validate(() => string.IsNullOrWhiteSpace(name), nameof(name), "Subject name must be provided");
             }
 
             Name = name;

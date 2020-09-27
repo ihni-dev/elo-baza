@@ -14,8 +14,8 @@ namespace EloBaza.Application.Commands.SubjectAggregate.ExamSession.Delete
         {
             using (var validationContext = new ValidationContext())
             {
-                validationContext.Validate(() => subjectKey == default, nameof(subjectKey), "Subject's key must be provided");
-                validationContext.Validate(() => examSessionKey == default, nameof(examSessionKey), "Exam session's key must be provided");
+                validationContext.Validate(() => subjectKey == default, nameof(subjectKey), "Subject key must be provided");
+                validationContext.Validate(() => examSessionKey == default, nameof(examSessionKey), "Exam session key must be provided");
             }
 
             SubjectKey = subjectKey;

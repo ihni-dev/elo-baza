@@ -1,5 +1,6 @@
 ﻿using EloBaza.Domain.SharedKernel;
 using EloBaza.Domain.SharedKernel.Exceptions;
+using EloBaza.Domain.SubjectAggregate;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,9 +9,9 @@ namespace EloBaza.Application.Commands.SubjectAggregate.ExamSession.Update
 {
     class UpdateExamSessionHandler : AsyncRequestHandler<UpdateExamSession>
     {
-        private readonly IRepository<Domain.SubjectAggregate.Subject> _subjectRepository;
+        private readonly IRepository<Subject> _subjectRepository;
 
-        public UpdateExamSessionHandler(IRepository<Domain.SubjectAggregate.Subject> subjectRepository)
+        public UpdateExamSessionHandler(IRepository<Subject> subjectRepository)
         {
             _subjectRepository = subjectRepository;
         }

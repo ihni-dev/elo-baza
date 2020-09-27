@@ -16,6 +16,7 @@ namespace EloBaza.Domain.SubjectAggregate
         public bool IsResit => ResitNumber == default;
 
         public Subject? Subject { get; private set; }
+        public static int MaxYear { get; set; }
 
         protected ExamSession() { }
 

@@ -1,6 +1,7 @@
 ﻿using EloBaza.Application.Queries.SubjectAggregate.ExamSession.Get;
 using EloBaza.Domain.SharedKernel;
 using EloBaza.Domain.SharedKernel.Exceptions;
+using EloBaza.Domain.SubjectAggregate;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,10 +10,10 @@ namespace EloBaza.Application.Commands.SubjectAggregate.ExamSession.Create
 {
     class CreateExamSessionHandler : IRequestHandler<CreateExamSession, ExamSessionDetailsReadModel>
     {
-        private readonly IRepository<Domain.SubjectAggregate.Subject> _subjectRepository;
+        private readonly IRepository<Subject> _subjectRepository;
         private readonly IMediator _mediator;
 
-        public CreateExamSessionHandler(IRepository<Domain.SubjectAggregate.Subject> subjectRepository, IMediator mediator)
+        public CreateExamSessionHandler(IRepository<Subject> subjectRepository, IMediator mediator)
         {
             _subjectRepository = subjectRepository;
             _mediator = mediator;

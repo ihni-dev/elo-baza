@@ -5,24 +5,24 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EloBaza.Application.Commands.SubjectAggregate.ExamSession.Delete
+namespace EloBaza.Application.Commands.SubjectAggregate.Restore
 {
-    class DeleteExamSessionHandler : AsyncRequestHandler<DeleteExamSession>
+    class RestoreSubjectHandler : AsyncRequestHandler<RestoreSubject>
     {
         private readonly IRepository<Subject> _subjectRepository;
 
-        public DeleteExamSessionHandler(IRepository<Subject> subjectRepository)
+        public RestoreSubjectHandler(IRepository<Subject> subjectRepository)
         {
             _subjectRepository = subjectRepository;
         }
 
-        protected override async Task Handle(DeleteExamSession request, CancellationToken cancellationToken)
+        protected override async Task Handle(RestoreSubject request, CancellationToken cancellationToken)
         {
             var subject = await _subjectRepository.Find(request.SubjectKey, cancellationToken);
             if (subject is null)
                 throw new NotFoundException($"Subject with key: {request.SubjectKey} does not exists");
 
-            subject.DeleteExamSession(request.RequestorId, request.ExamSessionKey);
+            subject.Restore(request.RequestorId);
 
             await _subjectRepository.Save(subject, cancellationToken);
         }

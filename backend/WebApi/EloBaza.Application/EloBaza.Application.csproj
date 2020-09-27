@@ -27,7 +27,6 @@
 
   <ItemGroup>
     <Folder Include="Behaviors\" />
-    <Folder Include="Commands\SubjectAggregate\Restore\" />
   </ItemGroup>
 
 </Project>

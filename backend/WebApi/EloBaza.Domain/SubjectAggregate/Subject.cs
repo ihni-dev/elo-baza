@@ -33,7 +33,7 @@ namespace EloBaza.Domain.SubjectAggregate
             return subject;
         }
 
-        public void UpdateName(int userId, string name)
+        public void Update(int userId, string? name)
         {
             Validate(name);
 
@@ -47,10 +47,15 @@ namespace EloBaza.Domain.SubjectAggregate
             MarkAsDeleted(userId);
         }
 
+        public void Restore(int userId)
+        {
+            MarkAsNotDeleted(userId);
+        }
+
         private static void Validate(string name)
         {
             using var validationContext = new ValidationContext();
-            validationContext.Validate(() => string.IsNullOrEmpty(name), nameof(Name), "Subject's name must be provided");
+            validationContext.Validate(() => string.IsNullOrEmpty(name), nameof(Name), "Subject name must be provided");
             validationContext.Validate(() => name.Length <= NameMaxLength, nameof(name), "Category name maximum length (50) exceeded");
         }
 

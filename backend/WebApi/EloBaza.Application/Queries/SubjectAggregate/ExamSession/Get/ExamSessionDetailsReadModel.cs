@@ -8,22 +8,22 @@ namespace EloBaza.Application.Queries.SubjectAggregate.ExamSession.Get
     public class ExamSessionDetailsReadModel
     {
         /// <summary>
-        /// Exam session's key
+        /// Exam session key
         /// </summary>
         public Guid Key { get; set; }
 
         /// <summary>
-        /// Exam session's name
+        /// Exam session name
         /// </summary>
         public string? Name { get; set; }
 
         /// <summary>
-        /// Exam session's year
+        /// Exam session year
         /// </summary>
         public int Year { get; set; }
 
         /// <summary>
-        /// Exam session's semester
+        /// Exam session semester
         /// </summary>
         public string? Semester { get; set; }
     }

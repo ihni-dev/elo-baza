@@ -3,13 +3,13 @@ using EloBaza.Domain.SharedKernel.Exceptions;
 using MediatR;
 using System;
 
-namespace EloBaza.Application.Commands.SubjectAggregate.Delete
+namespace EloBaza.Application.Commands.SubjectAggregate.Restore
 {
-    public class DeleteSubject : AuditableCommand, IRequest
+    public class RestoreSubject : AuditableCommand, IRequest
     {
         public Guid SubjectKey { get; private set; }
 
-        public DeleteSubject(int requestorId, Guid subjectKey) : base(requestorId)
+        public RestoreSubject(int requestorId, Guid subjectKey) : base(requestorId)
         {
             using (var validationContext = new ValidationContext())
             {
