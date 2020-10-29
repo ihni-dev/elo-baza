@@ -1,5 +1,4 @@
-﻿using EloBaza.MailService.ServiceBusListener.NewUserRegistered;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 namespace EloBaza.MailService.Mailing

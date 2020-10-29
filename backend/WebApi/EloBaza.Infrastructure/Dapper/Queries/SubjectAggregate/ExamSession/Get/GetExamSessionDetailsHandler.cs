@@ -17,9 +17,10 @@ SELECT
     es.ExamSessionKey AS 'Key',
     es.Name,
     es.Year,
-    es.Semester
+    es.Semester,
+    es.ResitNumber
 FROM Subject s
-    INNER JOIN ExamSession es ON s.SubjectId = es.SubjectId 
+INNER JOIN ExamSession es ON s.SubjectId = es.SubjectId 
 WHERE s.SubjectKey = @SubjectKey AND es.ExamSessionKey = @ExamSessionKey
 ";
 

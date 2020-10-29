@@ -1,4 +1,5 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+
 WORKDIR /app
 EXPOSE 80
 
@@ -6,15 +7,16 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 
 WORKDIR /src
 
-COPY ["src/EloBaza.WebApi/EloBaza.WebApi.csproj", "src/EloBaza.WebApi/"]
-COPY ["src/EloBaza.Infrastructure/EloBaza.Infrastructure.csproj", "src/EloBaza.Infrastructure/"]
-COPY ["src/EloBaza.Application/EloBaza.Application.csproj", "src/EloBaza.Application/"]
-COPY ["src/EloBaza.Domain/EloBaza.Domain.csproj", "src/EloBaza.Domain/"]
-RUN dotnet restore "src/EloBaza.WebApi/EloBaza.WebApi.csproj"
+COPY ["WebApi/EloBaza.WebApi/EloBaza.WebApi.csproj", "WebApi/EloBaza.WebApi/"]
+COPY ["WebApi/EloBaza.Infrastructure/EloBaza.Infrastructure.csproj", "WebApi/EloBaza.Infrastructure/"]
+COPY ["WebApi/EloBaza.ServiceBusListener/EloBaza.ServiceBusListener.csproj", "WebApi/EloBaza.ServiceBusListener/"]
+COPY ["WebApi/EloBaza.Application/EloBaza.Application.csproj", "WebApi/EloBaza.Application/"]
+COPY ["WebApi/EloBaza.Domain/EloBaza.Domain.csproj", "WebApi/EloBaza.Domain/"]
+RUN dotnet restore "WebApi/EloBaza.WebApi/EloBaza.WebApi.csproj"
 
 COPY . .
 
-WORKDIR "src/EloBaza.WebApi"
+WORKDIR "WebApi/EloBaza.WebApi"
 
 RUN dotnet build "EloBaza.WebApi.csproj" -c Release -o /app/build
 

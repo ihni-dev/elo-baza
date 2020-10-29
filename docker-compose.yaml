@@ -11,35 +11,35 @@ services:
 
   web:
     build:
-      context: api
-      dockerfile: backend/WebApi/EloBaza.WebApi/Dockerfile
+      context: backend
+      dockerfile: WebApi/EloBaza.WebApi/Dockerfile
     ports:
       - "8001:80"
     environment:
-      DOTNET_ENVIRONMENT: Development
-      ConnectionStrings__DB: Server=db;Database=elo-baza;User=sa;Password=1Secure*Password1;MultipleActiveResultSets=true
+      DOTNET_ENVIRONMENT: "Development"
+      ConnectionStrings__DB: "Server=db;Database=elo-baza;User=sa;Password=1Secure*Password1;MultipleActiveResultSets=true"
     depends_on:
       - migration
 
   migration:
     build:
-      context: api
-      dockerfile: backend/WebApi/EloBaza.MigrationTool/Dockerfile
+      context: backend
+      dockerfile: WebApi/EloBaza.MigrationTool/Dockerfile
     environment:
-      ConnectionStrings__DB: Server=db;Database=elo-baza;User=sa;Password=1Secure*Password1;MultipleActiveResultSets=true
+      ConnectionStrings__DB: "Server=db;Database=elo-baza;User=sa;Password=1Secure*Password1;MultipleActiveResultSets=true"
     depends_on:
       - db
 
   db:
-    image: "mcr.microsoft.com/mssql/server:2019-CU5-ubuntu-16.04"
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
     ports:
       - "1433:1433"
     volumes:
       - mssql-data:/var/opt/mssql
     environment:
-      SA_PASSWORD: 1Secure*Password1
-      MSSQL_PID: Express
-      ACCEPT_EULA: Y
+      SA_PASSWORD: "1Secure*Password1"
+      MSSQL_PID: "Express"
+      ACCEPT_EULA: "Y"
 
 volumes:
   mssql-data:

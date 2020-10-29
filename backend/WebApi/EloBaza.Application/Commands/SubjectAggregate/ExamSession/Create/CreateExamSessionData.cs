@@ -17,12 +17,17 @@ namespace EloBaza.Application.Commands.SubjectAggregate.ExamSession.Create
                 validationContext.Validate(
                     () => year < Domain.SubjectAggregate.ExamSession.MinYear || Domain.SubjectAggregate.ExamSession.MaxYear > 2150,
                     nameof(year),
-                    $"Year {year} is invalid. Please provide year between 1950 and 2150.");
+                    $"Year {year} is invalid. Please provide year between 1950 and 2150");
 
                 validationContext.Validate(
                     () => !Enumeration.HasDisplayName<Semester>(semester),
                     nameof(semester),
-                    $"Semester {semester} is invalid.");
+                    $"Semester {semester} is invalid");
+
+                validationContext.Validate(
+                    () => resitNumber < 0,
+                    nameof(semester),
+                    $"Resit number must be 0 or higer");
             }
 
             Year = year;

@@ -2,7 +2,6 @@
 using EloBaza.Domain.SharedKernel.Exceptions;
 using EloBaza.Domain.SubjectAggregate;
 using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 

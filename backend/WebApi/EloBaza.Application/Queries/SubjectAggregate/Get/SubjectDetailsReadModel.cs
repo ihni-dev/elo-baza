@@ -1,4 +1,4 @@
-﻿using EloBaza.Application.Queries.SubjectAggregate.ExamSession;
+﻿using EloBaza.Application.Queries.SubjectAggregate.ExamSession.GetAll;
 using System;
 using System.Collections.Generic;
 

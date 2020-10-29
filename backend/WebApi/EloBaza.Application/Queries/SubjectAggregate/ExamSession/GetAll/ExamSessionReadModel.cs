@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EloBaza.Application.Queries.SubjectAggregate.ExamSession
+namespace EloBaza.Application.Queries.SubjectAggregate.ExamSession.GetAll
 {
     /// <summary>
     /// Exam session representation model
@@ -16,15 +16,5 @@ namespace EloBaza.Application.Queries.SubjectAggregate.ExamSession
         /// Exam session name
         /// </summary>
         public string? Name { get; set; }
-
-        /// <summary>
-        /// Exam session year
-        /// </summary>
-        public int Year { get; set; }
-
-        /// <summary>
-        /// Exam session semester
-        /// </summary>
-        public string? Semester { get; set; }
     }
 }

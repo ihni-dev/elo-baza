@@ -49,7 +49,7 @@ namespace EloBaza.WebApi.Middleware
             ProblemDetails problemDetails;
             if (ex is ValidationException)
             {
-                problemDetails = new ProblemDetails()
+                problemDetails = new ValidationProblemDetails(((ValidationException)ex).Errors)
                 {
                     Detail = ex.Message,
                     Status = StatusCodes.Status400BadRequest,

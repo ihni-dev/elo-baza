@@ -47,7 +47,7 @@ namespace EloBaza.Domain.SubjectAggregate
 
             Name = newName;
             ParentCategory = newParentCategoryKey;
-            
+
             SetModificationData(userId);
         }
 
@@ -84,7 +84,7 @@ namespace EloBaza.Domain.SubjectAggregate
         {
             using var validationContext = new ValidationContext();
             validationContext.Validate(() => string.IsNullOrWhiteSpace(name), nameof(name), "Category name must be provided");
-            validationContext.Validate(() => name.Length <= NameMaxLength, nameof(name), "Category name maximum length (50) exceeded");
+            validationContext.Validate(() => name.Length > NameMaxLength, nameof(name), $"Category name maximum length ({NameMaxLength}) exceeded");
         }
     }
 }

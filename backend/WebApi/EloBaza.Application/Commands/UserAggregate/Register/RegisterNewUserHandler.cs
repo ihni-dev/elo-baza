@@ -24,7 +24,7 @@ namespace EloBaza.Application.Commands.UserAggregate.Register
 
             await _userRepository.Save(user, cancellationToken);
 
-            await _mediator.Publish(new NewUserRegistered(user.Email, user.DisplayName));
+            await _mediator.Publish(new NewUserRegistered(user.Email, user.DisplayName), cancellationToken);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace EloBaza.Application.Commands.SubjectAggregate.Create
 
             await _subjectRepository.Save(subject, cancellationToken);
 
-            return await _mediator.Send(new GetSubjectDetails(subject.Key));
+            return await _mediator.Send(new GetSubjectDetails(subject.Key), cancellationToken);
         }
     }
 }

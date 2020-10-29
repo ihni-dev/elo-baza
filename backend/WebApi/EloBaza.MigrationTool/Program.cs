@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace EloBaza.MigrationTool
 {
-    class Program
+    public sealed class Program
     {
         static async Task Main(string[] args)
         {

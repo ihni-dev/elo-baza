@@ -1,12 +1,12 @@
-using System.IO;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Azure.ServiceBus;
+using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Microsoft.Azure.ServiceBus.Core;
+using System.IO;
 using System.Text;
-using Microsoft.Azure.ServiceBus;
+using System.Threading.Tasks;
 
 namespace NotifyNewUserRegistered
 {

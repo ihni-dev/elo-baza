@@ -29,7 +29,7 @@ namespace EloBaza.Application.Commands.SubjectAggregate.ExamSession.Create
 
             await _subjectRepository.Save(subject, cancellationToken);
 
-            return await _mediator.Send(new GetExamSessionDetails(subject.Key, examSession.Key));
+            return await _mediator.Send(new GetExamSessionDetails(subject.Key, examSession.Key), cancellationToken);
         }
     }
 }

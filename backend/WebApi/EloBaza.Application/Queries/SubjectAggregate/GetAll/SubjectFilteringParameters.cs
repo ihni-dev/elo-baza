@@ -2,9 +2,9 @@
 {
     public class SubjectFilteringParameters
     {
-        public string? Name { get; private set; }
+        public string Name { get; private set; }
 
-        public SubjectFilteringParameters(string? name)
+        public SubjectFilteringParameters(string name)
         {
             Name = name;
         }

@@ -12,10 +12,10 @@ namespace EloBaza.MailService.Mailing
         public bool IsHtml { get; private set; }
 
         public Mail(IEnumerable<string> recipientsTo,
-            IEnumerable<string> recipientsCc, 
+            IEnumerable<string> recipientsCc,
             IEnumerable<string> recipientsBcc,
-            string content, 
-            string subject, 
+            string content,
+            string subject,
             bool isHtml)
         {
             RecipientsTo = recipientsTo;

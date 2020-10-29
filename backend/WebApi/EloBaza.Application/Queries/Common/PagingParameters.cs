@@ -4,8 +4,10 @@ namespace EloBaza.Application.Queries.Common
 {
     public class PagingParameters
     {
-        public int Page { get; private set; }
-        public int PageSize { get; private set; }
+        public int Page { get; private set; } = 1;
+        public int PageSize { get; private set; } = 30;
+
+        public PagingParameters() { }
 
         public PagingParameters(int page, int pageSize)
         {

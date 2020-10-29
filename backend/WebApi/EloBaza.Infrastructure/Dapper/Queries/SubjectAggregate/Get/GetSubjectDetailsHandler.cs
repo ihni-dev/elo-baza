@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using EloBaza.Application.Queries.SubjectAggregate.ExamSession;
+using EloBaza.Application.Queries.SubjectAggregate.ExamSession.GetAll;
 using EloBaza.Application.Queries.SubjectAggregate.Get;
 using EloBaza.Domain.SharedKernel.Exceptions;
 using MediatR;
@@ -20,9 +20,7 @@ SELECT
     s.SubjectKey AS 'Key',
     s.Name,
     es.ExamSessionKey AS 'Key',
-    es.Name,
-    es.Year,
-    es.Semester
+    es.Name
 FROM Subject s
     LEFT JOIN ExamSession es ON s.SubjectId = es.SubjectId 
 WHERE s.SubjectKey = @SubjectKey

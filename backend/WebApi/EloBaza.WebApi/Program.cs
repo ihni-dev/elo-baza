@@ -9,7 +9,7 @@ namespace EloBaza.WebApi
 {
     public sealed class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
             var configuration = GetAppConfiguration();
             InitLogger(configuration);
@@ -30,7 +30,7 @@ namespace EloBaza.WebApi
             }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args, IConfiguration configuration) =>
+        private static IHostBuilder CreateHostBuilder(string[] args, IConfiguration configuration) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(configurationBuilder =>
                 {

@@ -35,7 +35,7 @@ namespace EloBaza.WebApi
 
             services.AddInfrastructureServices(Configuration)
                 .AddApplicationServices()
-                .AddServiceBusListenerServices(Configuration)
+                //.AddServiceBusListenerServices(Configuration)
                 .AddAutoMapper(typeof(Program).GetTypeInfo().Assembly)
                 .AddSwagger()
                 .AddCorsPolicies();

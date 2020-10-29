@@ -22,7 +22,7 @@ namespace EloBaza.ServiceBusListener.NewUserRegistered
         private readonly IServiceProvider _serviceProvider;
 
         public NewUserRegisteredServiceBusListener(ILogger<NewUserRegisteredServiceBusListener> logger,
-            IOptions<NewUserRegisteredServiceBusConfig> newUserRegisteredServiceBusConfig, 
+            IOptions<NewUserRegisteredServiceBusConfig> newUserRegisteredServiceBusConfig,
             IServiceProvider serviceProvider)
         {
             _logger = logger;
@@ -76,7 +76,7 @@ namespace EloBaza.ServiceBusListener.NewUserRegistered
             try
             {
                 await mediator.Send(
-                    new RegisterNewUser(newUserRegisteredMessage.UserKey, newUserRegisteredMessage.Email, newUserRegisteredMessage.DisplayName), 
+                    new RegisterNewUser(newUserRegisteredMessage.UserKey, newUserRegisteredMessage.Email, newUserRegisteredMessage.DisplayName),
                     cancellationToken);
             }
             catch (Exception ex)

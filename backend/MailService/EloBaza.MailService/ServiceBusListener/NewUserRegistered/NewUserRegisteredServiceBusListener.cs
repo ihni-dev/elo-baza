@@ -22,7 +22,7 @@ namespace EloBaza.MailService.ServiceBusListener.NewUserRegistered
         private readonly IServiceProvider _serviceProvider;
 
         public NewUserRegisteredServiceBusListener(ILogger<NewUserRegisteredServiceBusListener> logger,
-            IOptions<NewUserRegisteredServiceBusConfig> newUserRegisteredServiceBusConfig, 
+            IOptions<NewUserRegisteredServiceBusConfig> newUserRegisteredServiceBusConfig,
             IServiceProvider serviceProvider)
         {
             _logger = logger;
@@ -77,8 +77,8 @@ namespace EloBaza.MailService.ServiceBusListener.NewUserRegistered
                 recipientsTo: new[] { newUserRegisteredMessage.Email },
                 recipientsCc: Array.Empty<string>(),
                 recipientsBcc: Array.Empty<string>(),
-                content: NewUserRegisteredTemplate.Generate(newUserRegisteredMessage), 
-                subject: "Witamy w StudyBee", 
+                content: NewUserRegisteredTemplate.Generate(newUserRegisteredMessage),
+                subject: "Witamy w StudyBee",
                 isHtml: true);
 
             try
@@ -93,7 +93,7 @@ namespace EloBaza.MailService.ServiceBusListener.NewUserRegistered
 
         private Task ExceptionReceivedHandler(ExceptionReceivedEventArgs exceptionReceivedEventArgs)
         {
-            _logger.LogError($"Message handler encountered an exception {exceptionReceivedEventArgs.Exception}.");
+            _logger.LogError($"Message handler encountered an exception {exceptionReceivedEventArgs.Exception}");
             return Task.CompletedTask;
         }
     }

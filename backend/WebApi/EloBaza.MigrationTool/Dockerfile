@@ -1,15 +1,21 @@
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim AS base
+
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+
 WORKDIR /src
-COPY ["src/EloBaza.MigrationTool/EloBaza.MigrationTool.csproj", "src/EloBaza.MigrationTool/"]
-COPY ["src/EloBaza.Infrastructure/EloBaza.Infrastructure.csproj", "src/EloBaza.Infrastructure/"]
-COPY ["src/EloBaza.Application/EloBaza.Application.csproj", "src/EloBaza.Application/"]
-COPY ["src/EloBaza.Domain/EloBaza.Domain.csproj", "src/EloBaza.Domain/"]
-RUN dotnet restore "src/EloBaza.MigrationTool/EloBaza.MigrationTool.csproj"
+
+COPY ["WebApi/EloBaza.MigrationTool/EloBaza.MigrationTool.csproj", "WebApi/EloBaza.MigrationTool/"]
+COPY ["WebApi/EloBaza.Infrastructure/EloBaza.Infrastructure.csproj", "WebApi/EloBaza.Infrastructure/"]
+COPY ["WebApi/EloBaza.Application/EloBaza.Application.csproj", "WebApi/EloBaza.Application/"]
+COPY ["WebApi/EloBaza.Domain/EloBaza.Domain.csproj", "WebApi/EloBaza.Domain/"]
+RUN dotnet restore "WebApi/EloBaza.MigrationTool/EloBaza.MigrationTool.csproj"
+
 COPY . .
-WORKDIR "src/EloBaza.MigrationTool"
+
+WORKDIR "WebApi/EloBaza.MigrationTool"
+
 RUN dotnet build "EloBaza.MigrationTool.csproj" -c Release -o /app/build
 
 FROM build AS publish

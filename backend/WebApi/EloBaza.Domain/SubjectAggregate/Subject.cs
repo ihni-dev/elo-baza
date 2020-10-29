@@ -17,6 +17,8 @@ namespace EloBaza.Domain.SubjectAggregate
 
         protected Subject() { }
 
+        #region Subject
+
         protected Subject(string name)
         {
             Key = Guid.NewGuid();
@@ -33,7 +35,7 @@ namespace EloBaza.Domain.SubjectAggregate
             return subject;
         }
 
-        public void Update(int userId, string? name)
+        public void Update(int userId, string name)
         {
             Validate(name);
 
@@ -56,8 +58,10 @@ namespace EloBaza.Domain.SubjectAggregate
         {
             using var validationContext = new ValidationContext();
             validationContext.Validate(() => string.IsNullOrEmpty(name), nameof(Name), "Subject name must be provided");
-            validationContext.Validate(() => name.Length <= NameMaxLength, nameof(name), "Category name maximum length (50) exceeded");
+            validationContext.Validate(() => name.Length > NameMaxLength, nameof(name), "Category name maximum length (50) exceeded");
         }
+
+        #endregion
 
         #region ExamSession
 
@@ -95,9 +99,18 @@ namespace EloBaza.Domain.SubjectAggregate
         {
             var examSession = FindExamSession(examSessionKey);
             if (examSession is null)
-                throw new NotFoundException($"Exam session with Key: {examSessionKey} does not exists for subject: {Key}");
+                throw new NotFoundException($"Exam session with Key: {examSessionKey} does not exists");
 
             examSession.MarkAsDeleted(userId);
+        }
+
+        public void RestoreExamSession(int userId, Guid examSessionKey)
+        {
+            var examSession = FindExamSession(examSessionKey);
+            if (examSession is null)
+                throw new NotFoundException($"Exam session with Key: {examSessionKey} does not exists for subject: {Key}");
+
+            examSession.MarkAsNotDeleted(userId);
         }
 
         private ExamSession FindExamSession(Guid examSessionKey)
@@ -112,10 +125,9 @@ namespace EloBaza.Domain.SubjectAggregate
 
         #endregion
 
-
         #region Category
 
-        public Category CreateRootCategory(int userId, string name, Guid? parentCategoryKey)
+        public Category CreateCategory(int userId, string name, Guid? parentCategoryKey)
         {
             var parentCategory = FindCategory(parentCategoryKey);
 
@@ -127,13 +139,13 @@ namespace EloBaza.Domain.SubjectAggregate
             return category;
         }
 
-        public void UpdateCategory(int userId, Guid categoryKey, Guid? parentCategoryKey, string? name)
+        public void UpdateCategory(int userId, Guid categoryKey, string name, Guid? parentCategoryKey)
         {
             var category = FindCategory(categoryKey);
             if (category is null)
                 throw new NotFoundException($"Category with Key: {categoryKey} does not exists");
 
-            var newName = name ?? category.Name;
+            var newName = name;
             var newParentCategory = FindCategory(parentCategoryKey);
 
             var hasChanged = category.Name != newName || category.ParentCategory != newParentCategory;
@@ -150,10 +162,23 @@ namespace EloBaza.Domain.SubjectAggregate
             category.MarkAsDeleted(userId);
         }
 
+        public void RestoreCategory(int userId, Guid categoryKey)
+        {
+            var category = FindCategory(categoryKey);
+            if (category is null)
+                throw new NotFoundException($"Category with Key: {categoryKey} does not exists");
+
+            category.MarkAsNotDeleted(userId);
+        }
+
         private Category? FindCategory(Guid? categoryKey)
         {
             if (categoryKey is null)
                 return null;
+
+            var rootCategory = Categories.SingleOrDefault(c => c.Key == categoryKey);
+            if (!(rootCategory is null))
+                return rootCategory;
 
             foreach (var category in Categories)
             {

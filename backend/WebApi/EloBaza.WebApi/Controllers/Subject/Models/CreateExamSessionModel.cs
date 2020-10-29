@@ -22,10 +22,10 @@ namespace EloBaza.WebApi.Controllers.Subject.Models
         public string Semester { get; set; } = default!;
 
         /// <summary>
-        /// Exam session resit number (optional) - range 1 to 10
+        /// Exam session resit number (optional) - range 0 to 10
         /// </summary>
         [Required]
-        [Range(1, 10)]
+        [Range(0, 10)]
         public byte ResitNumber { get; set; } = 0;
     }
 }
