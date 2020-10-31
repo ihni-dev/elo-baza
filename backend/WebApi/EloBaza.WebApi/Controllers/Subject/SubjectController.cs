@@ -393,7 +393,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// <response code="204">If update succeeded</response>
         /// <response code="400">If validation failed</response> 
         /// <response code="404">If subject or category does not exists</response>
-        /// <response code="409">If category with provided data on same level already exists</response>
+        /// <response code="409">If category with provided data on same level already exists or trying to assign parent as a child of its child</response>
         [HttpPatch("{subjectKey}/category/{categoryKey}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

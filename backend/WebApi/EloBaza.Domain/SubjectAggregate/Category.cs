@@ -77,7 +77,11 @@ namespace EloBaza.Domain.SubjectAggregate
 
         internal bool SubCategoryAlreadyExists(Category subCategory)
         {
-            return SubCategories.Any(sc => sc.Name.Equals(subCategory.Name, StringComparison.OrdinalIgnoreCase));
+            var foundSubCategory = SubCategories.FirstOrDefault(sc => sc.Name.Equals(subCategory.Name, StringComparison.OrdinalIgnoreCase));
+            if (foundSubCategory is null)
+                return false;
+
+            return subCategory != foundSubCategory;
         }
 
         private static void Validate(string name)

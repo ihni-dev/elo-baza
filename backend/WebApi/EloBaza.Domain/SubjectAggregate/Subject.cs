@@ -148,9 +148,20 @@ namespace EloBaza.Domain.SubjectAggregate
             var newName = name;
             var newParentCategory = FindCategory(parentCategoryKey);
 
+            if (parentCategoryKey.HasValue && newParentCategory is null)
+                throw new NotFoundException($"Category with key: {parentCategoryKey} does not exists");
+
             var hasChanged = category.Name != newName || category.ParentCategory != newParentCategory;
             if (hasChanged)
+            {
+                if (!(newParentCategory is null) && PotentialParentIsChildOf(category, newParentCategory))
+                    throw new AlreadyExistsException($"Cannot assign parent as a child of its child");
+
                 category.Update(userId, newParentCategory, newName);
+
+                if (CategoryAlreadyExists(category, newParentCategory))
+                    throw new AlreadyExistsException($"Category: {category.Name} already exists");
+            }
         }
 
         public void DeleteCategory(int userId, Guid categoryKey)
@@ -194,9 +205,28 @@ namespace EloBaza.Domain.SubjectAggregate
         private bool CategoryAlreadyExists(Category category, Category? parentCategory)
         {
             if (parentCategory is null)
-                return Categories.Any(c => c.Name.Equals(category.Name, StringComparison.OrdinalIgnoreCase));
+            {
+                var foundCategory = Categories.FirstOrDefault(sc => sc.Name.Equals(category.Name, StringComparison.OrdinalIgnoreCase));
+                if (foundCategory is null)
+                    return false;
+
+                return category != foundCategory;
+            }
             else
+            {
                 return parentCategory.SubCategoryAlreadyExists(category);
+            }
+        }
+
+        private bool PotentialParentIsChildOf(Category category, Category? potentialParentCategory)
+        {
+            if (category == potentialParentCategory)
+                return true;
+
+            if (potentialParentCategory is null || potentialParentCategory.IsRootCategory)
+                return false;
+
+            return PotentialParentIsChildOf(category, potentialParentCategory.ParentCategory);
         }
 
         #endregion
