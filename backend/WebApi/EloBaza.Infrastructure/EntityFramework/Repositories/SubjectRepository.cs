@@ -23,6 +23,11 @@ namespace EloBaza.Infrastructure.EntityFramework.Repositories
                 .Subjects
                 .Include(s => s.ExamSessions)
                 .Include(s => s.Categories)
+                .ThenInclude(c => c.SubCategories)
+                .ThenInclude(c => c.SubCategories)
+                .ThenInclude(c => c.SubCategories)
+                .ThenInclude(c => c.SubCategories)
+                .ThenInclude(c => c.SubCategories)
                 .FirstOrDefaultAsync(s => s.Key == key, cancellationToken: cancellationToken);
         }
 

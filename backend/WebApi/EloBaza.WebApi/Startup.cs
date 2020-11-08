@@ -1,7 +1,6 @@
 using AutoMapper;
 using EloBaza.Application.IoC;
 using EloBaza.Infrastructure.EntityFramework.IoC;
-using EloBaza.ServiceBusListener.IoC;
 using EloBaza.WebApi.Extensions;
 using EloBaza.WebApi.Middleware;
 using Microsoft.AspNetCore.Authentication;

@@ -70,7 +70,8 @@ namespace EloBaza.MigrationTool.Migrations
                     DeletedBy = table.Column<int>(nullable: true),
                     SubjectId = table.Column<int>(nullable: true),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
-                    ParentCategoryId = table.Column<int>(nullable: true)
+                    ParentCategoryId = table.Column<int>(nullable: true),
+                    Level = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

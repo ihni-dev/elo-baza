@@ -15,7 +15,7 @@ namespace EloBaza.MigrationTool.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.5")
+                .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -312,6 +312,9 @@ namespace EloBaza.MigrationTool.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("LastModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Level")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")

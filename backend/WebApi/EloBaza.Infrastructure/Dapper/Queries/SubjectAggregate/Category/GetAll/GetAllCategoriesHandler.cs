@@ -1,75 +1,60 @@
-﻿//using Dapper;
-//using EloBaza.Application.Queries.Common;
-//using EloBaza.Application.Queries.SubjectAggregate.Category.GetAll;
-//using MediatR;
-//using System;
-//using System.Collections.Generic;
-//using System.Data;
-//using System.Linq;
-//using System.Threading;
-//using System.Threading.Tasks;
+﻿using Dapper;
+using EloBaza.Application.Queries.SubjectAggregate.Category.GetAll;
+using MediatR;
+using System.Data;
+using System.Threading;
+using System.Threading.Tasks;
 
-//namespace EloBaza.Infrastructure.Dapper.Queries.SubjectAggregate.Category.GetAll
-//{
-//    class GetAllCategoriesHandler : IRequestHandler<GetAllCategories, GetAllCategoriesResult>
-//    {
-//        private readonly IDbConnection _dbConnection;
+namespace EloBaza.Infrastructure.Dapper.Queries.SubjectAggregate.Category.GetAll
+{
+    class GetAllCategoriesHandler : IRequestHandler<GetAllCategories, GetAllCategoriesResult>
+    {
+        private readonly IDbConnection _dbConnection;
 
-//        private const string GetAllExamSessionsQuery = @"
-//WITH CategoryResult AS (
-//    SELECT
-//        es.ExamSessionId,
-//        es.ExamSessionKey,
-//        es.Name
-//    FROM Subject s
-//    INNER JOIN ExamSession es ON s.SubjectId
-//    WHERE 
-//        s.SubjectKey = @SubjectKey
-//        es.Name LIKE '%' + @Name + '%'
-//), TotalCount AS (
-//    SELECT COUNT(*) AS TotalCount 
-//    FROM ExamSessionResult
-//)
-//SELECT
-//    ExamSessionKey AS 'Key',
-//    Name,
-//    TotalCount
-//FROM 
-//    ExamSessionResult, 
-//    TotalCount
-//ORDER BY ExamSessionResult.ExamSessionId
-//    OFFSET (@Page - 1) * @PageSize ROWS
-//    FETCH NEXT @PageSize ROWS ONLY
-//";
+        private const string GetCategoriesQuery = @"
+WITH CTE_Recursive (CategoryKey, ParentKey, CategoryId, ParentCategoryId, Name)
+AS
+(
+    SELECT
+        c.CategoryKey,
+        CAST(NULL AS UNIQUEIDENTIFIER) AS 'ParentKey',
+        c.CategoryId,
+        c.ParentCategoryId,
+        c.Name
+    FROM Subject s
+    JOIN Category c ON s.SubjectId = c.SubjectId
 
-//        public GetAllCategoriesHandler(IDbConnection dbConnection)
-//        {
-//            _dbConnection = dbConnection;
-//        }
+    UNION ALL
+    
+    SELECT         
+        c.CategoryKey, 
+        r.CategoryKey AS 'ParentKey',
+        c.CategoryId,
+        c.ParentCategoryId,
+        c.Name
+    FROM Category AS c
+    INNER JOIN CTE_Recursive AS r
+        ON c.ParentCategoryId = r.CategoryId
+)
+SELECT  
+    c.CategoryKey AS 'Key',
+    c.ParentKey AS 'ParentKey',
+    c.Name
+FROM CTE_Recursive AS c
+";
 
-//        public async Task<GetAllCategoriesResult> Handle(GetAllCategories request, CancellationToken cancellationToken)
-//        {
-//            var totalCountSet = new HashSet<int>();
-//            Func<CategoryReadModel, int, CategoryReadModel> map = (result, totalCount) =>
-//            {
-//                totalCountSet.Add(totalCount);
-//                return result;
-//            };
+        public GetAllCategoriesHandler(IDbConnection dbConnection)
+        {
+            _dbConnection = dbConnection;
+        }
 
-//            var examSessions = await _dbConnection.QueryAsync(
-//                sql: GetAllExamSessionsQuery,
-//                map: map,
-//                param: new
-//                {
-//                    request.SubjectKey,
-//                    request.ExamSessionFilteringParameters.Name,
-//                    request.PagingParameters.Page,
-//                    request.PagingParameters.PageSize
-//                },
-//                splitOn: "TotalCount");
+        public async Task<GetAllCategoriesResult> Handle(GetAllCategories request, CancellationToken cancellationToken)
+        {
+            var categories = await _dbConnection.QueryAsync<CategoryReadModel>(
+                sql: GetCategoriesQuery,
+                param: new { request.SubjectKey });
 
-//            var pagingInfo = new PagingInfo(totalCountSet.SingleOrDefault(), request.PagingParameters.Page, request.PagingParameters.PageSize);
-//            return new GetAllExamSessionsResult(examSessions, pagingInfo);
-//        }
-//    }
-//}
+            return new GetAllCategoriesResult(categories);
+        }
+    }
+}

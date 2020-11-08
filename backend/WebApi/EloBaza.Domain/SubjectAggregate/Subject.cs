@@ -131,11 +131,19 @@ namespace EloBaza.Domain.SubjectAggregate
         {
             var parentCategory = FindCategory(parentCategoryKey);
 
-            var category = Category.Create(userId, this, name, parentCategory);
-            if (CategoryAlreadyExists(category, parentCategory))
-                throw new AlreadyExistsException($"Category: {category.Name} already exists");
+            Category category;
+            if (parentCategory is null)
+            {
+                category = Category.CreateRoot(userId, this, name);
+                if (CategoryAlreadyExists(category, parentCategory))
+                    throw new AlreadyExistsException($"Category: {category.Name} already exists");
+                Categories.Add(category);
+            }
+            else
+            {
+                category = parentCategory.CreateSubCategory(userId, name);
+            }
 
-            Categories.Add(category);
             return category;
         }
 

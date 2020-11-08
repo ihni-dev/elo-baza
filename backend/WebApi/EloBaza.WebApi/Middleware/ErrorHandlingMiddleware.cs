@@ -61,6 +61,20 @@ namespace EloBaza.WebApi.Middleware
                 result = new BadRequestObjectResult(problemDetails);
                 return true;
             }
+            else if (ex is InvalidOperationException)
+            {
+                problemDetails = new ProblemDetails()
+                {
+                    Detail = ex.Message,
+                    Status = StatusCodes.Status400BadRequest,
+                    Type = "https://httpstatuses.com/400",
+                    Instance = httpContext.Request.Path,
+                    Title = ex.GetType().Name
+                };
+
+                result = new BadRequestObjectResult(problemDetails);
+                return true;
+            }
             else if (ex is NotFoundException)
             {
                 problemDetails = new ProblemDetails()

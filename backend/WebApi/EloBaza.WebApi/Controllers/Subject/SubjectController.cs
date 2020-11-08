@@ -163,19 +163,16 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// Get all exam sessions 
         /// </summary>
         /// <param name="subjectKey">Key of an exam session subject</param>
-        /// <param name="examSessionsFilteringParametersModel">Parameters to filter result by</param>
         /// <param name="pagingParametersModel">Pagination parameters</param>
         /// <response code="200">A list of exam sessions</response>
         [HttpGet("{subjectKey}/exam-session")]
         [ProducesResponseType(typeof(GetAllExamSessionsResult), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllExamSessions(Guid subjectKey,
-            [FromQuery] ExamSessionFilteringParametersModel examSessionsFilteringParametersModel,
             [FromQuery] PagingParametersModel pagingParametersModel)
         {
-            var examSessionsFilteringParameters = _mapper.Map<ExamSessionFilteringParameters>(examSessionsFilteringParametersModel);
             var pagingParameters = _mapper.Map<PagingParameters>(pagingParametersModel);
 
-            var examSessions = await _mediator.Send(new GetAllExamSessions(subjectKey, examSessionsFilteringParameters, pagingParameters));
+            var examSessions = await _mediator.Send(new GetAllExamSessions(subjectKey));
 
             return Ok(examSessions);
         }
@@ -273,7 +270,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<IActionResult> Update(Guid subjectKey, Guid examSessionKey, UpdateExamSessionModel updateExamSessionModel)
+        public async Task<IActionResult> UpdateExamSession(Guid subjectKey, Guid examSessionKey, UpdateExamSessionModel updateExamSessionModel)
         {
             var updateExamSessionData = _mapper.Map<UpdateExamSessionData>(updateExamSessionModel);
             await _mediator.Send(new UpdateExamSession(requestorId: 1, subjectKey, examSessionKey, updateExamSessionData));
@@ -289,19 +286,12 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// Get all categories
         /// </summary>
         /// <param name="subjectKey">Key of a category subject</param>
-        /// <param name="categoryFilteringParametersModel">Parameters to filter result by</param>
-        /// <param name="pagingParametersModel">Pagination parameters</param>
         /// <response code="200">A list of categories</response>
         [HttpGet("{subjectKey}/category")]
         [ProducesResponseType(typeof(GetAllCategoriesResult), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllExamSessions(Guid subjectKey,
-            [FromQuery] CategoryFilteringParametersModel categoryFilteringParametersModel,
-            [FromQuery] PagingParameters pagingParametersModel)
+        public async Task<IActionResult> GetAllCategories(Guid subjectKey)
         {
-            var categoryFilteringParameters = _mapper.Map<CategoryFilteringParameters>(categoryFilteringParametersModel);
-            var pagingParameters = _mapper.Map<PagingParameters>(pagingParametersModel);
-
-            var categories = await _mediator.Send(new GetAllCategories(subjectKey, categoryFilteringParameters, pagingParameters));
+            var categories = await _mediator.Send(new GetAllCategories(subjectKey));
 
             return Ok(categories);
         }
@@ -399,7 +389,7 @@ namespace EloBaza.WebApi.Controllers.Subject
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<IActionResult> Update(Guid subjectKey, Guid categoryKey, UpdateCategoryModel updateCategoryModel)
+        public async Task<IActionResult> UpdateCategory(Guid subjectKey, Guid categoryKey, UpdateCategoryModel updateCategoryModel)
         {
             var updateCategoryData = _mapper.Map<UpdateCategoryData>(updateCategoryModel);
             await _mediator.Send(new UpdateCategory(requestorId: 1, subjectKey, categoryKey, updateCategoryData));

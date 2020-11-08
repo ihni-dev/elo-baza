@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace EloBaza.Application.Queries.SubjectAggregate.Category.GetAll
 {
@@ -14,13 +13,13 @@ namespace EloBaza.Application.Queries.SubjectAggregate.Category.GetAll
         public Guid Key { get; set; }
 
         /// <summary>
+        /// Parent category key
+        /// </summary>
+        public Guid? ParentKey { get; set; }
+
+        /// <summary>
         /// Category name
         /// </summary>
         public string? Name { get; set; }
-
-        /// <summary>
-        /// Child categories
-        /// </summary>
-        public ICollection<CategoryReadModel> ChildCategories { get; private set; } = new List<CategoryReadModel>();
     }
 }

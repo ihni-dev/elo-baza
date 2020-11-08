@@ -5,8 +5,6 @@ using EloBaza.Application.Commands.SubjectAggregate.Create;
 using EloBaza.Application.Commands.SubjectAggregate.ExamSession.Create;
 using EloBaza.Application.Commands.SubjectAggregate.ExamSession.Update;
 using EloBaza.Application.Commands.SubjectAggregate.Update;
-using EloBaza.Application.Queries.SubjectAggregate.Category.GetAll;
-using EloBaza.Application.Queries.SubjectAggregate.ExamSession.GetAll;
 using EloBaza.Application.Queries.SubjectAggregate.GetAll;
 
 namespace EloBaza.WebApi.Controllers.Subject.Models
@@ -21,11 +19,9 @@ namespace EloBaza.WebApi.Controllers.Subject.Models
 
             CreateMap<CreateExamSessionModel, CreateExamSessionData>();
             CreateMap<UpdateExamSessionModel, UpdateExamSessionData>();
-            CreateMap<ExamSessionFilteringParametersModel, ExamSessionFilteringParameters>();
 
             CreateMap<CreateCategoryModel, CreateCategoryData>();
             CreateMap<UpdateCategoryModel, UpdateCategoryData>();
-            CreateMap<CategoryFilteringParametersModel, CategoryFilteringParameters>();
         }
     }
 }

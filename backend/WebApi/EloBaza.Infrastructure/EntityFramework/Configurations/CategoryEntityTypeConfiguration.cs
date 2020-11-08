@@ -22,6 +22,9 @@ namespace EloBaza.Infrastructure.EntityFramework.Configurations
                 .HasMaxLength(Category.NameMaxLength)
                 .IsRequired(true);
 
+            builder.Property(c => c.Level)
+                .IsRequired(true);
+
             builder.HasOne<Category>(c => c.ParentCategory)
                 .WithMany(pc => pc.SubCategories)
                 .IsRequired(false)
