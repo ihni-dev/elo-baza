@@ -65,11 +65,11 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// Get a subject by key
         /// </summary>
         /// <param name="subjectKey">Key of a subject</param>
-        /// <response code="200">Subject read model if found</response>
+        /// <response code="200">Subject setails read model if found</response>
         /// <response code="400">If validation failed</response> 
         /// <response code="404">If not found</response>
         [HttpGet("{subjectKey}")]
-        [ProducesResponseType(typeof(SubjectReadModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(SubjectDetailsReadModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(Guid subjectKey)
@@ -163,15 +163,11 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// Get all exam sessions 
         /// </summary>
         /// <param name="subjectKey">Key of an exam session subject</param>
-        /// <param name="pagingParametersModel">Pagination parameters</param>
         /// <response code="200">A list of exam sessions</response>
         [HttpGet("{subjectKey}/exam-session")]
         [ProducesResponseType(typeof(GetAllExamSessionsResult), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllExamSessions(Guid subjectKey,
-            [FromQuery] PagingParametersModel pagingParametersModel)
+        public async Task<IActionResult> GetAllExamSessions(Guid subjectKey)
         {
-            var pagingParameters = _mapper.Map<PagingParameters>(pagingParametersModel);
-
             var examSessions = await _mediator.Send(new GetAllExamSessions(subjectKey));
 
             return Ok(examSessions);
