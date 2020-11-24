@@ -33,13 +33,10 @@ namespace EloBaza.MigrationTool
                 try
                 {
                     await Migrate(cancellationToken);
-                    _telemetryClient.TrackEvent("Database migrated");
                     _logger.LogInformation("Database migrated");
                 }
                 catch (Exception ex)
                 {
-                    _telemetryClient.TrackEvent("Could not migrate database");
-                    _telemetryClient.TrackException(ex);
                     _logger.LogError(ex, "Could not migrate database");
                 }
             }
@@ -49,10 +46,7 @@ namespace EloBaza.MigrationTool
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            _telemetryClient.TrackEvent("Waiting for AI client flush.");
             _logger.LogInformation("Waiting for AI client flush.");
-
-            _telemetryClient.TrackEvent("Shutting down Migration Tool...");
             _logger.LogInformation("Shutting down Migration Tool...");
 
             _telemetryClient.Flush();
