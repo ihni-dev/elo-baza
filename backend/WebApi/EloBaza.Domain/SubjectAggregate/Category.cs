@@ -137,7 +137,7 @@ namespace EloBaza.Domain.SubjectAggregate
         {
             if (newParent.IsLeafCategory)
                 return false;
-             
+
             return HeightDown() + newParent.Level < MaxLevel;
         }
 

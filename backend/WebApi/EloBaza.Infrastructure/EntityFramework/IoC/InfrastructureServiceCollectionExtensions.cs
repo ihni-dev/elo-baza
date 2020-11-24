@@ -20,7 +20,7 @@ namespace EloBaza.Infrastructure.EntityFramework.IoC
         {
             return services
                 .AddTransient<IDbConnection>(sp => new SqlConnection(configuration.GetConnectionString("DB")))
-                .AddDbContext<SubjectDbContext>(options => 
+                .AddDbContext<SubjectDbContext>(options =>
                     options.UseSqlServer(configuration.GetConnectionString("DB"))
                         .EnableDetailedErrors())
                 .AddScoped<IRepository<Subject>, SubjectRepository>()

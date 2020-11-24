@@ -72,7 +72,7 @@ namespace EloBaza.Domain.SharedKernel
             return (GetType().ToString() + Id).GetHashCode(StringComparison.InvariantCulture);
         }
 
-        public static bool operator ==(Entity left, Entity right)
+        public static bool operator ==(Entity? left, Entity? right)
         {
             if (left is null && right is null)
                 return true;
@@ -83,7 +83,7 @@ namespace EloBaza.Domain.SharedKernel
             return left.Equals(right);
         }
 
-        public static bool operator !=(Entity left, Entity right)
+        public static bool operator !=(Entity? left, Entity? right)
         {
             return !(left == right);
         }
