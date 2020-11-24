@@ -1,7 +1,9 @@
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using System;
 
@@ -12,22 +14,7 @@ namespace EloBaza.WebApi
         static void Main(string[] args)
         {
             var configuration = GetAppConfiguration();
-            InitLogger(configuration);
-
-            try
-            {
-                Log.Information("Starting web host");
-                CreateHostBuilder(args, configuration).Build().Run();
-            }
-            catch (Exception ex)
-            {
-                Log.Fatal(ex, "Host terminated unexpectedly");
-                throw;
-            }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
+            CreateHostBuilder(args, configuration).Build().Run();
         }
 
         private static IHostBuilder CreateHostBuilder(string[] args, IConfiguration configuration) =>
@@ -40,28 +27,33 @@ namespace EloBaza.WebApi
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-                .UseSerilog();
+                .UseSerilog((context, services, config) =>
+                {
+                    var telemetryConfiguration = services.GetRequiredService<TelemetryConfiguration>();
+                    config.ReadFrom.Configuration(configuration);
+
+                    if (!string.IsNullOrWhiteSpace(configuration.GetValue<string>("ApplicationInsights:InstrumentationKey")))
+                        config.WriteTo.ApplicationInsights(
+                            services.GetRequiredService<TelemetryConfiguration>(),
+                            TelemetryConverter.Traces);
+                });
 
         private static IConfiguration GetAppConfiguration()
         {
-            var userSecretsConfig = new ConfigurationBuilder()
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? throw new InvalidOperationException("ASPNETCORE_ENVIRONMENT env variable is not defined");
+
+            var config = new ConfigurationBuilder()
+                .AddEnvironmentVariables()
                 .AddUserSecrets(typeof(Program).Assembly)
                 .Build();
 
             return new ConfigurationBuilder()
                 .AddAzureAppConfiguration(options =>
                     {
-                        options.Connect(userSecretsConfig["ConnectionStrings:AppConfig"])
-                            .Select(KeyFilter.Any, Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? "Development");
+                        options.Connect(config["ConnectionStrings:AppConfig"])
+                            .Select(KeyFilter.Any, environment);
                     })
                 .Build();
-        }
-
-        private static void InitLogger(IConfiguration configuration)
-        {
-            Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(configuration)
-                .CreateLogger();
         }
     }
 }

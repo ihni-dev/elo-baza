@@ -52,7 +52,7 @@ namespace EloBaza.Domain.SharedKernel
 
         public override bool Equals(object obj)
         {
-            if (!(obj is Entity other))
+            if (obj is not Entity other)
                 return false;
 
             if (ReferenceEquals(this, other))

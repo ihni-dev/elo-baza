@@ -1,16 +1,17 @@
 using AutoMapper;
 using EloBaza.Application.IoC;
 using EloBaza.Infrastructure.EntityFramework.IoC;
+using EloBaza.WebApi.ApplicationInsights;
 using EloBaza.WebApi.Extensions;
 using EloBaza.WebApi.Middleware;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json.Converters;
+using Microsoft.Identity.Web;
 using Serilog;
 using System.Reflection;
 
@@ -28,9 +29,10 @@ namespace EloBaza.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor()
-                .AddControllers()
-                .AddNewtonsoftJson(options =>
-                    options.SerializerSettings.Converters.Add(new StringEnumConverter()));
+                .AddControllers();
+
+            services.AddHealthChecks()
+                    .AddSqlServer(Configuration.GetConnectionString("DB"));
 
             services.AddInfrastructureServices(Configuration)
                 .AddApplicationServices()
@@ -39,10 +41,11 @@ namespace EloBaza.WebApi
                 .AddSwagger()
                 .AddCorsPolicies();
 
-            services.AddAuthentication(AzureADB2CDefaults.BearerAuthenticationScheme)
-                .AddAzureADB2CBearer(options => Configuration.Bind("AzureAdB2C", options));
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddMicrosoftIdentityWebApi(Configuration, "AzureAdB2C");
 
-            services.AddApplicationInsightsTelemetry();
+            services.AddApplicationInsightsTelemetry()
+                .AddSingleton<ITelemetryInitializer, CloudRoleNameInitializer>();
         }
 
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -67,6 +70,7 @@ namespace EloBaza.WebApi
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {
+                    endpoints.MapHealthChecks("/health");
                     endpoints.MapControllers();
                 });
         }

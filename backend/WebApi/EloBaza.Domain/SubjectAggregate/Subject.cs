@@ -162,7 +162,7 @@ namespace EloBaza.Domain.SubjectAggregate
             var hasChanged = category.Name != newName || category.ParentCategory != newParentCategory;
             if (hasChanged)
             {
-                if (!(newParentCategory is null) && PotentialParentIsChildOf(category, newParentCategory))
+                if (newParentCategory is not null && PotentialParentIsChildOf(category, newParentCategory))
                     throw new AlreadyExistsException($"Cannot assign parent as a child of its child");
 
                 category.Update(userId, newParentCategory, newName);
@@ -196,14 +196,14 @@ namespace EloBaza.Domain.SubjectAggregate
                 return null;
 
             var rootCategory = Categories.SingleOrDefault(c => c.Key == categoryKey);
-            if (!(rootCategory is null))
+            if (rootCategory is not null)
                 return rootCategory;
 
             foreach (var category in Categories)
             {
                 var foundCategory = category.Seek(categoryKey.Value);
 
-                if (!(foundCategory is null))
+                if (foundCategory is not null)
                     return foundCategory;
             }
 

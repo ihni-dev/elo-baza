@@ -44,14 +44,15 @@ namespace EloBaza.MailService
 
         private static IConfiguration GetAppConfiguration()
         {
-            var userSecretsConfig = new ConfigurationBuilder()
+            var config = new ConfigurationBuilder()
+                .AddEnvironmentVariables()
                 .AddUserSecrets(typeof(Program).Assembly)
                 .Build();
 
             return new ConfigurationBuilder()
                 .AddAzureAppConfiguration(options =>
                 {
-                    options.Connect(userSecretsConfig["ConnectionStrings:AppConfig"])
+                    options.Connect(config["ConnectionStrings:AppConfig"])
                         .Select(KeyFilter.Any, Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? "Development");
                 })
                 .Build();

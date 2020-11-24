@@ -71,7 +71,7 @@ namespace EloBaza.Domain.SubjectAggregate
                 validationContext.Validate(() => string.IsNullOrWhiteSpace(newName), nameof(newName), "Category name must be provided");
             }
 
-            if (!(newParentCategory is null) && !CanAssignNewParent(newParentCategory))
+            if (newParentCategory is not null && !CanAssignNewParent(newParentCategory))
                 throw new InvalidOperationException("Can not change parent as it would exceed maximum depth of a category tree");
 
             Name = newName;

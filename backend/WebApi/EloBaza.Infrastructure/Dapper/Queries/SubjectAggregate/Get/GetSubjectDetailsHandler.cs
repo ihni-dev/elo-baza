@@ -44,7 +44,7 @@ WHERE s.SubjectKey = @SubjectKey
                     if (!lookup.TryGetValue(sdrm.Key, out subjectDetailsReadModel))
                         lookup.Add(sdrm.Key, subjectDetailsReadModel = sdrm);
 
-                    if (!(esrm is null))
+                    if (esrm is not null)
                         subjectDetailsReadModel.ExamSessions.Add(esrm);
 
                     return subjectDetailsReadModel;

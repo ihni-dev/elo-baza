@@ -6,9 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using System;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -66,7 +66,7 @@ namespace EloBaza.MailService.ServiceBusListener.NewUserRegistered
             _logger.LogInformation($"Received message: SequenceNumber:{message.SystemProperties.SequenceNumber}");
             _logger.LogDebug($"Received message: SequenceNumber:{message.SystemProperties.SequenceNumber} Body:{data}");
 
-            var newUserRegisteredMessage = JsonConvert.DeserializeObject<NewUserRegisteredMessage>(data);
+            var newUserRegisteredMessage = JsonSerializer.Deserialize<NewUserRegisteredMessage>(data);
 
             await _subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
 

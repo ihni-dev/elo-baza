@@ -20,13 +20,13 @@ namespace EloBaza.Application.Commands.SubjectAggregate.ExamSession.Update
                         nameof(year),
                         $"Year {year} is invalid. Please provide year between 1950 and 2150");
 
-                if (!(semester is null))
+                if (semester is not null)
                     validationContext.Validate(
                         () => !Enumeration.HasDisplayName<Semester>(semester),
                         nameof(semester),
                         $"Semester {semester} is invalid");
 
-                if (!(resitNumber is null))
+                if (resitNumber is not null)
                     validationContext.Validate(
                         () => resitNumber < 0,
                         nameof(semester),

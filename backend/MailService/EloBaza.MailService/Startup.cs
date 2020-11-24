@@ -5,14 +5,13 @@ using EloBaza.MailService.Mailing.Config;
 using EloBaza.MailService.Middleware;
 using EloBaza.MailService.ServiceBusListener.NewUserRegistered;
 using EloBaza.MailService.ServiceBusListener.NewUserRegistered.Config;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json.Converters;
+using Microsoft.Identity.Web;
 using Serilog;
 using System.Reflection;
 
@@ -30,9 +29,7 @@ namespace EloBaza.MailService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor()
-                .AddControllers()
-                .AddNewtonsoftJson(options =>
-                    options.SerializerSettings.Converters.Add(new StringEnumConverter()));
+                .AddControllers();
 
             services.Configure<NewUserRegisteredServiceBusConfig>(Configuration.GetSection("ServiceBus:NotifyNewUserRegistered:MailService"))
                 .AddHostedService<NewUserRegisteredServiceBusListener>()
@@ -42,8 +39,8 @@ namespace EloBaza.MailService
                 .AddSwagger()
                 .AddCorsPolicies();
 
-            services.AddAuthentication(AzureADB2CDefaults.BearerAuthenticationScheme)
-                .AddAzureADB2CBearer(options => Configuration.Bind("AzureAdB2C", options));
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddMicrosoftIdentityWebApi(Configuration, "AzureAdB2C");
 
             services.AddApplicationInsightsTelemetry();
         }

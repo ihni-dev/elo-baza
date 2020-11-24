@@ -19,8 +19,7 @@ namespace EloBaza.MailService.Extensions
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "EloBaza API", Version = "v1" });
 
                 options.IncludeXmlComments(mailServiceXmlFile);
-            })
-            .AddSwaggerGenNewtonsoftSupport();
+            });
         }
 
         public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app)

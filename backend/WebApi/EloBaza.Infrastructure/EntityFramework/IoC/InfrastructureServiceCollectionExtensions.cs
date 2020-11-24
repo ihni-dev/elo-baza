@@ -20,11 +20,17 @@ namespace EloBaza.Infrastructure.EntityFramework.IoC
         {
             return services
                 .AddTransient<IDbConnection>(sp => new SqlConnection(configuration.GetConnectionString("DB")))
-                .AddDbContext<SubjectDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DB")))
+                .AddDbContext<SubjectDbContext>(options => 
+                    options.UseSqlServer(configuration.GetConnectionString("DB"))
+                        .EnableDetailedErrors())
                 .AddScoped<IRepository<Subject>, SubjectRepository>()
-                .AddDbContext<QuestionDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DB")))
+                .AddDbContext<QuestionDbContext>(options =>
+                    options.UseSqlServer(configuration.GetConnectionString("DB"))
+                        .EnableDetailedErrors())
                 .AddScoped<IRepository<Question>, QuestionRepository>()
-                .AddDbContext<UserDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DB")))
+                .AddDbContext<UserDbContext>(options =>
+                    options.UseSqlServer(configuration.GetConnectionString("DB"))
+                        .EnableDetailedErrors())
                 .AddScoped<IRepository<User>, UserRepository>()
                 .AddMediatR(typeof(InfrastructureServiceCollectionExtensions).GetTypeInfo().Assembly);
         }

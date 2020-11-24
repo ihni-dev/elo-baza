@@ -1,45 +1,47 @@
-version: "3.7"
+version: "3.8"
 
 services:
-  ui:
-    build:
-      context: ui
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
     ports:
-      - "8000:80"
-    depends_on:
-      - web
-
-  web:
-    build:
-      context: backend
-      dockerfile: WebApi/EloBaza.WebApi/Dockerfile
-    ports:
-      - "8001:80"
+      - "1433:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql
     environment:
-      DOTNET_ENVIRONMENT: "Development"
-      ConnectionStrings__DB: "Server=db;Database=elo-baza;User=sa;Password=1Secure*Password1;MultipleActiveResultSets=true"
-    depends_on:
-      - migration
+      SA_PASSWORD: 1Secure*Password1
+      MSSQL_PID: Express
+      ACCEPT_EULA: Y
 
   migration:
     build:
       context: backend
       dockerfile: WebApi/EloBaza.MigrationTool/Dockerfile
     environment:
-      ConnectionStrings__DB: "Server=db;Database=elo-baza;User=sa;Password=1Secure*Password1;MultipleActiveResultSets=true"
+      DOTNET_ENVIRONMENT: LocalDocker
+      ConnectionStrings__AppConfig: ${ConnectionStrings__AppConfig}
     depends_on:
       - db
 
-  db:
-    image: "mcr.microsoft.com/mssql/server:2019-latest"
+  api:
+    build:
+      context: backend
+      dockerfile: WebApi/EloBaza.WebApi/Dockerfile
     ports:
-      - "1433:1433"
-    volumes:
-      - mssql-data:/var/opt/mssql
+      - "8001:80"
     environment:
-      SA_PASSWORD: "1Secure*Password1"
-      MSSQL_PID: "Express"
-      ACCEPT_EULA: "Y"
+      ASPNETCORE_ENVIRONMENT: LocalDocker
+      ConnectionStrings__AppConfig: ${ConnectionStrings__AppConfig}
+    depends_on:
+      - migration
+
+  ui:
+    build:
+      context: ui
+    ports:
+      - "8000:80"
+    depends_on:
+      - api
 
 volumes:
   mssql-data:
+    driver: local

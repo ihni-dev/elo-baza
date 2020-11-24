@@ -49,8 +49,7 @@ namespace EloBaza.WebApi.Extensions
 
                 options.IncludeXmlComments(webApiXmlPath);
                 options.IncludeXmlComments(applicationXmlPath);
-            })
-            .AddSwaggerGenNewtonsoftSupport();
+            });
         }
 
         public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app)
