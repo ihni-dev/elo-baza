@@ -3,7 +3,7 @@ import { Store, Select } from '@ngxs/store';
 import { ChangePageTitle } from 'src/app/core/layout/page-title/page-title-actions';
 import { PageTitleState } from 'src/app/core/layout/page-title/page-title-state';
 import { Observable } from 'rxjs';
-import { PageTitleStateModel } from 'src/app/core/layout/page-title/page-title-state.model';
+import { AppConfigurationService } from 'src/app/core/app-configuration/app-configuration.service';
 
 @Component({
   selector: 'app-home-page',
@@ -14,7 +14,14 @@ export class HomePage implements OnInit {
   @Select(PageTitleState.headerTitle) headerTitle$: Observable<string>;
   @Select(PageTitleState.headerSubtitle) headerSubtitle$: Observable<string>;
 
-  constructor(private store: Store) {}
+  public apiUrl: string;
+
+  constructor(
+    private store: Store,
+    appConfigurationService: AppConfigurationService
+  ) {
+    this.apiUrl = appConfigurationService.getConfig().apiUrl;
+  }
 
   ngOnInit(): void {
     this.store.dispatch(
