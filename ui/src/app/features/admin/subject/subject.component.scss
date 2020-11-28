@@ -1,0 +1,32 @@
+@import '../../../../styles/constants';
+
+.header-image {
+  background-image: url('https://cdn.glitch.com/9c389208-b279-4e96-bcbc-e5f8712d8706%2Fplaceholder-landscape-med.png?1553629847913');
+  background-size: cover;
+}
+
+.content {
+  padding: 32px 32px 16px 48px;
+  max-width: 100%;
+}
+
+.no-results {
+  margin-left: 32px;
+  margin-right: 32px;
+}
+
+@media (max-width: $extra-small-breakpoint-width) {
+  .content {
+    padding: 32px 0px 16px 16px;
+    max-width: 100%;
+  }
+
+  .no-results {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+}
+
+.progress-bar {
+  height: 2px;
+}

@@ -1,0 +1,32 @@
+<div *ngIf="(subjectResult$ | async) as subjectResult; else loading">
+    <div class="content" fxLayout="row wrap" fxLayoutGap="16px grid" fxFlexAlign="stretch">
+        <div fxFlex.xl="20%" fxFlex.lg="25%" fxFlex.md="33%" fxFlex.xs="100%" fxFlex.sm="50%"
+            *ngFor="let subject of subjectResult.data">
+            <mat-card class="mat-elevation-z4">
+                <mat-card-header>
+                    <div mat-card-avatar class="header-image"></div>
+                    <mat-card-title>{{subject.name}}</mat-card-title>
+                    <mat-card-subtitle>Pytań: 237</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image
+                    src="https://cdn.glitch.com/9c389208-b279-4e96-bcbc-e5f8712d8706%2Fplaceholder-landscape-short.png?1553629848209"
+                    alt="Thumbnail">
+                <mat-card-content>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris massa libero, lacinia quis sapien
+                        non, volutpat rutrum
+                        neque. Morbi laoreet, arcu vitae viverra feugiat, dui.
+                    </p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button>EDIT</button>
+                    <button mat-button color="warn">DELETE</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+    <mat-card class="no-results" mat-button *ngIf="subjectResult.data.length==0">Brak wyników</mat-card>
+</div>
+
+<ng-template #loading>
+    <mat-progress-bar mode="indeterminate" class="progress-bar"></mat-progress-bar>
+</ng-template>

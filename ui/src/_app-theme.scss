@@ -1,10 +1,10 @@
-@import "../node_modules/@angular/material/theming";
+@import '../node_modules/@angular/material/theming';
 
-@import "./app/core/layout/navbar/navbar-theme";
-@import "./app/core/layout/footer/footer-theme";
-@import "./app/features/home/home-page-theme";
-@import "./app/features/admin/admin-page-theme";
-@import "./app/shared/svg-viewer/svg-viewer-theme";
+@import './app/core/layout/navbar/navbar-theme';
+@import './app/core/layout/footer/footer-theme';
+@import './app/features/home/home-page-theme';
+@import './app/features/admin/admin-page-theme';
+@import './app/shared/svg-viewer/svg-viewer-theme';
 
 @mixin material-app-theme($theme) {
   $primary: map-get($theme, primary);
@@ -16,6 +16,7 @@
 
   .app-background {
     background: mat-color($background, background);
+    overflow: hidden;
   }
 
   .primary-header {
@@ -38,6 +39,24 @@
   @include admin-page-theme($theme);
 
   @include svg-viewer-theme($theme);
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: mat-color($accent) mat-color($primary);
+  }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: mat-color($primary);
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: mat-color($accent);
+    border-radius: 20px;
+    border: 3px solid mat-color($accent);
+  }
 }
 
 $primary: mat-palette($mat-indigo);

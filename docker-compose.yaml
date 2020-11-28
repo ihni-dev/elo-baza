@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.7"
 
 services:
   db:
@@ -38,7 +38,7 @@ services:
     build:
       context: ui
     environment:
-      API_URL: http://localhost:8001
+      API_URL: http://localhost:8001/api/
     ports:
       - "8000:80"
     depends_on:

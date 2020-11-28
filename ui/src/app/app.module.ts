@@ -11,6 +11,14 @@ import { NgxsModule } from '@ngxs/store';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { FooterModule } from './core/layout/footer/footer.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 const appInitializerFn = (appConfigurationService: AppConfigurationService) => {
   return () => appConfigurationService.loadConfiguration();
@@ -29,8 +37,19 @@ const appInitializerFn = (appConfigurationService: AppConfigurationService) => {
 
     NavbarModule,
     PageTitleModule,
+    FooterModule,
 
-    AppRoutingModule
+    AppRoutingModule,
+
+    LayoutModule,
+
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+
+    FlexLayoutModule
   ],
   providers: [
     {
