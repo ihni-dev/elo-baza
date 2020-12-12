@@ -8,6 +8,7 @@
 .content {
   padding: 32px 32px 16px 48px;
   max-width: 100%;
+  min-height: 10vh;
 }
 
 .no-results {
@@ -29,4 +30,14 @@
 
 .progress-bar {
   height: 2px;
+}
+
+.add-button {
+  position: absolute;
+  right: 2%;
+  top: 5px;
+}
+
+.placeholder {
+  height: 100px;
 }

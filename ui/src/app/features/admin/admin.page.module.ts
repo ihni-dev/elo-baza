@@ -9,12 +9,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 import { PageHeaderModule } from 'src/app/core/layout/page-header/page-header.module';
 import { SubjectComponent } from './subject/subject.component';
 import { SubjectService } from './subject/subject.service';
 import { CategoryService } from './category/category.service';
 import { CategoryComponent } from './category/category.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgxsModule } from '@ngxs/store';
+import { SubjectState } from './subject/subject.state';
 
 const routes: Routes = [{ path: '', component: AdminPage }];
 
@@ -29,8 +33,11 @@ const routes: Routes = [{ path: '', component: AdminPage }];
     MatIconModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
+    MatPaginatorModule,
+    MatTableModule,
     FlexLayoutModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    NgxsModule.forFeature([SubjectState])
   ],
   declarations: [AdminPage, SubjectComponent, CategoryComponent],
   providers: [SubjectService, CategoryService]

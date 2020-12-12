@@ -44,14 +44,13 @@ namespace EloBaza.WebApi.Controllers.Subject
         /// <summary>
         /// Get all subjects 
         /// </summary>
-        /// <param name="subjectFilteringParametersModel">Parameters to filter result by</param>
         /// <param name="pagingParametersModel">Pagination parameters</param>
+        /// <param name="subjectFilteringParametersModel">Parameters to filter result by</param>
         /// <response code="200">A list of subjects</response>
         [HttpGet]
         [ProducesResponseType(typeof(GetAllSubjectsResult), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAll(
-            [FromQuery] SubjectFilteringParametersModel subjectFilteringParametersModel,
-            [FromQuery] PagingParametersModel pagingParametersModel)
+        public async Task<IActionResult> GetAll([FromQuery] PagingParametersModel pagingParametersModel,
+            [FromQuery] SubjectFilteringParametersModel subjectFilteringParametersModel)
         {
             var subjectFilteringParameters = _mapper.Map<SubjectFilteringParameters>(subjectFilteringParametersModel);
             var pagingParameters = _mapper.Map<PagingParameters>(pagingParametersModel);

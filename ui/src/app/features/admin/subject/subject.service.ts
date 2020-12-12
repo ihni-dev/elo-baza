@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { AppConfigurationService } from '../../../core/app-configuration/app-configuration.service';
 import { Observable } from 'rxjs';
 import { delay } from 'rxjs/operators';
@@ -14,7 +14,20 @@ export class SubjectService {
 
   private subjectUrl = this.appConfiguration.combineWithApiUrl('subject');
 
-  public getSubjects(): Observable<SubjectResult> {
-    return this.httpClient.get<SubjectResult>(this.subjectUrl).pipe(delay(400));
+  public getSubjects(
+    page: number,
+    pageSize: number,
+    subjectName: string
+  ): Observable<SubjectResult> {
+    let httpParams = new HttpParams()
+      .set('page', page.toString())
+      .set('pageSize', pageSize.toString());
+    if (subjectName) httpParams = httpParams.set('name', subjectName);
+
+    return this.httpClient
+      .get<SubjectResult>(this.subjectUrl, {
+        params: httpParams
+      })
+      .pipe(delay(400));
   }
 }
